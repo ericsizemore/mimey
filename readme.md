@@ -22,7 +22,7 @@ Can also be used to get the enum value from an extension.
 ## Usage
 
 ```php
-$mimes = new \Mimey\MimeTypes;
+$mimes = new MimeTypes;
 
 // Convert extension to MIME type:
 $mimes->getMimeType('json'); // application/json
@@ -34,14 +34,14 @@ $mimes->getExtension('application/json'); // json
 ### Using the enum
 
 ```php
-$json = \Mimey\MimeType::ApplicationJson;
+$json = MimeType::ApplicationJson;
 echo $json->getExtension(); // json
 echo $json->value; // application/json
 
 $html = \Mimey\MimeType::fromExtension('html');
 echo $html->value; // text/html
 
-\Mimey\MimeType::fromExtension('asdf'); // throws an InvalidArgumentException if the extension cannot be found
+MimeType::fromExtension('asdf'); // throws an InvalidArgumentException if the extension cannot be found
 ```
 
 ### Getting All
@@ -68,12 +68,12 @@ There is a `MimeMappingBuilder` that can help with this:
 
 ```php
 // Create a builder using the built-in conversions as the basis.
-$builder = \Mimey\MimeMappingBuilder::create();
+$builder = MimeMappingBuilder::create();
 
 // Add a conversion. This conversion will take precedence over existing ones.
 $builder->add('custom/mime-type', 'myextension');
 
-$mimes = new \Mimey\MimeTypes($builder->getMapping());
+$mimes = new MimeTypes($builder->getMapping());
 $mimes->getMimeType('myextension'); // custom/mime-type
 $mimes->getExtension('custom/mime-type'); // myextension
 ```
@@ -107,8 +107,8 @@ The file can then be loaded to avoid overhead of repeated `$builder->add(...)` c
 
 ```php
 // Load the conversions from a cached file.
-$builder = \Mimey\MimeMappingBuilder::load($cache_file_path);
-$mimes = new \Mimey\MimeTypes($builder->getMapping());
+$builder = MimeMappingBuilder::load($cache_file_path);
+$mimes = new MimeTypes($builder->getMapping());
 ```
 
 ## Install

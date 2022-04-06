@@ -11,7 +11,7 @@ PHP package for converting file extensions to MIME types and vice versa.
 This package uses [httpd][]'s [mime.types][] to generate a mapping of file extension to MIME type and the other way around.
 
 The `mime.types` file is parsed by `bin/generate.php` and converted into an optimized JSON object in `dist/mime.types.min.json`
-which is then wrapped by helper class `\Mimey\MimeTypes`.
+which is then wrapped by helper class `MimeTypes`.
 
 **Since 3.1.0:** also provides a generated PHP enum with all mime types and methods to get the extension.
 Can also be used to get the enum value from an extension.

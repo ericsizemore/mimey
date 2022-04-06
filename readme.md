@@ -38,7 +38,7 @@ $json = MimeType::ApplicationJson;
 echo $json->getExtension(); // json
 echo $json->value; // application/json
 
-$html = \Mimey\MimeType::fromExtension('html');
+$html = MimeType::fromExtension('html');
 echo $html->value; // text/html
 
 MimeType::fromExtension('asdf'); // throws an InvalidArgumentException if the extension cannot be found

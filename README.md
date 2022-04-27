@@ -119,6 +119,21 @@ Compatible with PHP >= 8.1.
 composer require elephox/mimey
 ```
 
+## Contributing
+
+Missing a MIME type?
+
+Open an issue or even add it yourself! The process is very easy:
+
+1. fork this repository
+2. add your MIME type to the `data/mime.types.custom` file (make sure it's properly formatted!)
+3. push your changes
+4. submit a pull request
+
+After a short review and merge, the MIME type will automagically be added to the library.
+
+If you want to, you can also run `composer generate-types` and add the changed files under `dist/` to your PR.
+
 ## Credits
 
 This fork uses the same license as the original repository (MIT).

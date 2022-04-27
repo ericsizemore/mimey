@@ -79,6 +79,7 @@ class MimeMappingGenerator
 		$values = [
 			'namespace' => $namespace,
 			'classname' => $classname,
+			'interface_usage' => $namespace !== __NAMESPACE__ ? ("use " . MimeTypeInterface::class . ";\n") : '',
 			'cases' => "",
 			'type2ext' => "",
 			'ext2type' => "",

@@ -5,7 +5,6 @@ namespace Elephox\Mimey;
 
 use RuntimeException;
 use InvalidArgumentException;
-use Elephox\Mimey\MimeTypeInterface;
 
 enum MimeType: string implements MimeTypeInterface
 {

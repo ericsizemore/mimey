@@ -2981,6 +2981,9 @@
         ],
         "avif": [
             "image\/avif"
+        ],
+        "env": [
+            "text\/plain"
         ]
     },
     "extensions": {
@@ -5245,7 +5248,8 @@
             "def",
             "list",
             "log",
-            "in"
+            "in",
+            "env"
         ],
         "text\/prs.lines.tag": [
             "dsc"

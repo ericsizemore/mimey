@@ -2579,6 +2579,7 @@ enum MimeType: string implements MimeTypeInterface
 			'heif' => self::ImageHeif,
 			'heic' => self::ImageHeif,
 			'avif' => self::ImageAvif,
+			'env' => self::TextPlain,
 
 			default => throw new InvalidArgumentException("Unknown extension: " . $extension),
 		};

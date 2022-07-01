@@ -93,9 +93,6 @@
         "class": [
             "application\/java-vm"
         ],
-        "js": [
-            "application\/javascript"
-        ],
         "json": [
             "application\/json"
         ],
@@ -2605,6 +2602,12 @@
         "htm": [
             "text\/html"
         ],
+        "js": [
+            "text\/javascript"
+        ],
+        "mjs": [
+            "text\/javascript"
+        ],
         "n3": [
             "text\/n3"
         ],
@@ -3077,9 +3080,6 @@
         ],
         "application\/java-vm": [
             "class"
-        ],
-        "application\/javascript": [
-            "js"
         ],
         "application\/json": [
             "json"
@@ -5237,6 +5237,10 @@
         "text\/html": [
             "html",
             "htm"
+        ],
+        "text\/javascript": [
+            "js",
+            "mjs"
         ],
         "text\/n3": [
             "n3"

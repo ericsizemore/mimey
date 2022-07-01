@@ -38,7 +38,6 @@ enum MimeType: string implements MimeTypeInterface
 	case ApplicationJavaArchive = 'application/java-archive';
 	case ApplicationJavaSerializedObject = 'application/java-serialized-object';
 	case ApplicationJavaVm = 'application/java-vm';
-	case ApplicationJavascript = 'application/javascript';
 	case ApplicationJson = 'application/json';
 	case ApplicationJsonmlJson = 'application/jsonml+json';
 	case ApplicationLostXml = 'application/lost+xml';
@@ -700,6 +699,7 @@ enum MimeType: string implements MimeTypeInterface
 	case TextCss = 'text/css';
 	case TextCsv = 'text/csv';
 	case TextHtml = 'text/html';
+	case TextJavascript = 'text/javascript';
 	case TextN3 = 'text/n3';
 	case TextPlain = 'text/plain';
 	case TextPrsLinesTag = 'text/prs.lines.tag';
@@ -824,7 +824,6 @@ enum MimeType: string implements MimeTypeInterface
 			self::ApplicationJavaArchive => 'jar',
 			self::ApplicationJavaSerializedObject => 'ser',
 			self::ApplicationJavaVm => 'class',
-			self::ApplicationJavascript => 'js',
 			self::ApplicationJson => 'json',
 			self::ApplicationJsonmlJson => 'jsonml',
 			self::ApplicationLostXml => 'lostxml',
@@ -1486,6 +1485,7 @@ enum MimeType: string implements MimeTypeInterface
 			self::TextCss => 'css',
 			self::TextCsv => 'csv',
 			self::TextHtml => 'html',
+			self::TextJavascript => 'js',
 			self::TextN3 => 'n3',
 			self::TextPlain => 'txt',
 			self::TextPrsLinesTag => 'dsc',
@@ -1619,7 +1619,6 @@ enum MimeType: string implements MimeTypeInterface
 			'jar' => self::ApplicationJavaArchive,
 			'ser' => self::ApplicationJavaSerializedObject,
 			'class' => self::ApplicationJavaVm,
-			'js' => self::ApplicationJavascript,
 			'json' => self::ApplicationJson,
 			'jsonml' => self::ApplicationJsonmlJson,
 			'lostxml' => self::ApplicationLostXml,
@@ -2454,6 +2453,8 @@ enum MimeType: string implements MimeTypeInterface
 			'csv' => self::TextCsv,
 			'html' => self::TextHtml,
 			'htm' => self::TextHtml,
+			'js' => self::TextJavascript,
+			'mjs' => self::TextJavascript,
 			'n3' => self::TextN3,
 			'txt' => self::TextPlain,
 			'text' => self::TextPlain,

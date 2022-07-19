@@ -8,7 +8,7 @@ PHP package for converting file extensions to MIME types and vice versa.
 [![Downloads per Month](https://img.shields.io/packagist/dm/elephox/mimey.svg)](https://packagist.org/packages/elephox/mimey)
 [![License](https://img.shields.io/packagist/l/elephox/mimey.svg)](https://packagist.org/packages/elephox/mimey)
 
-This package uses [httpd][]'s [mime.types][] to generate a mapping of file extension to MIME type and the other way around.
+This package uses [httpd]'s [mime.types] to generate a mapping of file extension to MIME type and the other way around. Click here to view the changelog from their svn: [changelog]
 
 The `mime.types` file is parsed by `bin/generate.php` and converted into an optimized JSON object in `dist/mime.types.min.json`
 which is then wrapped by helper class `MimeTypes`.
@@ -18,6 +18,7 @@ Can also be used to get the enum value from an extension.
 
 [httpd]: https://httpd.apache.org/docs/current/programs/httpd.html
 [mime.types]: https://svn.apache.org/repos/asf/httpd/httpd/trunk/docs/conf/mime.types
+[changelog]: https://svn.apache.org/viewvc/httpd/httpd/trunk/docs/conf/mime.types?view=log
 
 ## Usage
 

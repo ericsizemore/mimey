@@ -13,10 +13,10 @@ use Throwable;
  */
 class MimeTypes implements MimeTypesInterface
 {
-	/** @var MimeTypeMap The cached built-in mapping array. */
+	/** @var ?MimeTypeMap The cached built-in mapping array. */
 	private static ?array $built_in = null;
 
-	/** @var MimeTypeMap The mapping array. */
+	/** @var ?MimeTypeMap The mapping array. */
 	protected ?array $mapping = null;
 
 	/**

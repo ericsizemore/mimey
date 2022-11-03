@@ -9,7 +9,6 @@ use InvalidArgumentException;
 enum %classname%: string implements MimeTypeInterface
 {
 %cases%
-
 	public function getExtension(): string
 	{
 		return match($this) {
@@ -25,9 +24,19 @@ enum %classname%: string implements MimeTypeInterface
 
 	public static function fromExtension(string $extension): MimeType
 	{
+		$type = self::tryFromExtension($extension);
+		if ($type === null) {
+			throw new InvalidArgumentException("Unknown extension: " . $extension);
+		}
+
+		return $type;
+	}
+
+	public static function tryFromExtension(string $extension): ?MimeType
+	{
 		return match($extension) {
 %ext2type%
-			default => throw new InvalidArgumentException("Unknown extension: " . $extension),
+			default => null,
 		};
 	}
 }

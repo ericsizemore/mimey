@@ -790,7 +790,6 @@ enum MimeType: string implements MimeTypeInterface
 	case ImageHeif = 'image/heif';
 	case ImageAvif = 'image/avif';
 
-
 	public function getExtension(): string
 	{
 		return match($this) {
@@ -1586,6 +1585,16 @@ enum MimeType: string implements MimeTypeInterface
 	}
 
 	public static function fromExtension(string $extension): MimeType
+	{
+		$type = self::tryFromExtension($extension);
+		if ($type === null) {
+			throw new InvalidArgumentException("Unknown extension: " . $extension);
+		}
+
+		return $type;
+	}
+
+	public static function tryFromExtension(string $extension): ?MimeType
 	{
 		return match($extension) {
 			'ez' => self::ApplicationAndrewInset,
@@ -2581,7 +2590,7 @@ enum MimeType: string implements MimeTypeInterface
 			'avif' => self::ImageAvif,
 			'env' => self::TextPlain,
 
-			default => throw new InvalidArgumentException("Unknown extension: " . $extension),
+			default => null,
 		};
 	}
 }

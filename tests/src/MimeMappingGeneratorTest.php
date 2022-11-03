@@ -101,7 +101,6 @@ enum TestMimeClass: string implements MimeTypeInterface
 	case ApplicationJson = 'application/json';
 	case ImageJpeg = 'image/jpeg';
 
-
 	public function getExtension(): string
 	{
 		return match(\$this) {
@@ -119,12 +118,22 @@ enum TestMimeClass: string implements MimeTypeInterface
 
 	public static function fromExtension(string \$extension): MimeType
 	{
+		\$type = self::tryFromExtension(\$extension);
+		if (\$type === null) {
+			throw new InvalidArgumentException("Unknown extension: " . \$extension);
+		}
+
+		return \$type;
+	}
+
+	public static function tryFromExtension(string \$extension): ?MimeType
+	{
 		return match(\$extension) {
 			'json' => self::ApplicationJson,
 			'jpeg' => self::ImageJpeg,
 			'jpg' => self::ImageJpeg,
 
-			default => throw new InvalidArgumentException("Unknown extension: " . \$extension),
+			default => null,
 		};
 	}
 }

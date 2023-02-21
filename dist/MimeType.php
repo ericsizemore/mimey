@@ -8,6 +8,23 @@ use InvalidArgumentException;
 
 enum MimeType: string implements MimeTypeInterface
 {
+	case ApplicationFontWoff = 'application/font-woff';
+	case ApplicationPhp = 'application/php';
+	case ApplicationXFontOtf = 'application/x-font-otf';
+	case ApplicationXFontTtf = 'application/x-font-ttf';
+	case ApplicationXGzip = 'application/x-gzip';
+	case ApplicationXHttpdPhp = 'application/x-httpd-php';
+	case ApplicationXHttpdPhpSource = 'application/x-httpd-php-source';
+	case ApplicationXPhp = 'application/x-php';
+	case AudioAmr = 'audio/amr';
+	case AudioMpeg = 'audio/mpeg';
+	case ImageJpeg = 'image/jpeg';
+	case ImageXMsBmp = 'image/x-ms-bmp';
+	case TextPhp = 'text/php';
+	case TextXPhp = 'text/x-php';
+	case ImageHeif = 'image/heif';
+	case ImageAvif = 'image/avif';
+	case TextPlain = 'text/plain';
 	case ApplicationAndrewInset = 'application/andrew-inset';
 	case ApplicationApplixware = 'application/applixware';
 	case ApplicationAtomXml = 'application/atom+xml';
@@ -596,7 +613,6 @@ enum MimeType: string implements MimeTypeInterface
 	case AudioBasic = 'audio/basic';
 	case AudioMidi = 'audio/midi';
 	case AudioMp4 = 'audio/mp4';
-	case AudioMpeg = 'audio/mpeg';
 	case AudioOgg = 'audio/ogg';
 	case AudioS3m = 'audio/s3m';
 	case AudioSilk = 'audio/silk';
@@ -640,7 +656,6 @@ enum MimeType: string implements MimeTypeInterface
 	case ImageG3fax = 'image/g3fax';
 	case ImageGif = 'image/gif';
 	case ImageIef = 'image/ief';
-	case ImageJpeg = 'image/jpeg';
 	case ImageKtx = 'image/ktx';
 	case ImagePng = 'image/png';
 	case ImagePrsBtif = 'image/prs.btif';
@@ -701,7 +716,6 @@ enum MimeType: string implements MimeTypeInterface
 	case TextHtml = 'text/html';
 	case TextJavascript = 'text/javascript';
 	case TextN3 = 'text/n3';
-	case TextPlain = 'text/plain';
 	case TextPrsLinesTag = 'text/prs.lines.tag';
 	case TextRichtext = 'text/richtext';
 	case TextSgml = 'text/sgml';
@@ -775,24 +789,27 @@ enum MimeType: string implements MimeTypeInterface
 	case VideoXSgiMovie = 'video/x-sgi-movie';
 	case VideoXSmv = 'video/x-smv';
 	case XConferenceXCooltalk = 'x-conference/x-cooltalk';
-	case ApplicationFontWoff = 'application/font-woff';
-	case ApplicationPhp = 'application/php';
-	case ApplicationXFontOtf = 'application/x-font-otf';
-	case ApplicationXFontTtf = 'application/x-font-ttf';
-	case ApplicationXGzip = 'application/x-gzip';
-	case ApplicationXHttpdPhp = 'application/x-httpd-php';
-	case ApplicationXHttpdPhpSource = 'application/x-httpd-php-source';
-	case ApplicationXPhp = 'application/x-php';
-	case AudioAmr = 'audio/amr';
-	case ImageXMsBmp = 'image/x-ms-bmp';
-	case TextPhp = 'text/php';
-	case TextXPhp = 'text/x-php';
-	case ImageHeif = 'image/heif';
-	case ImageAvif = 'image/avif';
 
 	public function getExtension(): string
 	{
 		return match($this) {
+			self::ApplicationFontWoff => 'wof',
+			self::ApplicationPhp => 'php',
+			self::ApplicationXFontOtf => 'otf',
+			self::ApplicationXFontTtf => 'ttf',
+			self::ApplicationXGzip => 'zip',
+			self::ApplicationXHttpdPhp => 'php',
+			self::ApplicationXHttpdPhpSource => 'php',
+			self::ApplicationXPhp => 'php',
+			self::AudioAmr => 'amr',
+			self::AudioMpeg => 'mp3',
+			self::ImageJpeg => 'jpg',
+			self::ImageXMsBmp => 'bmp',
+			self::TextPhp => 'php',
+			self::TextXPhp => 'php',
+			self::ImageHeif => 'heif',
+			self::ImageAvif => 'avif',
+			self::TextPlain => 'env',
 			self::ApplicationAndrewInset => 'ez',
 			self::ApplicationApplixware => 'aw',
 			self::ApplicationAtomXml => 'atom',
@@ -1381,7 +1398,6 @@ enum MimeType: string implements MimeTypeInterface
 			self::AudioBasic => 'au',
 			self::AudioMidi => 'mid',
 			self::AudioMp4 => 'm4a',
-			self::AudioMpeg => 'mpga',
 			self::AudioOgg => 'oga',
 			self::AudioS3m => 's3m',
 			self::AudioSilk => 'sil',
@@ -1425,7 +1441,6 @@ enum MimeType: string implements MimeTypeInterface
 			self::ImageG3fax => 'g3',
 			self::ImageGif => 'gif',
 			self::ImageIef => 'ief',
-			self::ImageJpeg => 'jpeg',
 			self::ImageKtx => 'ktx',
 			self::ImagePng => 'png',
 			self::ImagePrsBtif => 'btif',
@@ -1486,7 +1501,6 @@ enum MimeType: string implements MimeTypeInterface
 			self::TextHtml => 'html',
 			self::TextJavascript => 'js',
 			self::TextN3 => 'n3',
-			self::TextPlain => 'txt',
 			self::TextPrsLinesTag => 'dsc',
 			self::TextRichtext => 'rtx',
 			self::TextSgml => 'sgml',
@@ -1560,20 +1574,6 @@ enum MimeType: string implements MimeTypeInterface
 			self::VideoXSgiMovie => 'movie',
 			self::VideoXSmv => 'smv',
 			self::XConferenceXCooltalk => 'ice',
-			self::ApplicationFontWoff => 'wof',
-			self::ApplicationPhp => 'php',
-			self::ApplicationXFontOtf => 'otf',
-			self::ApplicationXFontTtf => 'ttf',
-			self::ApplicationXGzip => 'zip',
-			self::ApplicationXHttpdPhp => 'php',
-			self::ApplicationXHttpdPhpSource => 'php',
-			self::ApplicationXPhp => 'php',
-			self::AudioAmr => 'amr',
-			self::ImageXMsBmp => 'bmp',
-			self::TextPhp => 'php',
-			self::TextXPhp => 'php',
-			self::ImageHeif => 'heif',
-			self::ImageAvif => 'avif',
 
 			default => throw new RuntimeException("Unknown extension for type: " . $this->value),
 		};
@@ -1597,6 +1597,27 @@ enum MimeType: string implements MimeTypeInterface
 	public static function tryFromExtension(string $extension): ?MimeType
 	{
 		return match($extension) {
+			'wof' => self::ApplicationFontWoff,
+			'php' => self::ApplicationPhp,
+			'otf' => self::ApplicationXFontOtf,
+			'ttf' => self::ApplicationXFontTtf,
+			'ttc' => self::ApplicationXFontTtf,
+			'zip' => self::ApplicationXGzip,
+			'amr' => self::AudioAmr,
+			'mp3' => self::AudioMpeg,
+			'mpga' => self::AudioMpeg,
+			'mp2' => self::AudioMpeg,
+			'mp2a' => self::AudioMpeg,
+			'm2a' => self::AudioMpeg,
+			'm3a' => self::AudioMpeg,
+			'jpg' => self::ImageJpeg,
+			'jpeg' => self::ImageJpeg,
+			'jpe' => self::ImageJpeg,
+			'bmp' => self::ImageXMsBmp,
+			'heif' => self::ImageHeif,
+			'heic' => self::ImageHeif,
+			'avif' => self::ImageAvif,
+			'env' => self::TextPlain,
 			'ez' => self::ApplicationAndrewInset,
 			'aw' => self::ApplicationApplixware,
 			'atom' => self::ApplicationAtomXml,
@@ -2314,7 +2335,6 @@ enum MimeType: string implements MimeTypeInterface
 			'xvm' => self::ApplicationXvXml,
 			'yang' => self::ApplicationYang,
 			'yin' => self::ApplicationYinXml,
-			'zip' => self::ApplicationZip,
 			'adp' => self::AudioAdpcm,
 			'au' => self::AudioBasic,
 			'snd' => self::AudioBasic,
@@ -2324,12 +2344,6 @@ enum MimeType: string implements MimeTypeInterface
 			'rmi' => self::AudioMidi,
 			'm4a' => self::AudioMp4,
 			'mp4a' => self::AudioMp4,
-			'mpga' => self::AudioMpeg,
-			'mp2' => self::AudioMpeg,
-			'mp2a' => self::AudioMpeg,
-			'mp3' => self::AudioMpeg,
-			'm2a' => self::AudioMpeg,
-			'm3a' => self::AudioMpeg,
 			'oga' => self::AudioOgg,
 			'ogg' => self::AudioOgg,
 			'spx' => self::AudioOgg,
@@ -2370,19 +2384,12 @@ enum MimeType: string implements MimeTypeInterface
 			'cml' => self::ChemicalXCml,
 			'csml' => self::ChemicalXCsml,
 			'xyz' => self::ChemicalXXyz,
-			'ttc' => self::FontCollection,
-			'otf' => self::FontOtf,
-			'ttf' => self::FontTtf,
 			'woff' => self::FontWoff,
 			'woff2' => self::FontWoff2,
-			'bmp' => self::ImageBmp,
 			'cgm' => self::ImageCgm,
 			'g3' => self::ImageG3fax,
 			'gif' => self::ImageGif,
 			'ief' => self::ImageIef,
-			'jpeg' => self::ImageJpeg,
-			'jpg' => self::ImageJpeg,
-			'jpe' => self::ImageJpeg,
 			'ktx' => self::ImageKtx,
 			'png' => self::ImagePng,
 			'btif' => self::ImagePrsBtif,
@@ -2582,13 +2589,6 @@ enum MimeType: string implements MimeTypeInterface
 			'movie' => self::VideoXSgiMovie,
 			'smv' => self::VideoXSmv,
 			'ice' => self::XConferenceXCooltalk,
-			'wof' => self::ApplicationFontWoff,
-			'php' => self::ApplicationPhp,
-			'amr' => self::AudioAmr,
-			'heif' => self::ImageHeif,
-			'heic' => self::ImageHeif,
-			'avif' => self::ImageAvif,
-			'env' => self::TextPlain,
 
 			default => null,
 		};

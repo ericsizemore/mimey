@@ -13,7 +13,7 @@ This package uses [httpd]'s [mime.types] to generate a mapping of file extension
 The `mime.types` file is parsed by `bin/generate.php` and converted into an optimized JSON object in `dist/mime.types.min.json`
 which is then wrapped by helper class `MimeTypes`.
 
-**Since 3.1.0:** also provides a generated PHP enum with all mime types and methods to get the extension.
+Also provides a generated PHP enum with all mime types and methods to get the extension.
 Can also be used to get the enum value from an extension.
 
 [httpd]: https://httpd.apache.org/docs/current/programs/httpd.html
@@ -101,14 +101,14 @@ $builder->add(...);
 $builder->add(...);
 ...
 // Save the conversions to a cached file.
-$builder->save($cache_file_path);
+$builder->save($cacheFilePath);
 ```
 
 The file can then be loaded to avoid overhead of repeated `$builder->add(...)` calls:
 
 ```php
 // Load the conversions from a cached file.
-$builder = MimeMappingBuilder::load($cache_file_path);
+$builder = MimeMappingBuilder::load($cacheFilePath);
 $mimes = new MimeTypes($builder->getMapping());
 ```
 

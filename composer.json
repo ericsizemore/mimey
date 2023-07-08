@@ -14,7 +14,8 @@
         },
         {
             "name": "Eric Sizemore",
-            "email": "me@ericsizemore.com"
+            "email": "me@ericsizemore.com",
+            "homepage": "https://www.ericsizemore.com"
         }
     ],
     "require": {

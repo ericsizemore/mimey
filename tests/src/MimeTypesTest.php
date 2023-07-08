@@ -30,7 +30,7 @@ class MimeTypesTest extends TestCase
 		]);
 	}
 
-	public function getMimeTypeProvider(): array
+	public static function getMimeTypeProvider(): array
 	{
 		return [
 			['application/json', 'json'],
@@ -49,7 +49,7 @@ class MimeTypesTest extends TestCase
 		$this->assertEquals($expectedMimeType, $this->mime->getMimeType($extension));
 	}
 
-	public function getExtensionProvider(): array
+	public static function getExtensionProvider(): array
 	{
 		return [
 			['json', 'application/json'],
@@ -67,7 +67,7 @@ class MimeTypesTest extends TestCase
 		$this->assertEquals($expectedExtension, $this->mime->getExtension($mimeType));
 	}
 
-	public function getAllMimeTypesProvider(): array
+	public static function getAllMimeTypesProvider(): array
 	{
 		return [
 			[
@@ -96,7 +96,7 @@ class MimeTypesTest extends TestCase
 		$this->assertEquals($expectedMimeTypes, $this->mime->getAllMimeTypes($extension));
 	}
 
-	public function getAllExtensionsProvider(): array
+	public static function getAllExtensionsProvider(): array
 	{
 		return [
 			[

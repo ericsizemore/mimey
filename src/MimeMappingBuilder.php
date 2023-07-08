@@ -1,6 +1,6 @@
 <?php
 
-namespace Elephox\Mimey;
+namespace Esi\Mimey;
 
 use JetBrains\PhpStorm\Pure;
 use JsonException;

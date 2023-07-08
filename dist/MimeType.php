@@ -1,4 +1,5 @@
 <?php
+
 declare(strict_types=1);
 
 namespace Esi\Mimey;
@@ -1575,7 +1576,7 @@ enum MimeType: string implements MimeTypeInterface
 			self::VideoXSmv => 'smv',
 			self::XConferenceXCooltalk => 'ice',
 
-			default => throw new RuntimeException("Unknown extension for type: " . $this->value),
+			default => throw new RuntimeException('Unknown extension for type: ' . $this->value),
 		};
 	}
 
@@ -1587,10 +1588,10 @@ enum MimeType: string implements MimeTypeInterface
 	public static function fromExtension(string $extension): MimeType
 	{
 		$type = self::tryFromExtension($extension);
-		if ($type === null) {
-			throw new InvalidArgumentException("Unknown extension: " . $extension);
-		}
 
+		if ($type === null) {
+			throw new InvalidArgumentException('Unknown extension: ' . $extension);
+		}
 		return $type;
 	}
 

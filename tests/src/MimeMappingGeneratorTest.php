@@ -108,7 +108,7 @@ enum TestMimeClass: string implements MimeTypeInterface
 			self::ApplicationJson => 'json',
 			self::ImageJpeg => 'jpeg',
 
-			default => throw new RuntimeException("Unknown extension for type: " . \$this->value),
+			default => throw new RuntimeException('Unknown extension for type: ' . \$this->value),
 		};
 	}
 
@@ -122,7 +122,7 @@ enum TestMimeClass: string implements MimeTypeInterface
 		\$type = self::tryFromExtension(\$extension);
 
 		if (\$type === null) {
-			throw new InvalidArgumentException("Unknown extension: " . \$extension);
+			throw new InvalidArgumentException('Unknown extension: ' . \$extension);
 		}
 		return \$type;
 	}

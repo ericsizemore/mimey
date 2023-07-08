@@ -1,9 +1,9 @@
 <?php
 
-namespace Elephox\Mimey\Tests;
+namespace Esi\Mimey\Tests;
 
-use Elephox\Mimey\MimeTypes;
-use Elephox\Mimey\MimeMappingBuilder;
+use Esi\Mimey\MimeTypes;
+use Esi\Mimey\MimeMappingBuilder;
 use PHPUnit\Framework\TestCase;
 use RuntimeException;
 

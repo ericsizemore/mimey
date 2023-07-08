@@ -3,10 +3,10 @@ Mimey
 
 PHP package for converting file extensions to MIME types and vice versa.
 
-[![Tests](https://github.com/elephox-dev/mimey/actions/workflows/tests.yml/badge.svg)](https://github.com/elephox-dev/mimey/actions/workflows/tests.yml)
-[![Latest Stable Version](https://img.shields.io/packagist/v/elephox/mimey.svg)](https://packagist.org/packages/elephox/mimey)
-[![Downloads per Month](https://img.shields.io/packagist/dm/elephox/mimey.svg)](https://packagist.org/packages/elephox/mimey)
-[![License](https://img.shields.io/packagist/l/elephox/mimey.svg)](https://packagist.org/packages/elephox/mimey)
+[![Tests](https://github.com/ericsizemore/mimey/actions/workflows/tests.yml/badge.svg)](https://github.com/ericsizemore/mimey/actions/workflows/tests.yml)
+[![Latest Stable Version](https://img.shields.io/packagist/v/esi/mimey.svg)](https://packagist.org/packages/esi/mimey)
+[![Downloads per Month](https://img.shields.io/packagist/dm/esi/mimey.svg)](https://packagist.org/packages/esi/mimey)
+[![License](https://img.shields.io/packagist/l/esi/mimey.svg)](https://packagist.org/packages/esi/mimey)
 
 This package uses [httpd]'s [mime.types] to generate a mapping of file extension to MIME type and the other way around. Click here to view the changelog from their svn: [changelog]
 
@@ -117,7 +117,7 @@ $mimes = new MimeTypes($builder->getMapping());
 Compatible with PHP >= 8.1.
 
 ```
-composer require elephox/mimey
+composer require esi/mimey
 ```
 
 ## Contributing
@@ -137,6 +137,6 @@ If you want to, you can also run `composer generate-types` and add the changed f
 
 ## Credits
 
-This fork uses the same license as the original repository (MIT).
-This repository is a fork of [ralouphie/mimey](https://github.com/ralouphie/mimey).
+This fork uses the same license as the original repository by @ralouphie (MIT).
+This repository is a fork of [elephox-dev/mimey](https://github.com/elephox-dev/mimey) which itself was a fork of [ralouphie/mimey](https://github.com/ralouphie/mimey).
 Thanks to them and all the contributors!

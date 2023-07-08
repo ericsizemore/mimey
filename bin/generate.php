@@ -6,7 +6,7 @@ require_once dirname(__DIR__) . '/vendor/autoload.php';
 
 //////////////////////////////////////////////////////////////
 
-use Elephox\Mimey\MimeMappingGenerator;
+use Esi\Mimey\MimeMappingGenerator;
 
 $mimeTypes = dirname(__DIR__) . "/data/mime.types";
 $mimeTypesCustom = dirname(__DIR__) . "/data/mime.types.custom";

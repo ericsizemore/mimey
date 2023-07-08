@@ -1,41 +1,45 @@
 {
-  "name": "elephox/mimey",
-  "description": "PHP package for converting file extensions to MIME types and vice versa.",
-  "license": "MIT",
-  "type": "library",
-  "authors": [
-    {
-      "name": "Ralph Khattar",
-      "email": "ralph.khattar@gmail.com"
+    "name": "esi/mimey",
+    "description": "PHP package for converting file extensions to MIME types and vice versa.",
+    "license": "MIT",
+    "type": "library",
+    "authors": [
+        {
+            "name": "Ralph Khattar",
+            "email": "ralph.khattar@gmail.com"
+        },
+        {
+            "name": "Ricardo Boss",
+            "email": "contact@ricardoboss.de"
+        },
+        {
+            "name": "Eric Sizemore",
+            "email": "me@ericsizemore.com"
+        }
+    ],
+    "require": {
+        "php": "^8.1 <8.3",
+        "jetbrains/phpstorm-attributes": "^1.0"
     },
-    {
-      "name": "Ricardo Boss",
-      "email": "contact@ricardoboss.de"
+    "require-dev": {
+        "phpunit/phpunit": "^9.6"
+    },
+    "suggest": {
+        "ext-mbstring": "For non-English (user) input parsing"
+    },
+    "autoload": {
+        "psr-4": {
+            "Esi\\Mimey\\": ["src/", "dist/"]
+        }
+    },
+    "autoload-dev": {
+        "psr-4": {
+            "Esi\\Mimey\\Tests\\": "tests/src/"
+        }
+    },
+    "scripts": {
+        "test": "phpunit",
+        "generate-types": "@php bin/generate.php",
+        "update-types": "@php bin/update.php"
     }
-  ],
-  "require": {
-    "php": "^8.1 <8.3",
-    "jetbrains/phpstorm-attributes": "^1.0"
-  },
-  "require-dev": {
-    "phpunit/phpunit": "^9.6"
-  },
-  "suggest": {
-    "ext-mbstring": "For non-English (user) input parsing"
-  },
-  "autoload": {
-    "psr-4": {
-      "Elephox\\Mimey\\": ["src/", "dist/"]
-    }
-  },
-  "autoload-dev": {
-    "psr-4": {
-      "Elephox\\Mimey\\Tests\\": "tests/src/"
-    }
-  },
-  "scripts": {
-    "test": "phpunit",
-    "generate-types": "@php bin/generate.php",
-    "update-types": "@php bin/update.php"
-  }
 }

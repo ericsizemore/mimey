@@ -1,8 +1,8 @@
 <?php
 
-namespace Elephox\Mimey\Tests;
+namespace Esi\Mimey\Tests;
 
-use Elephox\Mimey\MimeTypes;
+use Esi\Mimey\MimeTypes;
 use PHPUnit\Framework\TestCase;
 use ReflectionProperty;
 use RuntimeException;

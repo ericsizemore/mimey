@@ -1,8 +1,8 @@
 <?php
 
-namespace Elephox\Mimey\Tests;
+namespace Esi\Mimey\Tests;
 
-use Elephox\Mimey\MimeMappingGenerator;
+use Esi\Mimey\MimeMappingGenerator;
 use PHPUnit\Framework\TestCase;
 
 class MimeMappingGeneratorTest extends TestCase
@@ -94,7 +94,7 @@ namespace TestMimeNamespace;
 
 use RuntimeException;
 use InvalidArgumentException;
-use Elephox\Mimey\MimeTypeInterface;
+use Esi\Mimey\MimeTypeInterface;
 
 enum TestMimeClass: string implements MimeTypeInterface
 {

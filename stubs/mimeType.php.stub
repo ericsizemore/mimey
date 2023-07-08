@@ -7,7 +7,6 @@ namespace %namespace%;
 use RuntimeException;
 use InvalidArgumentException;
 %interface_usage%
-
 enum %classname%: string implements MimeTypeInterface
 {
 %cases%

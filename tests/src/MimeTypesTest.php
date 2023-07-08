@@ -156,7 +156,7 @@ class MimeTypesTest extends TestCase
 		rename($original, $backup);
 		file_put_contents($original, 'invalid json');
 
-		$property = new ReflectionProperty(MimeTypes::class, 'built_in');
+		$property = new ReflectionProperty(MimeTypes::class, 'builtIn');
 		$property->setValue(null);
 
 		try {

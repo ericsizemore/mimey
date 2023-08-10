@@ -1,0 +1,60 @@
+version: 2.1
+jobs:
+  install:
+    docker:
+      - image: cimg/php:8.2.8
+    working_directory: ~/mimey
+    steps:
+      - checkout
+      - run: php --version
+      - run: sudo composer self-update
+      - restore_cache:
+          keys:
+            - composer-v2-{{ checksum "composer.json" }}
+            - composer-v2-
+      - run: composer update --prefer-dist --optimize-autoloader --no-progress --no-interaction
+      - save_cache:
+          key: composer-v2-{{ checksum "composer.json" }}
+          paths:
+            - vendor
+      - persist_to_workspace:
+          root: .
+          paths:
+            - vendor
+  test-php81:
+    docker:
+      - image: cimg/php:8.1.22
+    working_directory: ~/mimey
+    steps:
+      - checkout
+      - run: php --version
+      - attach_workspace:
+          at: .
+      - run: vendor/bin/phpunit --colors=never --log-junit build/phpunit/results81.xml --coverage-html build/coverage --coverage-clover build/clover.xml
+      - run: vendor/bin/php-coveralls -x build/clover.xml -o build/coveralls.json || true
+      - store_test_results:
+          path: build
+  test-php82:
+    docker:
+      - image: cimg/php:8.2.8
+    working_directory: ~/mimey
+    steps:
+      - checkout
+      - run: php --version
+      - attach_workspace:
+          at: .
+      - run: vendor/bin/phpunit --colors=never --log-junit build/phpunit/results82.xml --coverage-html build/coverage --coverage-clover build/clover.xml
+      - run: vendor/bin/php-coveralls -x build/clover.xml -o build/coveralls.json || true
+      - store_artifacts:
+          path: build/coverage
+          destination: coverage
+      - store_test_results:
+          path: build
+workflows:
+  version: 2
+  test:
+    jobs:
+      - install
+      - test-php82:
+          requires:
+            - install

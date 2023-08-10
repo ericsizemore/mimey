@@ -231,6 +231,7 @@ enum MimeType: string implements MimeTypeInterface
 	case ApplicationVndFuzzysheet = 'application/vnd.fuzzysheet';
 	case ApplicationVndGenomatixTuxedo = 'application/vnd.genomatix.tuxedo';
 	case ApplicationVndGeogebraFile = 'application/vnd.geogebra.file';
+	case ApplicationVndGeogebraSlides = 'application/vnd.geogebra.slides';
 	case ApplicationVndGeogebraTool = 'application/vnd.geogebra.tool';
 	case ApplicationVndGeometryExplorer = 'application/vnd.geometry-explorer';
 	case ApplicationVndGeonext = 'application/vnd.geonext';
@@ -491,6 +492,7 @@ enum MimeType: string implements MimeTypeInterface
 	case ApplicationVndZul = 'application/vnd.zul';
 	case ApplicationVndZzazzDeckXml = 'application/vnd.zzazz.deck+xml';
 	case ApplicationVoicexmlXml = 'application/voicexml+xml';
+	case ApplicationWasm = 'application/wasm';
 	case ApplicationWidget = 'application/widget';
 	case ApplicationWinhlp = 'application/winhlp';
 	case ApplicationWsdlXml = 'application/wsdl+xml';
@@ -1016,6 +1018,7 @@ enum MimeType: string implements MimeTypeInterface
 			self::ApplicationVndFuzzysheet => 'fzs',
 			self::ApplicationVndGenomatixTuxedo => 'txd',
 			self::ApplicationVndGeogebraFile => 'ggb',
+			self::ApplicationVndGeogebraSlides => 'ggs',
 			self::ApplicationVndGeogebraTool => 'ggt',
 			self::ApplicationVndGeometryExplorer => 'gex',
 			self::ApplicationVndGeonext => 'gxt',
@@ -1276,6 +1279,7 @@ enum MimeType: string implements MimeTypeInterface
 			self::ApplicationVndZul => 'zir',
 			self::ApplicationVndZzazzDeckXml => 'zaz',
 			self::ApplicationVoicexmlXml => 'vxml',
+			self::ApplicationWasm => 'wasm',
 			self::ApplicationWidget => 'wgt',
 			self::ApplicationWinhlp => 'hlp',
 			self::ApplicationWsdlXml => 'wsdl',
@@ -1866,6 +1870,7 @@ enum MimeType: string implements MimeTypeInterface
 			'fzs' => self::ApplicationVndFuzzysheet,
 			'txd' => self::ApplicationVndGenomatixTuxedo,
 			'ggb' => self::ApplicationVndGeogebraFile,
+			'ggs' => self::ApplicationVndGeogebraSlides,
 			'ggt' => self::ApplicationVndGeogebraTool,
 			'gex' => self::ApplicationVndGeometryExplorer,
 			'gre' => self::ApplicationVndGeometryExplorer,
@@ -2170,6 +2175,7 @@ enum MimeType: string implements MimeTypeInterface
 			'zirz' => self::ApplicationVndZul,
 			'zaz' => self::ApplicationVndZzazzDeckXml,
 			'vxml' => self::ApplicationVoicexmlXml,
+			'wasm' => self::ApplicationWasm,
 			'wgt' => self::ApplicationWidget,
 			'hlp' => self::ApplicationWinhlp,
 			'wsdl' => self::ApplicationWsdlXml,

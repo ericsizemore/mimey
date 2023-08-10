@@ -45,9 +45,14 @@ jobs:
           at: .
       - run: vendor/bin/phpunit --colors=never --log-junit build/phpunit/results82.xml --coverage-html build/coverage --coverage-clover build/clover.xml
       - run: vendor/bin/php-coveralls -x build/clover.xml -o build/coveralls.json || true
+      - run:
+          name: Creating Dummy Artifacts
+          command: |
+            mkdir /build/artifacts;
+            echo "my artifact files in a dir" > /build/artifacts/artifact-1;
       - store_artifacts:
-          path: build/coverage
-          destination: coverage
+          path: /build/artifacts/artifact-1
+          destination: artifact-file
       - store_test_results:
           path: build
 workflows:

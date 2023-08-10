@@ -7,9 +7,6 @@
 	<testsuite name="default">
 		<directory>tests/src</directory>
 	</testsuite>
-    <logging>
-        <log type="coverage-clover" target="build/clover.xml"/>
-    </logging>
 	<source>
 		<include>
 			<directory>src</directory>

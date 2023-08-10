@@ -1,10 +1,13 @@
 version: 2.1
+orbs:
+  browser-tools: circleci/browser-tools@1.4.3
 jobs:
   install:
     docker:
-      - image: cimg/php:8.2.8
+      - image: cimg/php:8.2.8-browsers
     working_directory: ~/mimey
     steps:
+      - browser-tools/install-browser-tools
       - checkout
       - run: php --version
       - run: sudo composer self-update
@@ -23,27 +26,37 @@ jobs:
             - vendor
   test-php81:
     docker:
-      - image: cimg/php:8.1.22
+      - image: cimg/php:8.1.22-browsers
     working_directory: ~/mimey
     steps:
       - checkout
       - run: php --version
       - attach_workspace:
           at: .
-      - run: vendor/bin/phpunit --colors=never --log-junit build/phpunit/results81.xml --coverage-html build/coverage --coverage-clover build/clover.xml
+      - run:
+          name: "Run tests"
+          command: phpdbg -qrr vendor/bin/phpunit --colors=never --log-junit build/phpunit/results81.xml --coverage-html build/coverage --coverage-clover build/clover.xml
+          environment:
+            XDEBUG_MODE: coverage
       - run: vendor/bin/php-coveralls -x build/clover.xml -o build/coveralls.json || true
+       environment:
+            XDEBUG_MODE: coverage
       - store_test_results:
           path: build
   test-php82:
     docker:
-      - image: cimg/php:8.2.8
+      - image: cimg/php:8.2.8-browsers
     working_directory: ~/mimey
     steps:
       - checkout
       - run: php --version
       - attach_workspace:
           at: .
-      - run: vendor/bin/phpunit --colors=never --log-junit build/phpunit/results82.xml --coverage-html build/coverage --coverage-clover build/clover.xml
+      - run:
+          name: "Run tests"
+          command: phpdbg -qrr vendor/bin/phpunit --colors=never --log-junit build/phpunit/results82.xml --coverage-html build/coverage --coverage-clover build/clover.xml
+          environment:
+            XDEBUG_MODE: coverage
       - run: vendor/bin/php-coveralls -x build/clover.xml -o build/coveralls.json || true
       - run:
           name: Creating Dummy Artifacts

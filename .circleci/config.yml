@@ -39,8 +39,6 @@ jobs:
           environment:
             XDEBUG_MODE: coverage
       - run: vendor/bin/php-coveralls -x build/clover.xml -o build/coveralls.json || true
-       environment:
-            XDEBUG_MODE: coverage
       - store_test_results:
           path: build
   test-php82:

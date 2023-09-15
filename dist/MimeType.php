@@ -1580,7 +1580,8 @@ enum MimeType: string implements MimeTypeInterface
 			self::VideoXSmv => 'smv',
 			self::XConferenceXCooltalk => 'ice',
 
-			default => throw new RuntimeException('Unknown extension for type: ' . $this->value),
+			// Match arm is unreachable because previous comparison is always true
+            //default => throw new RuntimeException('Unknown extension for type: ' . $this->value),
 		};
 	}
 

@@ -110,6 +110,7 @@ enum TestMimeClass: string implements MimeTypeInterface
 		return match(\$this) {
 			self::ApplicationJson => 'json',
 			self::ImageJpeg => 'jpeg',
+
 		};
 	}
 

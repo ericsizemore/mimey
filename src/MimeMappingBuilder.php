@@ -61,14 +61,14 @@ use Throwable;
 class MimeMappingBuilder
 {
     /**
-     * @var array The mapping array.
+     * @var array<mixed> The mapping array.
      */
     protected array $mapping;
 
     /**
      * Create a new mapping builder.
      *
-     * @param array $mapping An associative array containing two entries. See `MimeTypes` constructor for details.
+     * @param array<mixed> $mapping An associative array containing two entries. See `MimeTypes` constructor for details.
      */
     private function __construct(array $mapping)
     {
@@ -105,7 +105,7 @@ class MimeMappingBuilder
     }
 
     /**
-     * @return array The mapping.
+     * @return array<mixed> The mapping.
      */
     public function getMapping(): array
     {

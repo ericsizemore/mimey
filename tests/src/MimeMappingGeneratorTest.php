@@ -35,7 +35,10 @@ class MimeMappingGeneratorTest extends TestCase
 		$this->assertEquals($expected, $mapping);
 	}
 
-	public function testGenerateJson(): void
+    /**
+     * @throws \JsonException
+     */
+    public function testGenerateJson(): void
 	{
 		$generator = new MimeMappingGenerator(<<<EOF
 #ignore

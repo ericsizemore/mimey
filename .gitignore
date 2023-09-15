@@ -2,3 +2,10 @@ vendor/
 build/
 composer.phar
 .phpunit.result.cache
+.idea/
+*.iws
+out/
+.idea_modules/
+atlassian-ide-plugin.xml
+.idea/php.xml
+.idea/mimey.iml

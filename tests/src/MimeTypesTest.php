@@ -30,6 +30,9 @@ class MimeTypesTest extends TestCase
 		]);
 	}
 
+    /**
+     * @return array<int, array<int, string>>
+     */
 	public static function getMimeTypeProvider(): array
 	{
 		return [
@@ -44,11 +47,14 @@ class MimeTypesTest extends TestCase
 	/**
 	 * @dataProvider getMimeTypeProvider
 	 */
-	public function testGetMimeType($expectedMimeType, $extension): void
+	public function testGetMimeType(string $expectedMimeType, string $extension): void
 	{
 		$this->assertEquals($expectedMimeType, $this->mime->getMimeType($extension));
 	}
 
+    /**
+     * @return array<int, array<int, string>>
+     */
 	public static function getExtensionProvider(): array
 	{
 		return [
@@ -62,11 +68,14 @@ class MimeTypesTest extends TestCase
 	/**
 	 * @dataProvider getExtensionProvider
 	 */
-	public function testGetExtension($expectedExtension, $mimeType): void
+	public function testGetExtension(string $expectedExtension, string $mimeType): void
 	{
 		$this->assertEquals($expectedExtension, $this->mime->getExtension($mimeType));
 	}
 
+    /**
+     * @return array<int, array<int, string>>
+     */
 	public static function getAllMimeTypesProvider(): array
 	{
 		return [
@@ -90,12 +99,18 @@ class MimeTypesTest extends TestCase
 
 	/**
 	 * @dataProvider getAllMimeTypesProvider
+     *
+     * @param array<int, array<int, string>>  $expectedMimeTypes
+     *
 	 */
-	public function testGetAllMimeTypes($expectedMimeTypes, $extension): void
+	public function testGetAllMimeTypes(array $expectedMimeTypes, string $extension): void
 	{
 		$this->assertEquals($expectedMimeTypes, $this->mime->getAllMimeTypes($extension));
 	}
 
+    /**
+     * @return array<int, array<int, string>>
+     */
 	public static function getAllExtensionsProvider(): array
 	{
 		return [
@@ -116,8 +131,10 @@ class MimeTypesTest extends TestCase
 
 	/**
 	 * @dataProvider getAllExtensionsProvider
+     *
+     * @param array<int, array<int, string>> $expectedExtensions
 	 */
-	public function testGetAllExtensions($expectedExtensions, $mimeType): void
+	public function testGetAllExtensions(array $expectedExtensions, string $mimeType): void
 	{
 		$this->assertEquals($expectedExtensions, $this->mime->getAllExtensions($mimeType));
 	}

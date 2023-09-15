@@ -61,13 +61,20 @@ use JsonException;
  */
 class MimeMappingGenerator
 {
+    /**
+     * @var string $mimeTypesText
+     */
     protected string $mimeTypesText;
+
+    /**
+     * @var ?array<mixed> $mapCache
+     */
     protected ?array $mapCache = null;
 
     /**
      * Create a new generator instance with the given mime.types text.
      *
-     * @param non-empty-string $mime_types_text The text from the mime.types file.
+     * @param non-empty-string $mimeTypesText The text from the mime.types file.
      */
     public function __construct(string $mimeTypesText)
     {

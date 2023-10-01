@@ -1579,6 +1579,7 @@ enum MimeType: string implements MimeTypeInterface
 			self::VideoXSgiMovie => 'movie',
 			self::VideoXSmv => 'smv',
 			self::XConferenceXCooltalk => 'ice',
+
 		};
 	}
 

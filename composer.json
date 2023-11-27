@@ -19,7 +19,7 @@
         }
     ],
     "require": {
-        "php": "^8.1 <8.3",
+        "php": "^8.1",
         "jetbrains/phpstorm-attributes": "^1.0"
     },
     "require-dev": {
@@ -42,7 +42,7 @@
         }
     },
     "scripts": {
-        "test": "phpunit",
+        "test": "phpunit --display-deprecations",
         "phpstan": "vendor/bin/phpstan analyse -c phpstan.neon",
         "generate-types": "@php bin/generate.php",
         "update-types": "@php bin/update.php"

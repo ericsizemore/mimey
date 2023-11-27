@@ -6,7 +6,7 @@
  * @author    Eric Sizemore <admin@secondversion.com>
  * @package   Mimey
  * @link      https://www.secondversion.com/
- * @version   1.0.0
+ * @version   1.1.0
  * @copyright (C) 2023 Eric Sizemore
  * @license   The MIT License (MIT)
  */
@@ -20,7 +20,7 @@ use JsonException;
  * @author    Eric Sizemore <admin@secondversion.com>
  * @package   Mimey
  * @link      https://www.secondversion.com/
- * @version   1.0.0
+ * @version   1.1.0
  * @copyright (C) 2023 Eric Sizemore
  * @license   The MIT License (MIT)
  *
@@ -84,7 +84,7 @@ class MimeMappingGenerator
     /**
      * Read the given mime.types text and return a mapping compatible with the MimeTypes class.
      *
-     * @return MimeTypeMap The mapping.
+     * @return MimeTypeMap|array<string, array<string, array<int, string>>> The mapping.
      */
     public function generateMapping(): array
     {
@@ -94,24 +94,24 @@ class MimeMappingGenerator
 
         $this->mapCache = [];
 
-        $lines = explode("\n", $this->mimeTypesText);
+        $lines = \explode("\n", $this->mimeTypesText);
 
         foreach ($lines AS $line) {
-            $line = trim(preg_replace('~\\#.*~', '', $line));
-            $parts = $line ? array_values(array_filter(explode("\t", $line))) : [];
+            $line = \trim(\preg_replace('~\\#.*~', '', $line));
+            $parts = $line ? \array_values(\array_filter(\explode("\t", $line))) : [];
 
-            if (count($parts) === 2) {
-                $mime = trim($parts[0]);
-                $extensions = explode(' ', $parts[1]);
+            if (\count($parts) === 2) {
+                $mime = \trim($parts[0]);
+                $extensions = \explode(' ', $parts[1]);
 
                 foreach ($extensions AS $extension) {
-                    $extension = trim($extension);
+                    $extension = \trim($extension);
 
                     if ($mime AND $extension) {
                         $this->mapCache['mimes'][$extension][] = $mime;
                         $this->mapCache['extensions'][$mime][] = $extension;
-                        $this->mapCache['mimes'][$extension] = array_unique($this->mapCache['mimes'][$extension]);
-                        $this->mapCache['extensions'][$mime] = array_unique($this->mapCache['extensions'][$mime]);
+                        $this->mapCache['mimes'][$extension] = \array_unique($this->mapCache['mimes'][$extension]);
+                        $this->mapCache['extensions'][$mime] = \array_unique($this->mapCache['extensions'][$mime]);
                     }
                 }
             }
@@ -125,13 +125,13 @@ class MimeMappingGenerator
      */
     public function generateJson(bool $minify = true): string
     {
-        return json_encode($this->generateMapping(), JSON_THROW_ON_ERROR | ($minify ? 0 : JSON_PRETTY_PRINT));
+        return \json_encode($this->generateMapping(), \JSON_THROW_ON_ERROR | ($minify ? 0 : \JSON_PRETTY_PRINT));
     }
 
     /**
      * @param non-empty-string $classname
      * @param non-empty-string $namespace
-     * @return non-empty-string
+     * @return non-empty-string|string
      */
     public function generatePhpEnum(string $classname = 'MimeType', string $namespace = __NAMESPACE__): string
     {
@@ -144,7 +144,7 @@ class MimeMappingGenerator
             'ext2type'        => '',
         ];
 
-        $stub = file_get_contents(dirname(__DIR__) . '/stubs/mimeType.php.stub');
+        $stub = \file_get_contents(\dirname(__DIR__) . '/stubs/mimeType.php.stub');
 
         $mapping = $this->generateMapping();
         $nameMap = [];
@@ -152,22 +152,26 @@ class MimeMappingGenerator
         foreach ($mapping['extensions'] AS $mime => $extensions) {
             $nameMap[$mime] = $this->convertMimeTypeToCaseName($mime);
 
-            $values['cases'] .= sprintf("\tcase %s = '%s';\n", $nameMap[$mime], $mime);
-            $values['type2ext'] .= sprintf("\t\t\tself::%s => '%s',\n", $nameMap[$mime], $extensions[0]);
+            $values['cases'] .= \sprintf("\tcase %s = '%s';\n", $nameMap[$mime], $mime);
+            $values['type2ext'] .= \sprintf("\t\t\tself::%s => '%s',\n", $nameMap[$mime], $extensions[0]);
         }
 
         foreach ($mapping['mimes'] AS $extension => $mimes) {
-            $values['ext2type'] .= sprintf("\t\t\t'%s' => self::%s,\n", $extension, $nameMap[$mimes[0]]);
+            $values['ext2type'] .= \sprintf("\t\t\t'%s' => self::%s,\n", $extension, $nameMap[$mimes[0]]);
         }
 
         foreach ($values AS $name => $value) {
-            $stub = str_replace("%$name%", $value, $stub);
+            $stub = \str_replace("%$name%", $value, $stub);
         }
         return $stub;
     }
 
+    /**
+     * @param non-empty-string $mimeType
+     * @return non-empty-string|string
+     */
     protected function convertMimeTypeToCaseName(string $mimeType): string
     {
-        return preg_replace('/([\/\-_+.]+)/', '', ucfirst(ucwords($mimeType, '/-_+.')));
+        return \preg_replace('/([\/\-_+.]+)/', '', \ucfirst(\ucwords($mimeType, '/-_+.')));
     }
 }

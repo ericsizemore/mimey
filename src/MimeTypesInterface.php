@@ -6,7 +6,7 @@
  * @author    Eric Sizemore <admin@secondversion.com>
  * @package   Mimey
  * @link      https://www.secondversion.com/
- * @version   1.0.0
+ * @version   1.1.0
  * @copyright (C) 2023 Eric Sizemore
  * @license   The MIT License (MIT)
  */
@@ -18,7 +18,7 @@ namespace Esi\Mimey;
  * @author    Eric Sizemore <admin@secondversion.com>
  * @package   Mimey
  * @link      https://www.secondversion.com/
- * @version   1.0.0
+ * @version   1.1.0
  * @copyright (C) 2023 Eric Sizemore
  * @license   The MIT License (MIT)
  *

@@ -6,7 +6,7 @@
  * @author    Eric Sizemore <admin@secondversion.com>
  * @package   Mimey
  * @link      https://www.secondversion.com/
- * @version   1.0.0
+ * @version   1.1.0
  * @copyright (C) 2023 Eric Sizemore
  * @license   The MIT License (MIT)
  */
@@ -23,7 +23,7 @@ use Throwable;
  * @author    Eric Sizemore <admin@secondversion.com>
  * @package   Mimey
  * @link      https://www.secondversion.com/
- * @version   1.0.0
+ * @version   1.1.0
  * @copyright (C) 2023 Eric Sizemore
  * @license   The MIT License (MIT)
  *
@@ -89,19 +89,19 @@ class MimeMappingBuilder
         $existingMimes = empty($this->mapping['mimes'][$extension]) ? [] : $this->mapping['mimes'][$extension];
 
         if ($prependExtension) {
-            array_unshift($existingExtensions, $extension);
+            \array_unshift($existingExtensions, $extension);
         } else {
             $existingExtensions[] = $extension;
         }
 
         if ($prependMime) {
-            array_unshift($existingMimes, $mime);
+            \array_unshift($existingMimes, $mime);
         } else {
             $existingMimes[] = $mime;
         }
 
-        $this->mapping['extensions'][$mime] = array_unique($existingExtensions);
-        $this->mapping['mimes'][$extension] = array_unique($existingMimes);
+        $this->mapping['extensions'][$mime] = \array_unique($existingExtensions);
+        $this->mapping['mimes'][$extension] = \array_unique($existingMimes);
     }
 
     /**
@@ -124,7 +124,7 @@ class MimeMappingBuilder
     {
         $mapping = $this->getMapping();
 
-        return json_encode($mapping, flags: JSON_THROW_ON_ERROR | ($pretty ? JSON_PRETTY_PRINT : 0));
+        return \json_encode($mapping, flags: \JSON_THROW_ON_ERROR | ($pretty ? \JSON_PRETTY_PRINT : 0));
     }
 
     /**
@@ -139,7 +139,7 @@ class MimeMappingBuilder
      */
     public function save(string $file, int $flags = 0, mixed $context = null): false|int
     {
-        return file_put_contents($file, $this->compile(), $flags, $context);
+        return \file_put_contents($file, $this->compile(), $flags, $context);
     }
 
     /**
@@ -149,7 +149,7 @@ class MimeMappingBuilder
      */
     public static function create(): MimeMappingBuilder
     {
-        return self::load(dirname(__DIR__) . '/dist/mime.types.min.json');
+        return self::load(\dirname(__DIR__) . '/dist/mime.types.min.json');
     }
 
     /**
@@ -162,9 +162,9 @@ class MimeMappingBuilder
     public static function load(string $file): MimeMappingBuilder
     {
         try {
-            $json = file_get_contents($file);
+            $json = \file_get_contents($file);
 
-            return new self(json_decode($json, true, flags: JSON_THROW_ON_ERROR));
+            return new self(\json_decode($json, true, flags: \JSON_THROW_ON_ERROR));
         } catch (Throwable $e) {
             throw new RuntimeException('Unable to parse built-in types at ' . $file, 0, $e);
         }

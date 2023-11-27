@@ -6,7 +6,7 @@
  * @author    Eric Sizemore <admin@secondversion.com>
  * @package   Mimey
  * @link      https://www.secondversion.com/
- * @version   1.0.0
+ * @version   1.1.0
  * @copyright (C) 2023 Eric Sizemore
  * @license   The MIT License (MIT)
  */
@@ -22,7 +22,7 @@ use Throwable;
  * @author    Eric Sizemore <admin@secondversion.com>
  * @package   Mimey
  * @link      https://www.secondversion.com/
- * @version   1.0.0
+ * @version   1.1.0
  * @copyright (C) 2023 Eric Sizemore
  * @license   The MIT License (MIT)
  *
@@ -150,11 +150,12 @@ class MimeTypes implements MimeTypesInterface
     protected static function getBuiltIn(): array
     {
         if (self::$builtIn === null) {
-            $builtInTypes = dirname(__DIR__) . '/dist/mime.types.min.json';
+            $builtInTypes = \dirname(__DIR__) . '/dist/mime.types.min.json';
 
             try {
-                $json = file_get_contents($builtInTypes);
-                self::$builtIn = json_decode($json, true, flags: JSON_THROW_ON_ERROR);
+                $json = \file_get_contents($builtInTypes);
+
+                self::$builtIn = \json_decode($json, true, flags: \JSON_THROW_ON_ERROR);
             } catch (Throwable $e) {
                 throw new RuntimeException('Failed to parse built-in mime types at $builtInTypes', 0, $e);
             }
@@ -171,12 +172,12 @@ class MimeTypes implements MimeTypesInterface
      */
     private function cleanInput(string $input): string
     {
-        $input = trim($input);
+        $input = \trim($input);
 
-        if (function_exists('mb_strtolower')) {
-            $input = mb_strtolower($input);
+        if (\function_exists('\\mb_strtolower')) {
+            $input = \mb_strtolower($input);
         } else {
-            $input = strtolower($input);
+            $input = \strtolower($input);
         }
         return $input;
     }

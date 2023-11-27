@@ -15,7 +15,9 @@ class MimeMappingBuilderTest extends TestCase
 		$builder->add('foo/bar', 'foobar');
 		$builder->add('foo/bar', 'bar');
 		$builder->add('foo/baz', 'foobaz');
+
 		$mime = new MimeTypes($builder->getMapping());
+
 		$this->assertEquals('bar', $mime->getExtension('foo/bar'));
 		$this->assertEquals(['bar', 'foobar'], $mime->getAllExtensions('foo/bar'));
 		$this->assertEquals('foobaz', $mime->getExtension('foo/baz'));
@@ -51,6 +53,7 @@ class MimeMappingBuilderTest extends TestCase
 		$builder = MimeMappingBuilder::blank();
 		$builder->add('foo/bar', 'foobar');
 		$builder->add('foo/bar', 'bar', false);
+
 		$mime = new MimeTypes($builder->getMapping());
 		$this->assertEquals('foobar', $mime->getExtension('foo/bar'));
 	}
@@ -60,6 +63,7 @@ class MimeMappingBuilderTest extends TestCase
 		$builder = MimeMappingBuilder::blank();
 		$builder->add('foo/bar', 'foobar');
 		$builder->add('foo/bar2', 'foobar', true, false);
+
 		$mime = new MimeTypes($builder->getMapping());
 		$this->assertEquals('foo/bar', $mime->getMimeType('foobar'));
 	}
@@ -74,19 +78,21 @@ class MimeMappingBuilderTest extends TestCase
 		$builder->add('foo/one', 'one1');
 		$builder->add('foo/two', 'two');
 		$builder->add('foo/two2', 'two');
-		$file = tempnam(sys_get_temp_dir(), 'mapping_test');
+
+		$file = \tempnam(\sys_get_temp_dir(), 'mapping_test');
 		$builder->save($file);
-		$mapping_included = json_decode(file_get_contents($file), true, flags: JSON_THROW_ON_ERROR);
+
+		$mapping_included = \json_decode(\file_get_contents($file), true, flags: \JSON_THROW_ON_ERROR);
 		$this->assertEquals($builder->getMapping(), $mapping_included);
 		$builder2 = MimeMappingBuilder::load($file);
-		unlink($file);
+		\unlink($file);
 		$this->assertEquals($builder->getMapping(), $builder2->getMapping());
 	}
 
 	public function testLoadInvalid(): void
 	{
-		$file = tempnam(sys_get_temp_dir(), 'mapping_test');
-		file_put_contents($file, 'invalid json');
+		$file = \tempnam(\sys_get_temp_dir(), 'mapping_test');
+		\file_put_contents($file, 'invalid json');
 
 		$this->expectException(RuntimeException::class);
 

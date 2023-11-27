@@ -4,7 +4,8 @@ namespace Esi\Mimey\Tests;
 
 use Esi\Mimey\MimeTypes;
 use PHPUnit\Framework\TestCase;
-use ReflectionProperty;
+//use ReflectionProperty;
+use ReflectionClass;
 use RuntimeException;
 
 class MimeTypesTest extends TestCase
@@ -168,20 +169,22 @@ class MimeTypesTest extends TestCase
 
 	public function testInvalidBuiltInMapping(): void
 	{
-		$original = dirname(__DIR__, 2) . '/dist/mime.types.min.json';
-		$backup = dirname(__DIR__, 2) . '/dist/mime.types.min.json.backup';
-		rename($original, $backup);
-		file_put_contents($original, 'invalid json');
+		$original = \dirname(__DIR__, 2) . '/dist/mime.types.min.json';
+		$backup = \dirname(__DIR__, 2) . '/dist/mime.types.min.json.backup';
+		\rename($original, $backup);
+		\file_put_contents($original, 'invalid json');
 
-		$property = new ReflectionProperty(MimeTypes::class, 'builtIn');
-		$property->setValue(null);
+		//$property = new ReflectionProperty(MimeTypes::class, 'builtIn');
+		//$property->setValue(null);
+		$class = new ReflectionClass(MimeTypes::class);
+		$class->setStaticPropertyValue('builtIn', null);
 
 		try {
 			$this->expectException(RuntimeException::class);
 			new MimeTypes();
 		} finally {
-			unlink($original);
-			rename($backup, $original);
+			\unlink($original);
+			\rename($backup, $original);
 		}
 	}
 }

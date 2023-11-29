@@ -75,7 +75,7 @@ class MimeTypesTest extends TestCase
 	}
 
     /**
-     * @return array<int, array<int, string>>
+     * @return array<int, array<int, array<int, string>|string>>
      */
 	public static function getAllMimeTypesProvider(): array
 	{
@@ -101,7 +101,7 @@ class MimeTypesTest extends TestCase
 	/**
 	 * @dataProvider getAllMimeTypesProvider
      *
-     * @param array<int, array<int, string>>  $expectedMimeTypes
+     * @param array<int, array<int, array<int, string>|string>>  $expectedMimeTypes
      *
 	 */
 	public function testGetAllMimeTypes(array $expectedMimeTypes, string $extension): void
@@ -110,7 +110,7 @@ class MimeTypesTest extends TestCase
 	}
 
     /**
-     * @return array<int, array<int, string>>
+     * @return array<int, array<int, array<int, string>|string>>
      */
 	public static function getAllExtensionsProvider(): array
 	{
@@ -133,7 +133,7 @@ class MimeTypesTest extends TestCase
 	/**
 	 * @dataProvider getAllExtensionsProvider
      *
-     * @param array<int, array<int, string>> $expectedExtensions
+     * @param array<int, array<int, array<int, string>|string>> $expectedExtensions
 	 */
 	public function testGetAllExtensions(array $expectedExtensions, string $mimeType): void
 	{

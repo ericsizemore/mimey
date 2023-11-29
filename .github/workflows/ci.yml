@@ -6,6 +6,7 @@ on:
   pull_request:
     branches: [ develop ]
 
+# Is it overkill to run PHPStan using different PHP versions? Probably :)
 jobs:
   phpstan:
     name: PHPStan Static Analysis  ${{ matrix.php }}
@@ -41,7 +42,10 @@ jobs:
       - name: Install dependencies
         run: composer install --prefer-dist --no-progress
 
-      - name: Analysis
-        uses: php-actions/phpstan@v3
-        with:
-          path: src/ dist/ bin/
+      - name: Run PHPStan
+        run: composer run-script phpstan
+
+      #- name: Analysis
+      #  uses: php-actions/phpstan@v3
+      #  with:
+      #    path: src/ dist/ bin/

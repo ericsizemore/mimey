@@ -41,6 +41,12 @@
             "Esi\\Mimey\\Tests\\": "tests/src/"
         }
     },
+	"support": {
+		"issues": "https://github.com/ericsizemore/mimey/issues",
+		"forum": "https://github.com/ericsizemore/mimey/discussions",
+		"source": "https://github.com/ericsizemore/mimey/tree/develop/src",
+		"security": "https://github.com/ericsizemore/mimey/security/policy"
+	},
     "scripts": {
         "test": "phpunit --display-deprecations",
         "phpstan": "vendor/bin/phpstan analyse -c phpstan.neon",

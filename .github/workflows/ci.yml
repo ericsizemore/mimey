@@ -38,6 +38,9 @@ jobs:
           restore-keys: |
             ${{ runner.os }}-composer-
 
+      - name: Install dependencies
+        run: composer install --prefer-dist --no-progress
+
       - name: Analysis
         uses: php-actions/phpstan@v3
         with:

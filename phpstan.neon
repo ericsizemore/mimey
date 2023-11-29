@@ -1,6 +1,6 @@
 includes:
     - vendor/phpstan/phpstan-phpunit/extension.neon
-    - phar://phpstan.phar/conf/bleedingEdge.neo
+    - vendor/phpstan/phpstan/conf/bleedingEdge.neo
 
 parameters:
     level: 6

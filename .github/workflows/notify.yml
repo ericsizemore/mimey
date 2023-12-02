@@ -7,6 +7,7 @@ on:
 
 jobs:
   setup:
+    permissions: read-all
     runs-on: ubuntu-latest
     steps:
       - uses: nearform-actions/github-action-notify-twitter@v1.1.5

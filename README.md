@@ -3,13 +3,17 @@ Mimey
 
 PHP package for converting file extensions to MIME types and vice versa.
 
+[![FOSSA Status](https://app.fossa.com/api/projects/git%2Bgithub.com%2Fericsizemore%2Fmimey.svg?type=shield)](https://app.fossa.com/projects/git%2Bgithub.com%2Fericsizemore%2Fmimey?ref=badge_shield)
+[![Build Status](https://scrutinizer-ci.com/g/ericsizemore/mimey/badges/build.png?b=develop)](https://scrutinizer-ci.com/g/ericsizemore/mimey/build-status/develop)
+[![Code Coverage](https://scrutinizer-ci.com/g/ericsizemore/mimey/badges/coverage.png?b=develop)](https://scrutinizer-ci.com/g/ericsizemore/mimey/?branch=develop)
+[![Scrutinizer Code Quality](https://scrutinizer-ci.com/g/ericsizemore/mimey/badges/quality-score.png?b=develop)](https://scrutinizer-ci.com/g/ericsizemore/mimey/?branch=develop)
 [![PHPStan](https://github.com/ericsizemore/mimey/actions/workflows/ci.yml/badge.svg)](https://github.com/ericsizemore/mimey/actions/workflows/ci.yml)
 [![Tests](https://github.com/ericsizemore/mimey/actions/workflows/tests.yml/badge.svg)](https://github.com/ericsizemore/mimey/actions/workflows/tests.yml)
 [![Psalm Security Scan](https://github.com/ericsizemore/mimey/actions/workflows/psalm.yml/badge.svg)](https://github.com/ericsizemore/mimey/actions/workflows/psalm.yml)
+
 [![Latest Stable Version](https://img.shields.io/packagist/v/esi/mimey.svg)](https://packagist.org/packages/esi/mimey)
 [![Downloads per Month](https://img.shields.io/packagist/dm/esi/mimey.svg)](https://packagist.org/packages/esi/mimey)
 [![License](https://img.shields.io/packagist/l/esi/mimey.svg)](https://packagist.org/packages/esi/mimey)
-[![FOSSA Status](https://app.fossa.com/api/projects/git%2Bgithub.com%2Fericsizemore%2Fmimey.svg?type=shield)](https://app.fossa.com/projects/git%2Bgithub.com%2Fericsizemore%2Fmimey?ref=badge_shield)
 
 This package uses [httpd]'s [mime.types] to generate a mapping of file extension to MIME type and the other way around. Click here to view the changelog from their svn: [changelog]
 

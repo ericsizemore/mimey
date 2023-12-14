@@ -6,7 +6,7 @@
  * @author    Eric Sizemore <admin@secondversion.com>
  * @package   Mimey
  * @link      https://www.secondversion.com/
- * @version   1.1.0
+ * @version   1.1.1
  * @copyright (C) 2023 Eric Sizemore
  * @license   The MIT License (MIT)
  */
@@ -22,7 +22,7 @@ use Throwable;
  * @author    Eric Sizemore <admin@secondversion.com>
  * @package   Mimey
  * @link      https://www.secondversion.com/
- * @version   1.1.0
+ * @version   1.1.1
  * @copyright (C) 2023 Eric Sizemore
  * @license   The MIT License (MIT)
  *
@@ -57,7 +57,10 @@ use Throwable;
 /**
  * Class for converting MIME types to file extensions and vice versa.
  *
- * @psalm-type MimeTypeMap = array{mimes: array<non-empty-string, list<non-empty-string>>, extensions: array<non-empty-string, list<non-empty-string>>}
+ * This psalm-type looks gnarly, but it covers just about everything. Will be worked on further. It makes 
+ * PHPStan happy for now.
+ *
+ * @psalm-type MimeTypeMap = array{mimes: array<non-empty-string, list<non-empty-string>>|non-empty-array<string, array<int<0, max>, string>>, extensions: array<non-empty-string, list<non-empty-string>>|non-empty-array<string, array<int<0, max>, string>>|array<string, array<int<0, max>, string>>}
  */
 class MimeTypes implements MimeTypesInterface
 {
@@ -76,9 +79,10 @@ class MimeTypes implements MimeTypesInterface
      *
      * If no mappings are defined, they will default to the ones included with this package.
      *
-     * @param MimeTypeMap|null $mapping An associative array containing two entries.
-     * Entry "mimes" being an associative array of extension to array of MIME types.
-     * Entry "extensions" being an associative array of MIME type to array of extensions.
+     * @param  MimeTypeMap|null  $mapping  An associative array containing two entries.
+     *                                     Entry "mimes" being an associative array of extension to 
+     *                                     array of MIME types. Entry "extensions" being an associative 
+     *                                     array of MIME type to array of extensions.
      * Example:
      * <code>
      * [
@@ -105,41 +109,41 @@ class MimeTypes implements MimeTypesInterface
 	}
 
     #[Pure]
-    public function getMimeType($extension): ?string
+    public function getMimeType(string $extension): ?string
     {
         $extension = $this->cleanInput($extension);
 
         if (!empty($this->mapping['mimes'][$extension])) {
-            return $this->mapping['mimes'][$extension][0];
+            return $this->mapping['mimes'][$extension][0]; /** @phpstan-ignore-line */
         }
         return null;
     }
 
     #[Pure]
-    public function getExtension($mimeType): ?string
+    public function getExtension(string $mimeType): ?string
     {
         $mimeType = $this->cleanInput($mimeType);
 
         if (!empty($this->mapping['extensions'][$mimeType])) {
-            return $this->mapping['extensions'][$mimeType][0];
+            return $this->mapping['extensions'][$mimeType][0]; /** @phpstan-ignore-line */
         }
         return null;
     }
 
     #[Pure]
-    public function getAllMimeTypes($extension): array
+    public function getAllMimeTypes(string $extension): array
     {
         $extension = $this->cleanInput($extension);
 
-        return $this->mapping['mimes'][$extension] ?? [];
+        return $this->mapping['mimes'][$extension] ?? []; /** @phpstan-ignore-line */
     }
 
     #[Pure]
-    public function getAllExtensions($mimeType): array
+    public function getAllExtensions(string $mimeType): array
     {
         $mimeType = $this->cleanInput($mimeType);
 
-        return $this->mapping['extensions'][$mimeType] ?? [];
+        return $this->mapping['extensions'][$mimeType] ?? []; /** @phpstan-ignore-line */
     }
 
     /**
@@ -153,9 +157,13 @@ class MimeTypes implements MimeTypesInterface
             $builtInTypes = \dirname(__DIR__) . '/dist/mime.types.min.json';
 
             try {
+                /** @var string $json **/
                 $json = \file_get_contents($builtInTypes);
 
-                self::$builtIn = \json_decode($json, true, flags: \JSON_THROW_ON_ERROR);
+                /** @var MimeTypeMap $json **/
+                $json = \json_decode($json, true, flags: \JSON_THROW_ON_ERROR);
+
+                self::$builtIn = $json;
             } catch (Throwable $e) {
                 throw new RuntimeException('Failed to parse built-in mime types at $builtInTypes', 0, $e);
             }
@@ -174,11 +182,13 @@ class MimeTypes implements MimeTypesInterface
     {
         $input = \trim($input);
 
-        if (\function_exists('\\mb_strtolower')) {
+        //@codeCoverageIgnoreStart
+        if (\function_exists('mb_strtolower')) {
             $input = \mb_strtolower($input);
         } else {
             $input = \strtolower($input);
         }
+        //@codeCoverageIgnoreEnd
         return $input;
     }
 }

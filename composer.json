@@ -5,17 +5,18 @@
     "type": "library",
     "authors": [
         {
+            "name": "Eric Sizemore",
+            "email": "me@ericsizemore.com",
+            "homepage": "https://www.ericsizemore.com",
+            "role": "Developer"
+        },
+        {
             "name": "Ralph Khattar",
             "email": "ralph.khattar@gmail.com"
         },
         {
             "name": "Ricardo Boss",
             "email": "contact@ricardoboss.de"
-        },
-        {
-            "name": "Eric Sizemore",
-            "email": "me@ericsizemore.com",
-            "homepage": "https://www.ericsizemore.com"
         }
     ],
     "require": {
@@ -23,7 +24,6 @@
         "jetbrains/phpstorm-attributes": "^1.0"
     },
     "require-dev": {
-        "php-coveralls/php-coveralls": "^2.6",
         "phpstan/phpstan": "^1.10",
         "phpstan/phpstan-phpunit": "^1.3",
         "phpunit/phpunit": "^10.2"
@@ -48,9 +48,15 @@
 		"security": "https://github.com/ericsizemore/mimey/security/policy"
 	},
     "scripts": {
-        "test": "phpunit --display-deprecations",
+        "test": "phpunit --coverage-clover=build/logs/clover.xml --coverage-html=build/logs/coverage --display-deprecations --display-warnings --globals-backup",
         "phpstan": "vendor/bin/phpstan analyse -c phpstan.neon",
         "generate-types": "@php bin/generate.php",
         "update-types": "@php bin/update.php"
+    },
+    "minimum-stability": "dev",
+    "extra": {
+        "branch-alias": {
+            "dev-develop": "1.0-dev"
+        }
     }
 }

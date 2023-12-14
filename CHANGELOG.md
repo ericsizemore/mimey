@@ -1,3 +1,10 @@
+### 1.1.1 (2023-12-14)
+
+  * Added Scrutinizer to workflow
+  * Updating codebase based on PHPStan level 9, strict w/bleeding edge. A work in progress
+  * Updated docs throughout
+  * First pass and attempt at adhering to PSR-12, PSR-5, and PSR-19
+
 ### 1.1.0 (2023-11-27)
 
   * Updated composer.json to remove the restriction on PHP 8.3

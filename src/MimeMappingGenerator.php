@@ -6,7 +6,7 @@
  * @author    Eric Sizemore <admin@secondversion.com>
  * @package   Mimey
  * @link      https://www.secondversion.com/
- * @version   1.1.0
+ * @version   1.1.1
  * @copyright (C) 2023 Eric Sizemore
  * @license   The MIT License (MIT)
  */
@@ -20,7 +20,7 @@ use JsonException;
  * @author    Eric Sizemore <admin@secondversion.com>
  * @package   Mimey
  * @link      https://www.secondversion.com/
- * @version   1.1.0
+ * @version   1.1.1
  * @copyright (C) 2023 Eric Sizemore
  * @license   The MIT License (MIT)
  *
@@ -57,24 +57,31 @@ use JsonException;
  *
  * Reads text in the format of httpd's mime.types and generates a PHP array containing the mappings.
  *
- * @psalm-type MimeTypeMap = array{mimes: array<non-empty-string, list<non-empty-string>>, extensions: array<non-empty-string, list<non-empty-string>>}
+ * The psalm-type's looks gnarly, but it covers just about everything. Will be worked on further. It makes 
+ * PHPStan happy for now.
+ *
+ * @psalm-type MimeTypeMap = array{mimes: array<non-empty-string, list<non-empty-string>>|non-empty-array<string, array<int<0, max>, string>>, extensions: array<non-empty-string, list<non-empty-string>>|non-empty-array<string, array<int<0, max>, string>>|array<string, array<int<0, max>, string>>}
+ *
+ * @psalm-type MimeTypeMapTwo =  array{mimes: non-empty-array<non-falsy-string, non-empty-array<0, non-falsy-string>>, extensions?: array<string, array<int<0, max>, string>>}
+ *
+ * @psalm-type MimeTypeMapThree = array{mimes?: array<string, array<int<0, max>, string>>, extensions: non-empty-array<non-falsy-string, non-empty-array<0, non-falsy-string>>}
  */
 class MimeMappingGenerator
 {
     /**
-     * @var string $mimeTypesText
+     * @var  string  $mimeTypesText
      */
     protected string $mimeTypesText;
 
     /**
-     * @var ?array<mixed> $mapCache
+     * @var  MimeTypeMap|MimeTypeMapTwo|MimeTypeMapThree|array{}  $mapCache
      */
-    protected ?array $mapCache = null;
+    protected array $mapCache = [];
 
     /**
      * Create a new generator instance with the given mime.types text.
      *
-     * @param non-empty-string $mimeTypesText The text from the mime.types file.
+     * @param  non-empty-string  $mimeTypesText  The text from the mime.types file.
      */
     public function __construct(string $mimeTypesText)
     {
@@ -84,30 +91,31 @@ class MimeMappingGenerator
     /**
      * Read the given mime.types text and return a mapping compatible with the MimeTypes class.
      *
-     * @return MimeTypeMap|array<string, array<string, array<int, string>>> The mapping.
+     * @return  MimeTypeMap|MimeTypeMapTwo|MimeTypeMapThree|array{}  The mapping.
      */
     public function generateMapping(): array
     {
-        if ($this->mapCache !== null) {
+        if ($this->mapCache !== []) {
             return $this->mapCache;
         }
 
-        $this->mapCache = [];
-
         $lines = \explode("\n", $this->mimeTypesText);
 
-        foreach ($lines AS $line) {
-            $line = \trim(\preg_replace('~\\#.*~', '', $line));
+        foreach ($lines as $line) {
+            /** @var string $line **/
+            $line = \preg_replace('~\\#.*~', '', $line);
+            $line = \trim($line);
+
             $parts = $line ? \array_values(\array_filter(\explode("\t", $line))) : [];
 
             if (\count($parts) === 2) {
                 $mime = \trim($parts[0]);
                 $extensions = \explode(' ', $parts[1]);
 
-                foreach ($extensions AS $extension) {
+                foreach ($extensions as $extension) {
                     $extension = \trim($extension);
 
-                    if ($mime AND $extension) {
+                    if ($mime && $extension) {
                         $this->mapCache['mimes'][$extension][] = $mime;
                         $this->mapCache['extensions'][$mime][] = $extension;
                         $this->mapCache['mimes'][$extension] = \array_unique($this->mapCache['mimes'][$extension]);
@@ -120,7 +128,11 @@ class MimeMappingGenerator
     }
 
     /**
-     * @return non-empty-string
+     * Generate the JSON from the mapCache.
+     *
+     * @param   bool              $minify  Whether to minify the generated JSON
+     * @return  non-empty-string
+     *
      * @throws JsonException
      */
     public function generateJson(bool $minify = true): string
@@ -129,9 +141,11 @@ class MimeMappingGenerator
     }
 
     /**
-     * @param non-empty-string $classname
-     * @param non-empty-string $namespace
-     * @return non-empty-string|string
+     * Generates the PHP Enum found in `dist`
+     *
+     * @param   non-empty-string         $classname
+     * @param   non-empty-string         $namespace
+     * @return  non-empty-string|string
      */
     public function generatePhpEnum(string $classname = 'MimeType', string $namespace = __NAMESPACE__): string
     {
@@ -144,34 +158,36 @@ class MimeMappingGenerator
             'ext2type'        => '',
         ];
 
+        /** @var string $stub **/
         $stub = \file_get_contents(\dirname(__DIR__) . '/stubs/mimeType.php.stub');
 
         $mapping = $this->generateMapping();
         $nameMap = [];
 
-        foreach ($mapping['extensions'] AS $mime => $extensions) {
+        foreach ($mapping['extensions'] as $mime => $extensions) { /** @phpstan-ignore-line */
             $nameMap[$mime] = $this->convertMimeTypeToCaseName($mime);
 
-            $values['cases'] .= \sprintf("\tcase %s = '%s';\n", $nameMap[$mime], $mime);
-            $values['type2ext'] .= \sprintf("\t\t\tself::%s => '%s',\n", $nameMap[$mime], $extensions[0]);
+            $values['cases'] .= \sprintf("    case %s = '%s';\n", $nameMap[$mime], $mime);
+            $values['type2ext'] .= \sprintf("            self::%s => '%s',\n", $nameMap[$mime], $extensions[0]);
         }
 
-        foreach ($mapping['mimes'] AS $extension => $mimes) {
-            $values['ext2type'] .= \sprintf("\t\t\t'%s' => self::%s,\n", $extension, $nameMap[$mimes[0]]);
+        foreach ($mapping['mimes'] as $extension => $mimes) { /** @phpstan-ignore-line */
+            $values['ext2type'] .= \sprintf("            '%s' => self::%s,\n", $extension, $nameMap[$mimes[0]]);
         }
 
-        foreach ($values AS $name => $value) {
+        foreach ($values as $name => $value) {
             $stub = \str_replace("%$name%", $value, $stub);
         }
         return $stub;
     }
 
     /**
-     * @param non-empty-string $mimeType
+     * @param non-empty-string|string $mimeType
      * @return non-empty-string|string
      */
     protected function convertMimeTypeToCaseName(string $mimeType): string
     {
+        /** @phpstan-ignore-next-line */
         return \preg_replace('/([\/\-_+.]+)/', '', \ucfirst(\ucwords($mimeType, '/-_+.')));
     }
 }

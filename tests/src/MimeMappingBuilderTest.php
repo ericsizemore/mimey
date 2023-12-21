@@ -12,10 +12,20 @@
  */
 namespace Esi\Mimey\Tests;
 
+// Core classes
 use Esi\Mimey\MimeTypes;
 use Esi\Mimey\MimeMappingBuilder;
+
+// PHPUnit
 use PHPUnit\Framework\TestCase;
-use RuntimeException;
+use PHPUnit\Framework\Attributes\CoversClass;
+
+// Exceptions
+use JsonException, RuntimeException;
+
+// Functions & constants
+use function tempnam, sys_get_temp_dir, file_get_contents, file_put_contents, json_decode, unlink;
+use const JSON_THROW_ON_ERROR;
 
 /**
  * Mimey - PHP package for converting file extensions to MIME types and vice versa.
@@ -54,6 +64,7 @@ use RuntimeException;
  * Elephox\Mimey is a fork of ralouphie/mimey (https://github.com/ralouphie/mimey) which is:
  *     Copyright (c) 2016 Ralph Khattar
  */
+#[CoversClass(MimeMappingBuilder::class)]
 class MimeMappingBuilderTest extends TestCase
 {
     /**
@@ -68,16 +79,16 @@ class MimeMappingBuilderTest extends TestCase
 
         $mime = new MimeTypes($builder->getMapping());
 
-        $this->assertEquals('bar', $mime->getExtension('foo/bar'));
-        $this->assertEquals(['bar', 'foobar'], $mime->getAllExtensions('foo/bar'));
-        $this->assertEquals('foobaz', $mime->getExtension('foo/baz'));
-        $this->assertEquals(['foobaz'], $mime->getAllExtensions('foo/baz'));
-        $this->assertEquals('foo/bar', $mime->getMimeType('foobar'));
-        $this->assertEquals(['foo/bar'], $mime->getAllMimeTypes('foobar'));
-        $this->assertEquals('foo/bar', $mime->getMimeType('bar'));
-        $this->assertEquals(['foo/bar'], $mime->getAllMimeTypes('bar'));
-        $this->assertEquals('foo/baz', $mime->getMimeType('foobaz'));
-        $this->assertEquals(['foo/baz'], $mime->getAllMimeTypes('foobaz'));
+        self::assertEquals('bar', $mime->getExtension('foo/bar'));
+        self::assertEquals(['bar', 'foobar'], $mime->getAllExtensions('foo/bar'));
+        self::assertEquals('foobaz', $mime->getExtension('foo/baz'));
+        self::assertEquals(['foobaz'], $mime->getAllExtensions('foo/baz'));
+        self::assertEquals('foo/bar', $mime->getMimeType('foobar'));
+        self::assertEquals(['foo/bar'], $mime->getAllMimeTypes('foobar'));
+        self::assertEquals('foo/bar', $mime->getMimeType('bar'));
+        self::assertEquals(['foo/bar'], $mime->getAllMimeTypes('bar'));
+        self::assertEquals('foo/baz', $mime->getMimeType('foobaz'));
+        self::assertEquals(['foo/baz'], $mime->getAllMimeTypes('foobaz'));
     }
 
     /**
@@ -88,20 +99,20 @@ class MimeMappingBuilderTest extends TestCase
         $builder = MimeMappingBuilder::create();
         $mime1 = new MimeTypes($builder->getMapping());
 
-        $this->assertEquals('json', $mime1->getExtension('application/json'));
-        $this->assertEquals('application/json', $mime1->getMimeType('json'));
+        self::assertEquals('json', $mime1->getExtension('application/json'));
+        self::assertEquals('application/json', $mime1->getMimeType('json'));
 
         $builder->add('application/json', 'mycustomjson');
         $mime2 = new MimeTypes($builder->getMapping());
 
-        $this->assertEquals('mycustomjson', $mime2->getExtension('application/json'));
-        $this->assertEquals('application/json', $mime2->getMimeType('json'));
+        self::assertEquals('mycustomjson', $mime2->getExtension('application/json'));
+        self::assertEquals('application/json', $mime2->getMimeType('json'));
 
         $builder->add('application/mycustomjson', 'json');
         $mime3 = new MimeTypes($builder->getMapping());
 
-        $this->assertEquals('mycustomjson', $mime3->getExtension('application/json'));
-        $this->assertEquals('application/mycustomjson', $mime3->getMimeType('json'));
+        self::assertEquals('mycustomjson', $mime3->getExtension('application/json'));
+        self::assertEquals('application/mycustomjson', $mime3->getMimeType('json'));
     }
 
     /**
@@ -114,7 +125,7 @@ class MimeMappingBuilderTest extends TestCase
             $builder->add('foo/bar', 'bar', false);
 
         $mime = new MimeTypes($builder->getMapping());
-        $this->assertEquals('foobar', $mime->getExtension('foo/bar'));
+        self::assertEquals('foobar', $mime->getExtension('foo/bar'));
     }
 
     /**
@@ -127,18 +138,18 @@ class MimeMappingBuilderTest extends TestCase
             $builder->add('foo/bar2', 'foobar', true, false);
 
         $mime = new MimeTypes($builder->getMapping());
-        $this->assertEquals('foo/bar', $mime->getMimeType('foobar'));
+        self::assertEquals('foo/bar', $mime->getMimeType('foobar'));
     }
 
     /**
      * Test saving the mapping to a file.
      *
-     * @throws \JsonException
+     * @throws JsonException
      */
     public function testSave(): void
     {
         /** @var string $file **/
-        $file = \tempnam(\sys_get_temp_dir(), 'mapping_test');
+        $file = tempnam(sys_get_temp_dir(), 'mapping_test');
 
         $builder = MimeMappingBuilder::blank();
             $builder->add('foo/one', 'one');
@@ -148,30 +159,30 @@ class MimeMappingBuilderTest extends TestCase
         $builder->save($file);
 
         /** @var string $json **/
-        $json = \file_get_contents($file);
+        $json = file_get_contents($file);
 
-        $mappingIncluded = \json_decode($json, true, flags: \JSON_THROW_ON_ERROR);
-        $this->assertEquals($builder->getMapping(), $mappingIncluded);
+        $mappingIncluded = json_decode($json, true, flags: JSON_THROW_ON_ERROR);
+        self::assertEquals($builder->getMapping(), $mappingIncluded);
 
         $builder2 = MimeMappingBuilder::load($file);
 
-        \unlink($file);
+        unlink($file);
 
-        $this->assertEquals($builder->getMapping(), $builder2->getMapping());
+        self::assertEquals($builder->getMapping(), $builder2->getMapping());
     }
 
     /**
      * Test loading a mapping file that contains invalid JSON.
      *
-     * @throws \JsonException
+     * @throws JsonException
      */
     public function testLoadInvalid(): void
     {
        /** @var string $file **/
-        $file = \tempnam(\sys_get_temp_dir(), 'mapping_test');
-        \file_put_contents($file, 'invalid json');
+        $file = tempnam(sys_get_temp_dir(), 'mapping_test');
+        file_put_contents($file, 'invalid json');
 
-        $this->expectException(RuntimeException::class);
+        self::expectException(RuntimeException::class);
         MimeMappingBuilder::load($file);
     }
 }

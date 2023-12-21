@@ -12,10 +12,21 @@
  */
 namespace Esi\Mimey\Tests;
 
+// Core classes
 use Esi\Mimey\MimeTypes;
+
+// PHPUnit
 use PHPUnit\Framework\TestCase;
+use PHPUnit\Framework\Attributes\CoversClass;
+use PHPUnit\Framework\Attributes\DataProvider;
+
 use ReflectionClass;
+
+// Exceptions
 use RuntimeException;
+
+// Functions
+use function dirname, rename, file_put_contents, unlink;
 
 /**
  * Mimey - PHP package for converting file extensions to MIME types and vice versa.
@@ -54,6 +65,7 @@ use RuntimeException;
  * Elephox\Mimey is a fork of ralouphie/mimey (https://github.com/ralouphie/mimey) which is:
  *     Copyright (c) 2016 Ralph Khattar
  */
+#[CoversClass(MimeTypes::class)]
 class MimeTypesTest extends TestCase
 {
     /**
@@ -104,11 +116,13 @@ class MimeTypesTest extends TestCase
     /**
      * Tests retrieving a mime type based on extension.
      *
-     * @dataProvider getMimeTypeProvider
+     * @param string $expectedMimeType
+     * @param string $extension
      */
+    #[DataProvider('getMimeTypeProvider')]  
     public function testGetMimeType(string $expectedMimeType, string $extension): void
     {
-        $this->assertEquals($expectedMimeType, $this->mime->getMimeType($extension));
+        self::assertEquals($expectedMimeType, $this->mime->getMimeType($extension));
     }
 
     /**
@@ -129,11 +143,13 @@ class MimeTypesTest extends TestCase
     /**
      * Tests retrieving an extension based on mime type.
      *
-     * @dataProvider getExtensionProvider
+     * @param string $expectedExtension
+     * @param string $mimeType
      */
+    #[DataProvider('getExtensionProvider')]
     public function testGetExtension(string $expectedExtension, string $mimeType): void
     {
-        $this->assertEquals($expectedExtension, $this->mime->getExtension($mimeType));
+        self::assertEquals($expectedExtension, $this->mime->getExtension($mimeType));
     }
 
     /**
@@ -165,14 +181,13 @@ class MimeTypesTest extends TestCase
     /**
      * Tests retrieving all mime types for a given extension.
      *
-     * @dataProvider getAllMimeTypesProvider
-     *
      * @param array<int, array<int, array<int, string>|string>>  $expectedMimeTypes
-     *
+     * @param string $extension
      */
+    #[DataProvider('getAllMimeTypesProvider')]
     public function testGetAllMimeTypes(array $expectedMimeTypes, string $extension): void
     {
-        $this->assertEquals($expectedMimeTypes, $this->mime->getAllMimeTypes($extension));
+        self::assertEquals($expectedMimeTypes, $this->mime->getAllMimeTypes($extension));
     }
 
     /**
@@ -201,13 +216,13 @@ class MimeTypesTest extends TestCase
     /**
      * Tests retrieving all extensions for a given mime type.
      *
-     * @dataProvider getAllExtensionsProvider
-     *
      * @param array<int, array<int, array<int, string>|string>> $expectedExtensions
+     * @param string $mimeType
      */
+    #[DataProvider('getAllExtensionsProvider')]
     public function testGetAllExtensions(array $expectedExtensions, string $mimeType): void
     {
-        $this->assertEquals($expectedExtensions, $this->mime->getAllExtensions($mimeType));
+        self::assertEquals($expectedExtensions, $this->mime->getAllExtensions($mimeType));
     }
 
     /**
@@ -215,7 +230,7 @@ class MimeTypesTest extends TestCase
      */
     public function testGetMimeTypeUndefined(): void
     {
-        $this->assertNull($this->mime->getMimeType('undefined'));
+        self::assertNull($this->mime->getMimeType('undefined'));
     }
 
     /**
@@ -223,7 +238,7 @@ class MimeTypesTest extends TestCase
      */
     public function testGetExtensionUndefined(): void
     {
-        $this->assertNull($this->mime->getExtension('undefined'));
+        self::assertNull($this->mime->getExtension('undefined'));
     }
 
     /**
@@ -231,7 +246,7 @@ class MimeTypesTest extends TestCase
      */
     public function testGetAllMimeTypesUndefined(): void
     {
-        $this->assertEquals([], $this->mime->getAllMimeTypes('undefined'));
+        self::assertEquals([], $this->mime->getAllMimeTypes('undefined'));
     }
 
     /**
@@ -239,7 +254,7 @@ class MimeTypesTest extends TestCase
      */
     public function testGetAllExtensionsUndefined(): void
     {
-        $this->assertEquals([], $this->mime->getAllExtensions('undefined'));
+        self::assertEquals([], $this->mime->getAllExtensions('undefined'));
     }
 
     /**
@@ -248,30 +263,30 @@ class MimeTypesTest extends TestCase
     public function testBuiltInMapping(): void
     {
         $mime = new MimeTypes();
-        $this->assertEquals('json', $mime->getExtension('application/json'));
-        $this->assertEquals('application/json', $mime->getMimeType('json'));
+        self::assertEquals('json', $mime->getExtension('application/json'));
+        self::assertEquals('application/json', $mime->getMimeType('json'));
     }
 
     /**
-     * Test behavior basedon invalid built in mapping.
+     * Test behavior based on invalid built in mapping.
      */
     public function testInvalidBuiltInMapping(): void
     {
-        $original = \dirname(__DIR__, 2) . '/dist/mime.types.min.json';
-        $backup = \dirname(__DIR__, 2) . '/dist/mime.types.min.json.backup';
+        $original = dirname(__DIR__, 2) . '/dist/mime.types.min.json';
+        $backup = dirname(__DIR__, 2) . '/dist/mime.types.min.json.backup';
 
-        \rename($original, $backup);
-        \file_put_contents($original, 'invalid json');
+        rename($original, $backup);
+        file_put_contents($original, 'invalid json');
 
         $class = new ReflectionClass(MimeTypes::class);
         $class->setStaticPropertyValue('builtIn', null);
 
         try {
-            $this->expectException(RuntimeException::class);
+            self::expectException(RuntimeException::class);
             new MimeTypes();
         } finally {
-            \unlink($original);
-            \rename($backup, $original);
+            unlink($original);
+            rename($backup, $original);
         }
     }
 }

@@ -12,9 +12,15 @@
  */
 namespace Esi\Mimey;
 
+// Classes
 use JetBrains\PhpStorm\Pure;
-use RuntimeException;
-use Throwable;
+
+// Exceptions
+use RuntimeException, Throwable;
+
+// Functions & constants
+use function dirname, file_get_contents, json_decode, trim, function_exists, strtolower;
+use const JSON_THROW_ON_ERROR;
 
 /**
  * Mimey - PHP package for converting file extensions to MIME types and vice versa.
@@ -101,11 +107,7 @@ class MimeTypes implements MimeTypesInterface
      */
     public function __construct(?array $mapping = null)
     {
-		if ($mapping === null) {
-			$this->mapping = self::getBuiltIn();
-		} else {
-			$this->mapping = $mapping;
-		}
+        $this->mapping = $mapping ?? self::getBuiltIn();
 	}
 
     #[Pure]
@@ -113,7 +115,7 @@ class MimeTypes implements MimeTypesInterface
     {
         $extension = $this->cleanInput($extension);
 
-        if (!empty($this->mapping['mimes'][$extension])) {
+        if (isset($this->mapping['mimes'][$extension])) {
             return $this->mapping['mimes'][$extension][0]; /** @phpstan-ignore-line */
         }
         return null;
@@ -124,7 +126,7 @@ class MimeTypes implements MimeTypesInterface
     {
         $mimeType = $this->cleanInput($mimeType);
 
-        if (!empty($this->mapping['extensions'][$mimeType])) {
+        if (isset($this->mapping['extensions'][$mimeType])) {
             return $this->mapping['extensions'][$mimeType][0]; /** @phpstan-ignore-line */
         }
         return null;
@@ -154,14 +156,14 @@ class MimeTypes implements MimeTypesInterface
     protected static function getBuiltIn(): array
     {
         if (self::$builtIn === null) {
-            $builtInTypes = \dirname(__DIR__) . '/dist/mime.types.min.json';
+            $builtInTypes = dirname(__DIR__) . '/dist/mime.types.min.json';
 
             try {
                 /** @var string $json **/
-                $json = \file_get_contents($builtInTypes);
+                $json = file_get_contents($builtInTypes);
 
                 /** @var MimeTypeMap $json **/
-                $json = \json_decode($json, true, flags: \JSON_THROW_ON_ERROR);
+                $json = json_decode($json, true, flags: JSON_THROW_ON_ERROR);
 
                 self::$builtIn = $json;
             } catch (Throwable $e) {
@@ -180,13 +182,13 @@ class MimeTypes implements MimeTypesInterface
      */
     private function cleanInput(string $input): string
     {
-        $input = \trim($input);
+        $input = trim($input);
 
         //@codeCoverageIgnoreStart
-        if (\function_exists('mb_strtolower')) {
+        if (function_exists('mb_strtolower')) {
             $input = \mb_strtolower($input);
         } else {
-            $input = \strtolower($input);
+            $input = strtolower($input);
         }
         //@codeCoverageIgnoreEnd
         return $input;

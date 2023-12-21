@@ -12,10 +12,15 @@
  */
 namespace Esi\Mimey;
 
+// Classes
 use JetBrains\PhpStorm\Pure;
-use JsonException;
-use RuntimeException;
-use Throwable;
+
+// Exceptions
+use JsonException, RuntimeException, Throwable;
+
+// Functions & constants
+use function array_unshift, array_unique,json_encode, file_put_contents, dirname,file_get_contents, json_decode;
+use const JSON_THROW_ON_ERROR, JSON_PRETTY_PRINT;
 
 /**
  * Mimey - PHP package for converting file extensions to MIME types and vice versa.
@@ -92,23 +97,25 @@ class MimeMappingBuilder
      */
     public function add(string $mime, string $extension, bool $prependExtension = true, bool $prependMime = true): void
     {
-        $existingExtensions = empty($this->mapping['extensions'][$mime]) ? [] : $this->mapping['extensions'][$mime];
-        $existingMimes = empty($this->mapping['mimes'][$extension]) ? [] : $this->mapping['mimes'][$extension];
+        //$existingExtensions = empty($this->mapping['extensions'][$mime]) ? [] : $this->mapping['extensions'][$mime];
+        //$existingMimes = empty($this->mapping['mimes'][$extension]) ? [] : $this->mapping['mimes'][$extension];
+        $existingExtensions = $this->mapping['extensions'][$mime] ?? [];
+        $existingMimes = $this->mapping['mimes'][$extension] ?? [];
 
         if ($prependExtension) {
-            \array_unshift($existingExtensions, $extension);
+            array_unshift($existingExtensions, $extension);
         } else {
             $existingExtensions[] = $extension;
         }
 
         if ($prependMime) {
-            \array_unshift($existingMimes, $mime);
+            array_unshift($existingMimes, $mime);
         } else {
             $existingMimes[] = $mime;
         }
 
-        $this->mapping['extensions'][$mime] = \array_unique($existingExtensions);
-        $this->mapping['mimes'][$extension] = \array_unique($existingMimes);
+        $this->mapping['extensions'][$mime] = array_unique($existingExtensions);
+        $this->mapping['mimes'][$extension] = array_unique($existingMimes);
     }
 
     /**
@@ -133,7 +140,7 @@ class MimeMappingBuilder
     {
         $mapping = $this->getMapping();
 
-        return \json_encode($mapping, flags: \JSON_THROW_ON_ERROR | ($pretty ? \JSON_PRETTY_PRINT : 0));
+        return json_encode($mapping, flags: JSON_THROW_ON_ERROR | ($pretty ? JSON_PRETTY_PRINT : 0));
     }
 
     /**
@@ -146,9 +153,9 @@ class MimeMappingBuilder
      *
      * @throws JsonException
      */
-    public function save(string $file, int $flags = 0, mixed $context = null): false|int
+    public function save(string $file, int $flags = 0, mixed $context = null): false | int
     {
-        return \file_put_contents($file, $this->compile(), $flags, $context);
+        return file_put_contents($file, $this->compile(), $flags, $context);
     }
 
     /**
@@ -158,7 +165,7 @@ class MimeMappingBuilder
      */
     public static function create(): MimeMappingBuilder
     {
-        return self::load(\dirname(__DIR__) . '/dist/mime.types.min.json');
+        return self::load(dirname(__DIR__) . '/dist/mime.types.min.json');
     }
 
     /**
@@ -173,9 +180,9 @@ class MimeMappingBuilder
     {
         try {
             /** @var string $json **/
-            $json = \file_get_contents($file);
+            $json = file_get_contents($file);
             /** @var MimeTypeMap **/
-            $json = \json_decode($json, true, flags: \JSON_THROW_ON_ERROR);
+            $json = json_decode($json, true, flags: JSON_THROW_ON_ERROR);
 
             return new self($json);
         } catch (Throwable $e) {

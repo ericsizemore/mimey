@@ -1,9 +1,13 @@
-### 1.1.1 (2023-12-14)
+### 1.1.1 (2023-12-20)
 
   * Added Scrutinizer to workflow
   * Updating codebase based on PHPStan level 9, strict w/bleeding edge. A work in progress
   * Updated docs throughout
   * First pass and attempt at adhering to PSR-12, PSR-5, and PSR-19
+  * Updated tests to use the PHPUnit CoversClass and DataProvider attributes.
+  * Update composer.json and github workflows to allow PHP 8.4 into the mix.
+  * Updated unit tests to use `self::` instead of `$this->` when calling PHPUnit methods
+  * Pass through to add function, exception, and constant imports
 
 ### 1.1.0 (2023-11-27)
 

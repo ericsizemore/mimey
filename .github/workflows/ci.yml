@@ -44,8 +44,3 @@ jobs:
 
       - name: Run PHPStan
         run: composer run-script phpstan
-
-      #- name: Analysis
-      #  uses: php-actions/phpstan@v3
-      #  with:
-      #    path: src/ dist/ bin/

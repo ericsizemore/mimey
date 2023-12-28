@@ -108,7 +108,7 @@ class MimeTypes implements MimeTypesInterface
     public function __construct(?array $mapping = null)
     {
         $this->mapping = $mapping ?? self::getBuiltIn();
-	}
+    }
 
     #[Pure]
     public function getMimeType(string $extension): ?string

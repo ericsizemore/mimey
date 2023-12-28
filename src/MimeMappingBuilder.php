@@ -19,7 +19,7 @@ use JetBrains\PhpStorm\Pure;
 use JsonException, RuntimeException, Throwable;
 
 // Functions & constants
-use function array_unshift, array_unique,json_encode, file_put_contents, dirname,file_get_contents, json_decode;
+use function array_unshift, array_unique, json_encode, file_put_contents, dirname, file_get_contents, json_decode;
 use const JSON_THROW_ON_ERROR, JSON_PRETTY_PRINT;
 
 /**

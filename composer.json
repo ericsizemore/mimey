@@ -19,22 +19,32 @@
             "email": "contact@ricardoboss.de"
         }
     ],
+    "support": {
+        "issues": "https://github.com/ericsizemore/mimey/issues",
+        "forum": "https://github.com/ericsizemore/mimey/discussions",
+        "source": "https://github.com/ericsizemore/mimey/tree/develop/src",
+        "security": "https://github.com/ericsizemore/mimey/security/policy"
+    },
     "require": {
         "php": "^8.1 <8.5",
         "jetbrains/phpstorm-attributes": "^1.0"
     },
     "require-dev": {
-        "phpunit/phpunit": "^10.5",
         "phpstan/phpstan": "^1.11",
         "phpstan/phpstan-phpunit": "^1.4",
-        "phpstan/phpstan-strict-rules": "^1.6"
+        "phpstan/phpstan-strict-rules": "^1.6",
+        "phpunit/phpunit": "^10.5"
     },
     "suggest": {
         "ext-mbstring": "For non-English (user) input parsing"
     },
+    "minimum-stability": "dev",
     "autoload": {
         "psr-4": {
-            "Esi\\Mimey\\": ["src/", "dist/"]
+            "Esi\\Mimey\\": [
+                "src/",
+                "dist/"
+            ]
         }
     },
     "autoload-dev": {
@@ -42,22 +52,15 @@
             "Esi\\Mimey\\Tests\\": "tests/src/"
         }
     },
-	"support": {
-		"issues": "https://github.com/ericsizemore/mimey/issues",
-		"forum": "https://github.com/ericsizemore/mimey/discussions",
-		"source": "https://github.com/ericsizemore/mimey/tree/develop/src",
-		"security": "https://github.com/ericsizemore/mimey/security/policy"
-	},
-    "scripts": {
-        "test": "phpunit --coverage-clover=build/logs/clover.xml --coverage-html=build/logs/coverage --display-deprecations --display-warnings --globals-backup",
-        "phpstan": "vendor/bin/phpstan analyse -c phpstan.neon",
-        "generate-types": "@php bin/generate.php",
-        "update-types": "@php bin/update.php"
-    },
-    "minimum-stability": "dev",
     "extra": {
         "branch-alias": {
             "dev-develop": "1.0-dev"
         }
+    },
+    "scripts": {
+        "generate-types": "@php bin/generate.php",
+        "phpstan": "vendor/bin/phpstan analyse -c phpstan.neon",
+        "test": "phpunit --coverage-clover=build/logs/clover.xml --coverage-html=build/logs/coverage --display-deprecations --display-warnings --globals-backup",
+        "update-types": "@php bin/update.php"
     }
 }

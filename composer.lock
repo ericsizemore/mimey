@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "70a6558f5d1850218e3fec96daa52f11",
+    "content-hash": "a104c943162950adf9745f973f42d181",
     "packages": [
         {
             "name": "jetbrains/phpstorm-attributes",

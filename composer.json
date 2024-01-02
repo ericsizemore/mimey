@@ -12,11 +12,13 @@
         },
         {
             "name": "Ralph Khattar",
-            "email": "ralph.khattar@gmail.com"
+            "email": "ralph.khattar@gmail.com",
+            "role": "Contributor"
         },
         {
             "name": "Ricardo Boss",
-            "email": "contact@ricardoboss.de"
+            "email": "contact@ricardoboss.de",
+            "role": "Contributor"
         }
     ],
     "support": {

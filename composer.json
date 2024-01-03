@@ -28,7 +28,7 @@
         "security": "https://github.com/ericsizemore/mimey/security/policy"
     },
     "require": {
-        "php": "^8.1 <8.5",
+        "php": "^8.2 <8.5",
         "jetbrains/phpstorm-attributes": "^1.0"
     },
     "require-dev": {

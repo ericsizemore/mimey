@@ -1,10 +1,11 @@
-### 1.1.2 ()
+### 1.2.0 (Work in progress)
 
   * Added PHP-CS-Fixer to dev dependencies
     * Fixes throughout per PHPCS (PER, PSR-2, PSR-12)
   * Updated copyright/license docblocks to reduce their size, and reduce to only one.
   * Normalized composer.json and added .gitattributes
   * Updated Mime Types
+  * Bumped minimum PHP version to 8.2
 
 ### 1.1.1 (2023-12-20)
 

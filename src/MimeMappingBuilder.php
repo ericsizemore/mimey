@@ -4,40 +4,16 @@
  * Mimey - PHP package for converting file extensions to MIME types and vice versa.
  *
  * @author    Eric Sizemore <admin@secondversion.com>
- * @package   Mimey
- * @link      https://www.secondversion.com/
  * @version   1.1.1
- * @copyright (C) 2023 Eric Sizemore
- * @license   The MIT License (MIT)
- */
-namespace Esi\Mimey;
-
-// Classes
-use JetBrains\PhpStorm\Pure;
-
-// Exceptions
-use JsonException, RuntimeException, Throwable;
-
-// Functions & constants
-use function array_unshift, array_unique, json_encode, file_put_contents, dirname, file_get_contents, json_decode;
-use const JSON_THROW_ON_ERROR, JSON_PRETTY_PRINT;
-
-/**
- * Mimey - PHP package for converting file extensions to MIME types and vice versa.
- *
- * @author    Eric Sizemore <admin@secondversion.com>
- * @package   Mimey
- * @link      https://www.secondversion.com/
- * @version   1.1.1
- * @copyright (C) 2023 Eric Sizemore
+ * @copyright (C) 2023-2024 Eric Sizemore
  * @license   The MIT License (MIT)
  *
- * Copyright (C) 2023 Eric Sizemore. All rights reserved.
+ * Copyright (C) 2023-2024 Eric Sizemore<https://www.secondversion.com/>.
  *
  * Permission is hereby granted, free of charge, to any person obtaining a copy
- * of this software and associated documentation files (the "Software"), to 
- * deal in the Software without restriction, including without limitation the 
- * rights to use, copy, modify, merge, publish, distribute, sublicense, and/or 
+ * of this software and associated documentation files (the "Software"), to
+ * deal in the Software without restriction, including without limitation the
+ * rights to use, copy, modify, merge, publish, distribute, sublicense, and/or
  * sell copies of the Software, and to permit persons to whom the Software is
  * furnished to do so, subject to the following conditions:
  *
@@ -60,10 +36,32 @@ use const JSON_THROW_ON_ERROR, JSON_PRETTY_PRINT;
  *     Copyright (c) 2016 Ralph Khattar
  */
 
+namespace Esi\Mimey;
+
+// Classes
+use JetBrains\PhpStorm\Pure;
+
+// Exceptions
+use JsonException;
+use RuntimeException;
+use Throwable;
+
+// Functions & constants
+use function array_unshift;
+use function array_unique;
+use function json_encode;
+use function file_put_contents;
+use function dirname;
+use function file_get_contents;
+use function json_decode;
+
+use const JSON_THROW_ON_ERROR;
+use const JSON_PRETTY_PRINT;
+
 /**
  * Class for converting MIME types to file extensions and vice versa.
  *
- * This psalm-type looks gnarly, but it covers just about everything. Will be worked on further. It makes 
+ * This psalm-type looks gnarly, but it covers just about everything. Will be worked on further. It makes
  * PHPStan happy for now.
  *
  * @psalm-type MimeTypeMap = array{mimes: array<non-empty-string, list<non-empty-string>>|non-empty-array<string, array<int<0, max>, string>>, extensions: array<non-empty-string, list<non-empty-string>>|non-empty-array<string, array<int<0, max>, string>>|array<string, array<int<0, max>, string>>}
@@ -97,8 +95,6 @@ class MimeMappingBuilder
      */
     public function add(string $mime, string $extension, bool $prependExtension = true, bool $prependMime = true): void
     {
-        //$existingExtensions = empty($this->mapping['extensions'][$mime]) ? [] : $this->mapping['extensions'][$mime];
-        //$existingMimes = empty($this->mapping['mimes'][$extension]) ? [] : $this->mapping['mimes'][$extension];
         $existingExtensions = $this->mapping['extensions'][$mime] ?? [];
         $existingMimes = $this->mapping['mimes'][$extension] ?? [];
 

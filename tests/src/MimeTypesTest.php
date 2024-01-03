@@ -4,46 +4,16 @@
  * Mimey - PHP package for converting file extensions to MIME types and vice versa.
  *
  * @author    Eric Sizemore <admin@secondversion.com>
- * @package   Mimey
- * @link      https://www.secondversion.com/
  * @version   1.1.1
- * @copyright (C) 2023 Eric Sizemore
- * @license   The MIT License (MIT)
- */
-namespace Esi\Mimey\Tests;
-
-// Core classes
-use Esi\Mimey\MimeTypes;
-
-// PHPUnit
-use PHPUnit\Framework\TestCase;
-use PHPUnit\Framework\Attributes\CoversClass;
-use PHPUnit\Framework\Attributes\DataProvider;
-
-use ReflectionClass;
-
-// Exceptions
-use RuntimeException;
-
-// Functions
-use function dirname, rename, file_put_contents, unlink;
-
-/**
- * Mimey - PHP package for converting file extensions to MIME types and vice versa.
- *
- * @author    Eric Sizemore <admin@secondversion.com>
- * @package   Mimey
- * @link      https://www.secondversion.com/
- * @version   1.1.1
- * @copyright (C) 2023 Eric Sizemore
+ * @copyright (C) 2023-2024 Eric Sizemore
  * @license   The MIT License (MIT)
  *
- * Copyright (C) 2023 Eric Sizemore. All rights reserved.
+ * Copyright (C) 2023-2024 Eric Sizemore<https://www.secondversion.com/>.
  *
  * Permission is hereby granted, free of charge, to any person obtaining a copy
- * of this software and associated documentation files (the "Software"), to 
- * deal in the Software without restriction, including without limitation the 
- * rights to use, copy, modify, merge, publish, distribute, sublicense, and/or 
+ * of this software and associated documentation files (the "Software"), to
+ * deal in the Software without restriction, including without limitation the
+ * rights to use, copy, modify, merge, publish, distribute, sublicense, and/or
  * sell copies of the Software, and to permit persons to whom the Software is
  * furnished to do so, subject to the following conditions:
  *
@@ -64,6 +34,31 @@ use function dirname, rename, file_put_contents, unlink;
  *     Copyright (c) 2022 Ricardo Boss
  * Elephox\Mimey is a fork of ralouphie/mimey (https://github.com/ralouphie/mimey) which is:
  *     Copyright (c) 2016 Ralph Khattar
+ */
+
+namespace Esi\Mimey\Tests;
+
+// Core classes
+use Esi\Mimey\MimeTypes;
+
+// PHPUnit
+use PHPUnit\Framework\TestCase;
+use PHPUnit\Framework\Attributes\CoversClass;
+use PHPUnit\Framework\Attributes\DataProvider;
+
+use ReflectionClass;
+
+// Exceptions
+use RuntimeException;
+
+// Functions
+use function dirname;
+use function rename;
+use function file_put_contents;
+use function unlink;
+
+/**
+ * Class to test MimeTypes.
  */
 #[CoversClass(MimeTypes::class)]
 class MimeTypesTest extends TestCase
@@ -119,7 +114,7 @@ class MimeTypesTest extends TestCase
      * @param string $expectedMimeType
      * @param string $extension
      */
-    #[DataProvider('getMimeTypeProvider')]  
+    #[DataProvider('getMimeTypeProvider')]
     public function testGetMimeType(string $expectedMimeType, string $extension): void
     {
         self::assertEquals($expectedMimeType, $this->mime->getMimeType($extension));

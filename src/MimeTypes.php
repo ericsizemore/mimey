@@ -4,40 +4,16 @@
  * Mimey - PHP package for converting file extensions to MIME types and vice versa.
  *
  * @author    Eric Sizemore <admin@secondversion.com>
- * @package   Mimey
- * @link      https://www.secondversion.com/
  * @version   1.1.1
- * @copyright (C) 2023 Eric Sizemore
- * @license   The MIT License (MIT)
- */
-namespace Esi\Mimey;
-
-// Classes
-use JetBrains\PhpStorm\Pure;
-
-// Exceptions
-use RuntimeException, Throwable;
-
-// Functions & constants
-use function dirname, file_get_contents, json_decode, trim, function_exists, strtolower;
-use const JSON_THROW_ON_ERROR;
-
-/**
- * Mimey - PHP package for converting file extensions to MIME types and vice versa.
- *
- * @author    Eric Sizemore <admin@secondversion.com>
- * @package   Mimey
- * @link      https://www.secondversion.com/
- * @version   1.1.1
- * @copyright (C) 2023 Eric Sizemore
+ * @copyright (C) 2023-2024 Eric Sizemore
  * @license   The MIT License (MIT)
  *
- * Copyright (C) 2023 Eric Sizemore. All rights reserved.
+ * Copyright (C) 2023-2024 Eric Sizemore<https://www.secondversion.com/>.
  *
  * Permission is hereby granted, free of charge, to any person obtaining a copy
- * of this software and associated documentation files (the "Software"), to 
- * deal in the Software without restriction, including without limitation the 
- * rights to use, copy, modify, merge, publish, distribute, sublicense, and/or 
+ * of this software and associated documentation files (the "Software"), to
+ * deal in the Software without restriction, including without limitation the
+ * rights to use, copy, modify, merge, publish, distribute, sublicense, and/or
  * sell copies of the Software, and to permit persons to whom the Software is
  * furnished to do so, subject to the following conditions:
  *
@@ -60,10 +36,29 @@ use const JSON_THROW_ON_ERROR;
  *     Copyright (c) 2016 Ralph Khattar
  */
 
+namespace Esi\Mimey;
+
+// Classes
+use JetBrains\PhpStorm\Pure;
+
+// Exceptions
+use RuntimeException;
+use Throwable;
+
+// Functions & constants
+use function dirname;
+use function file_get_contents;
+use function json_decode;
+use function trim;
+use function function_exists;
+use function strtolower;
+
+use const JSON_THROW_ON_ERROR;
+
 /**
  * Class for converting MIME types to file extensions and vice versa.
  *
- * This psalm-type looks gnarly, but it covers just about everything. Will be worked on further. It makes 
+ * This psalm-type looks gnarly, but it covers just about everything. Will be worked on further. It makes
  * PHPStan happy for now.
  *
  * @psalm-type MimeTypeMap = array{mimes: array<non-empty-string, list<non-empty-string>>|non-empty-array<string, array<int<0, max>, string>>, extensions: array<non-empty-string, list<non-empty-string>>|non-empty-array<string, array<int<0, max>, string>>|array<string, array<int<0, max>, string>>}
@@ -86,8 +81,8 @@ class MimeTypes implements MimeTypesInterface
      * If no mappings are defined, they will default to the ones included with this package.
      *
      * @param  MimeTypeMap|null  $mapping  An associative array containing two entries.
-     *                                     Entry "mimes" being an associative array of extension to 
-     *                                     array of MIME types. Entry "extensions" being an associative 
+     *                                     Entry "mimes" being an associative array of extension to
+     *                                     array of MIME types. Entry "extensions" being an associative
      *                                     array of MIME type to array of extensions.
      * Example:
      * <code>
@@ -116,7 +111,7 @@ class MimeTypes implements MimeTypesInterface
         $extension = $this->cleanInput($extension);
 
         if (isset($this->mapping['mimes'][$extension])) {
-            return $this->mapping['mimes'][$extension][0]; /** @phpstan-ignore-line */
+            return $this->mapping['mimes'][$extension][0]; // @phpstan-ignore-line
         }
         return null;
     }
@@ -127,7 +122,7 @@ class MimeTypes implements MimeTypesInterface
         $mimeType = $this->cleanInput($mimeType);
 
         if (isset($this->mapping['extensions'][$mimeType])) {
-            return $this->mapping['extensions'][$mimeType][0]; /** @phpstan-ignore-line */
+            return $this->mapping['extensions'][$mimeType][0]; // @phpstan-ignore-line
         }
         return null;
     }
@@ -137,7 +132,7 @@ class MimeTypes implements MimeTypesInterface
     {
         $extension = $this->cleanInput($extension);
 
-        return $this->mapping['mimes'][$extension] ?? []; /** @phpstan-ignore-line */
+        return $this->mapping['mimes'][$extension] ?? []; // @phpstan-ignore-line
     }
 
     #[Pure]
@@ -145,7 +140,7 @@ class MimeTypes implements MimeTypesInterface
     {
         $mimeType = $this->cleanInput($mimeType);
 
-        return $this->mapping['extensions'][$mimeType] ?? []; /** @phpstan-ignore-line */
+        return $this->mapping['extensions'][$mimeType] ?? []; // @phpstan-ignore-line
     }
 
     /**

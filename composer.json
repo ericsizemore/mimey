@@ -32,6 +32,7 @@
         "jetbrains/phpstorm-attributes": "^1.0"
     },
     "require-dev": {
+        "friendsofphp/php-cs-fixer": ">=3.45",
         "phpstan/phpstan": "^1.11",
         "phpstan/phpstan-phpunit": "^1.4",
         "phpstan/phpstan-strict-rules": "^1.6",
@@ -61,6 +62,8 @@
     },
     "scripts": {
         "generate-types": "@php bin/generate.php",
+        "phpcs-fix": "vendor/bin/php-cs-fixer fix --config=.php-cs-fixer.dist.php",
+        "phpcs-nofix": "vendor/bin/php-cs-fixer fix --config=.php-cs-fixer.dist.php --dry-run",
         "phpstan": "vendor/bin/phpstan analyse -c phpstan.neon",
         "test": "phpunit --coverage-clover=build/logs/clover.xml --coverage-html=build/logs/coverage --display-deprecations --display-warnings --globals-backup",
         "update-types": "@php bin/update.php"

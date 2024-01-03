@@ -1,3 +1,11 @@
+### 1.1.2 ()
+
+  * Added PHP-CS-Fixer to dev dependencies
+    * Fixes throughout per PHPCS (PER, PSR-2, PSR-12)
+  * Updated copyright/license docblocks to reduce their size, and reduce to only one.
+  * Normalized composer.json and added .gitattributes
+  * Updated Mime Types
+
 ### 1.1.1 (2023-12-20)
 
   * Added Scrutinizer to workflow

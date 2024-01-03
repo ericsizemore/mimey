@@ -4,39 +4,16 @@
  * Mimey - PHP package for converting file extensions to MIME types and vice versa.
  *
  * @author    Eric Sizemore <admin@secondversion.com>
- * @package   Mimey
- * @link      https://www.secondversion.com/
  * @version   1.1.1
- * @copyright (C) 2023 Eric Sizemore
- * @license   The MIT License (MIT)
- */
-namespace Esi\Mimey;
-
-// Exceptions
-use JsonException;
-
-// Functions & constants
-use function preg_replace, ucfirst, ucwords, str_replace, sprintf, file_get_contents, dirname;
-use function json_encode, array_unique, trim, explode, count, array_values, array_filter;
-
-use const JSON_THROW_ON_ERROR, JSON_PRETTY_PRINT;
-
-/**
- * Mimey - PHP package for converting file extensions to MIME types and vice versa.
- *
- * @author    Eric Sizemore <admin@secondversion.com>
- * @package   Mimey
- * @link      https://www.secondversion.com/
- * @version   1.1.1
- * @copyright (C) 2023 Eric Sizemore
+ * @copyright (C) 2023-2024 Eric Sizemore
  * @license   The MIT License (MIT)
  *
- * Copyright (C) 2023 Eric Sizemore. All rights reserved.
+ * Copyright (C) 2023-2024 Eric Sizemore<https://www.secondversion.com/>.
  *
  * Permission is hereby granted, free of charge, to any person obtaining a copy
- * of this software and associated documentation files (the "Software"), to 
- * deal in the Software without restriction, including without limitation the 
- * rights to use, copy, modify, merge, publish, distribute, sublicense, and/or 
+ * of this software and associated documentation files (the "Software"), to
+ * deal in the Software without restriction, including without limitation the
+ * rights to use, copy, modify, merge, publish, distribute, sublicense, and/or
  * sell copies of the Software, and to permit persons to whom the Software is
  * furnished to do so, subject to the following conditions:
  *
@@ -59,12 +36,36 @@ use const JSON_THROW_ON_ERROR, JSON_PRETTY_PRINT;
  *     Copyright (c) 2016 Ralph Khattar
  */
 
+namespace Esi\Mimey;
+
+// Exceptions
+use JsonException;
+
+// Functions & constants
+use function preg_replace;
+use function ucfirst;
+use function ucwords;
+use function str_replace;
+use function sprintf;
+use function file_get_contents;
+use function dirname;
+use function json_encode;
+use function array_unique;
+use function trim;
+use function explode;
+use function count;
+use function array_values;
+use function array_filter;
+
+use const JSON_THROW_ON_ERROR;
+use const JSON_PRETTY_PRINT;
+
 /**
  * Generates a mapping for use in the MimeTypes class.
  *
  * Reads text in the format of httpd's mime.types and generates a PHP array containing the mappings.
  *
- * The psalm-type's looks gnarly, but it covers just about everything. Will be worked on further. It makes 
+ * The psalm-type's looks gnarly, but it covers just about everything. Will be worked on further. It makes
  * PHPStan happy for now.
  *
  * @psalm-type MimeTypeMap = array{mimes: array<non-empty-string, list<non-empty-string>>|non-empty-array<string, array<int<0, max>, string>>, extensions: array<non-empty-string, list<non-empty-string>>|non-empty-array<string, array<int<0, max>, string>>|array<string, array<int<0, max>, string>>}
@@ -137,7 +138,7 @@ class MimeMappingGenerator
     /**
      * Generate the JSON from the mapCache.
      *
-     * @param   bool              $minify  Whether to minify the generated JSON
+     * @param   bool              $minify  Whether to minify the generated JSON.
      * @return  non-empty-string
      *
      * @throws JsonException
@@ -148,7 +149,7 @@ class MimeMappingGenerator
     }
 
     /**
-     * Generates the PHP Enum found in `dist`
+     * Generates the PHP Enum found in `dist`.
      *
      * @param   non-empty-string         $classname
      * @param   non-empty-string         $namespace
@@ -171,14 +172,14 @@ class MimeMappingGenerator
         $mapping = $this->generateMapping();
         $nameMap = [];
 
-        foreach ($mapping['extensions'] as $mime => $extensions) { /** @phpstan-ignore-line */
+        foreach ($mapping['extensions'] as $mime => $extensions) { // @phpstan-ignore-line
             $nameMap[$mime] = $this->convertMimeTypeToCaseName($mime);
 
             $values['cases'] .= sprintf("    case %s = '%s';\n", $nameMap[$mime], $mime);
             $values['type2ext'] .= sprintf("            self::%s => '%s',\n", $nameMap[$mime], $extensions[0]);
         }
 
-        foreach ($mapping['mimes'] as $extension => $mimes) { /** @phpstan-ignore-line */
+        foreach ($mapping['mimes'] as $extension => $mimes) { // @phpstan-ignore-line
             $values['ext2type'] .= sprintf("            '%s' => self::%s,\n", $extension, $nameMap[$mimes[0]]);
         }
 
@@ -194,7 +195,7 @@ class MimeMappingGenerator
      */
     protected function convertMimeTypeToCaseName(string $mimeType): string
     {
-        /** @phpstan-ignore-next-line */
+        // @phpstan-ignore-next-line
         return preg_replace('/([\/\-_+.]+)/', '', ucfirst(ucwords($mimeType, '/-_+.')));
     }
 }

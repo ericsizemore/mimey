@@ -4,45 +4,16 @@
  * Mimey - PHP package for converting file extensions to MIME types and vice versa.
  *
  * @author    Eric Sizemore <admin@secondversion.com>
- * @package   Mimey
- * @link      https://www.secondversion.com/
  * @version   1.1.1
- * @copyright (C) 2023 Eric Sizemore
- * @license   The MIT License (MIT)
- */
-namespace Esi\Mimey\Tests;
-
-// Core classes
-use Esi\Mimey\MimeTypes;
-use Esi\Mimey\MimeMappingBuilder;
-
-// PHPUnit
-use PHPUnit\Framework\TestCase;
-use PHPUnit\Framework\Attributes\CoversClass;
-
-// Exceptions
-use JsonException, RuntimeException;
-
-// Functions & constants
-use function tempnam, sys_get_temp_dir, file_get_contents, file_put_contents, json_decode, unlink;
-use const JSON_THROW_ON_ERROR;
-
-/**
- * Mimey - PHP package for converting file extensions to MIME types and vice versa.
- *
- * @author    Eric Sizemore <admin@secondversion.com>
- * @package   Mimey
- * @link      https://www.secondversion.com/
- * @version   1.1.1
- * @copyright (C) 2023 Eric Sizemore
+ * @copyright (C) 2023-2024 Eric Sizemore
  * @license   The MIT License (MIT)
  *
- * Copyright (C) 2023 Eric Sizemore. All rights reserved.
+ * Copyright (C) 2023-2024 Eric Sizemore<https://www.secondversion.com/>.
  *
  * Permission is hereby granted, free of charge, to any person obtaining a copy
- * of this software and associated documentation files (the "Software"), to 
- * deal in the Software without restriction, including without limitation the 
- * rights to use, copy, modify, merge, publish, distribute, sublicense, and/or 
+ * of this software and associated documentation files (the "Software"), to
+ * deal in the Software without restriction, including without limitation the
+ * rights to use, copy, modify, merge, publish, distribute, sublicense, and/or
  * sell copies of the Software, and to permit persons to whom the Software is
  * furnished to do so, subject to the following conditions:
  *
@@ -64,6 +35,34 @@ use const JSON_THROW_ON_ERROR;
  * Elephox\Mimey is a fork of ralouphie/mimey (https://github.com/ralouphie/mimey) which is:
  *     Copyright (c) 2016 Ralph Khattar
  */
+
+namespace Esi\Mimey\Tests;
+
+// Core classes
+use Esi\Mimey\MimeTypes;
+use Esi\Mimey\MimeMappingBuilder;
+
+// PHPUnit
+use PHPUnit\Framework\TestCase;
+use PHPUnit\Framework\Attributes\CoversClass;
+
+// Exceptions
+use JsonException;
+use RuntimeException;
+
+// Functions & constants
+use function tempnam;
+use function sys_get_temp_dir;
+use function file_get_contents;
+use function file_put_contents;
+use function json_decode;
+use function unlink;
+
+use const JSON_THROW_ON_ERROR;
+
+/**
+ * Class to test MimeMappingBuilder.
+ */
 #[CoversClass(MimeMappingBuilder::class)]
 class MimeMappingBuilderTest extends TestCase
 {
@@ -73,9 +72,9 @@ class MimeMappingBuilderTest extends TestCase
     public function testFromEmpty(): void
     {
         $builder = MimeMappingBuilder::blank();
-            $builder->add('foo/bar', 'foobar');
-            $builder->add('foo/bar', 'bar');
-            $builder->add('foo/baz', 'foobaz');
+        $builder->add('foo/bar', 'foobar');
+        $builder->add('foo/bar', 'bar');
+        $builder->add('foo/baz', 'foobaz');
 
         $mime = new MimeTypes($builder->getMapping());
 
@@ -92,7 +91,7 @@ class MimeMappingBuilderTest extends TestCase
     }
 
     /**
-     * Test with a mapping builder using the built-in types
+     * Test with a mapping builder using the built-in types.
      */
     public function testFromBuiltIn(): void
     {
@@ -116,26 +115,26 @@ class MimeMappingBuilderTest extends TestCase
     }
 
     /**
-     * Test appending an extension
+     * Test appending an extension.
      */
     public function testAppendExtension(): void
     {
         $builder = MimeMappingBuilder::blank();
-            $builder->add('foo/bar', 'foobar');
-            $builder->add('foo/bar', 'bar', false);
+        $builder->add('foo/bar', 'foobar');
+        $builder->add('foo/bar', 'bar', false);
 
         $mime = new MimeTypes($builder->getMapping());
         self::assertEquals('foobar', $mime->getExtension('foo/bar'));
     }
 
     /**
-     * Test appending a mime
+     * Test appending a mime.
      */
     public function testAppendMime(): void
     {
         $builder = MimeMappingBuilder::blank();
-            $builder->add('foo/bar', 'foobar');
-            $builder->add('foo/bar2', 'foobar', true, false);
+        $builder->add('foo/bar', 'foobar');
+        $builder->add('foo/bar2', 'foobar', true, false);
 
         $mime = new MimeTypes($builder->getMapping());
         self::assertEquals('foo/bar', $mime->getMimeType('foobar'));
@@ -152,10 +151,10 @@ class MimeMappingBuilderTest extends TestCase
         $file = tempnam(sys_get_temp_dir(), 'mapping_test');
 
         $builder = MimeMappingBuilder::blank();
-            $builder->add('foo/one', 'one');
-            $builder->add('foo/one', 'one1');
-            $builder->add('foo/two', 'two');
-            $builder->add('foo/two2', 'two');
+        $builder->add('foo/one', 'one');
+        $builder->add('foo/one', 'one1');
+        $builder->add('foo/two', 'two');
+        $builder->add('foo/two2', 'two');
         $builder->save($file);
 
         /** @var string $json **/
@@ -178,7 +177,7 @@ class MimeMappingBuilderTest extends TestCase
      */
     public function testLoadInvalid(): void
     {
-       /** @var string $file **/
+        /** @var string $file **/
         $file = tempnam(sys_get_temp_dir(), 'mapping_test');
         file_put_contents($file, 'invalid json');
 

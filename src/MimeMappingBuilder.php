@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 /**
  * Mimey - PHP package for converting file extensions to MIME types and vice versa.
  *
@@ -177,7 +179,7 @@ class MimeMappingBuilder
         try {
             /** @var string $json **/
             $json = file_get_contents($file);
-            /** @var MimeTypeMap **/
+            /** @var MimeTypeMap $json **/
             $json = json_decode($json, true, flags: JSON_THROW_ON_ERROR);
 
             return new self($json);

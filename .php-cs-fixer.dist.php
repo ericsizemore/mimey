@@ -6,7 +6,7 @@ $config
         '@PER-CS' => true,
         '@PSR2' => true,
         '@PSR12' => true,
-        'array_syntax' => ['syntax' => 'short']
+        'array_syntax' => ['syntax' => 'short'],
     ])
     ->setFinder(
         PhpCsFixer\Finder::create()

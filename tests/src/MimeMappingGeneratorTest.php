@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 /**
  * Mimey - PHP package for converting file extensions to MIME types and vice versa.
  *
@@ -93,10 +95,10 @@ class MimeMappingGeneratorTest extends TestCase
     {
         $generator = new MimeMappingGenerator(
             <<<EOF
-#ignore
-application/json\tjson
-image/jpeg\tjpeg jpg
-EOF
+                #ignore
+                application/json\tjson
+                image/jpeg\tjpeg jpg
+                EOF
         );
 
         $json = $generator->generateJson(false);
@@ -104,30 +106,29 @@ EOF
 
         self::assertEquals(
             <<<EOF
-{
-    "mimes": {
-        "json": [
-            "application\/json"
-        ],
-        "jpeg": [
-            "image\/jpeg"
-        ],
-        "jpg": [
-            "image\/jpeg"
-        ]
-    },
-    "extensions": {
-        "application\/json": [
-            "json"
-        ],
-        "image\/jpeg": [
-            "jpeg",
-            "jpg"
-        ]
-    }
-}
-EOF
-            ,
+                {
+                    "mimes": {
+                        "json": [
+                            "application\/json"
+                        ],
+                        "jpeg": [
+                            "image\/jpeg"
+                        ],
+                        "jpg": [
+                            "image\/jpeg"
+                        ]
+                    },
+                    "extensions": {
+                        "application\/json": [
+                            "json"
+                        ],
+                        "image\/jpeg": [
+                            "jpeg",
+                            "jpg"
+                        ]
+                    }
+                }
+                EOF,
             $json
         );
 
@@ -141,72 +142,71 @@ EOF
     {
         $generator = new MimeMappingGenerator(
             <<<EOF
-#ignore
-application/json\tjson
-image/jpeg\tjpeg jpg
-EOF
+                #ignore
+                application/json\tjson
+                image/jpeg\tjpeg jpg
+                EOF
         );
 
         $phpEnum = $generator->generatePhpEnum('TestMimeClass', 'TestMimeNamespace');
 
         self::assertEquals(
             <<<EOF
-<?php
+                <?php
 
-/**
- * @generated enum generated using bin/generate.php, please DO NOT EDIT!
- */
-declare(strict_types=1);
+                /**
+                 * @generated enum generated using bin/generate.php, please DO NOT EDIT!
+                 */
+                declare(strict_types=1);
 
-namespace TestMimeNamespace;
+                namespace TestMimeNamespace;
 
-use RuntimeException;
-use InvalidArgumentException;
-use Esi\Mimey\MimeTypeInterface;
+                use RuntimeException;
+                use InvalidArgumentException;
+                use Esi\Mimey\MimeTypeInterface;
 
-enum TestMimeClass: string implements MimeTypeInterface
-{
-    case ApplicationJson = 'application/json';
-    case ImageJpeg = 'image/jpeg';
+                enum TestMimeClass: string implements MimeTypeInterface
+                {
+                    case ApplicationJson = 'application/json';
+                    case ImageJpeg = 'image/jpeg';
 
-    public function getExtension(): string
-    {
-        return match(\$this) {
-            self::ApplicationJson => 'json',
-            self::ImageJpeg => 'jpeg',
+                    public function getExtension(): string
+                    {
+                        return match(\$this) {
+                            self::ApplicationJson => 'json',
+                            self::ImageJpeg => 'jpeg',
 
-        };
-    }
+                        };
+                    }
 
-    public function getValue(): string
-    {
-        return \$this->value;
-    }
+                    public function getValue(): string
+                    {
+                        return \$this->value;
+                    }
 
-    public static function fromExtension(string \$extension): MimeType
-    {
-        \$type = self::tryFromExtension(\$extension);
+                    public static function fromExtension(string \$extension): MimeType
+                    {
+                        \$type = self::tryFromExtension(\$extension);
 
-        if (\$type === null) {
-            throw new InvalidArgumentException('Unknown extension: ' . \$extension);
-        }
-        return \$type;
-    }
+                        if (\$type === null) {
+                            throw new InvalidArgumentException('Unknown extension: ' . \$extension);
+                        }
+                        return \$type;
+                    }
 
-    public static function tryFromExtension(string \$extension): ?MimeType
-    {
-        return match(\$extension) {
-            'json' => self::ApplicationJson,
-            'jpeg' => self::ImageJpeg,
-            'jpg' => self::ImageJpeg,
+                    public static function tryFromExtension(string \$extension): ?MimeType
+                    {
+                        return match(\$extension) {
+                            'json' => self::ApplicationJson,
+                            'jpeg' => self::ImageJpeg,
+                            'jpg' => self::ImageJpeg,
 
-            default => null,
-        };
-    }
-}
+                            default => null,
+                        };
+                    }
+                }
 
-EOF
-            ,
+                EOF,
             $phpEnum
         );
     }

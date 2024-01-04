@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 /**
  * Mimey - PHP package for converting file extensions to MIME types and vice versa.
  *
@@ -163,7 +165,7 @@ class MimeMappingGenerator
             'interface_usage' => $namespace !== __NAMESPACE__ ? ('use ' . MimeTypeInterface::class . ";\n") : '',
             'cases'           => '',
             'type2ext'        => '',
-            'ext2type'        => ''
+            'ext2type'        => '',
         ];
 
         /** @var string $stub **/

@@ -121,7 +121,7 @@ $mimes = new MimeTypes($builder->getMapping());
 
 ## Install
 
-Compatible with PHP >= 8.1.
+Compatible with PHP >= 8.2.
 
 ```
 composer require esi/mimey

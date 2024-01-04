@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 /**
  * Mimey - PHP package for converting file extensions to MIME types and vice versa.
  *

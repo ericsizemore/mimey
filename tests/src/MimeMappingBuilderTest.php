@@ -73,23 +73,23 @@ class MimeMappingBuilderTest extends TestCase
      */
     public function testFromEmpty(): void
     {
-        $builder = MimeMappingBuilder::blank();
-        $builder->add('foo/bar', 'foobar');
-        $builder->add('foo/bar', 'bar');
-        $builder->add('foo/baz', 'foobaz');
+        $mimeMappingBuilder = MimeMappingBuilder::blank();
+        $mimeMappingBuilder->add('foo/bar', 'foobar');
+        $mimeMappingBuilder->add('foo/bar', 'bar');
+        $mimeMappingBuilder->add('foo/baz', 'foobaz');
 
-        $mime = new MimeTypes($builder->getMapping());
+        $mimeTypes = new MimeTypes($mimeMappingBuilder->getMapping());
 
-        self::assertEquals('bar', $mime->getExtension('foo/bar'));
-        self::assertEquals(['bar', 'foobar'], $mime->getAllExtensions('foo/bar'));
-        self::assertEquals('foobaz', $mime->getExtension('foo/baz'));
-        self::assertEquals(['foobaz'], $mime->getAllExtensions('foo/baz'));
-        self::assertEquals('foo/bar', $mime->getMimeType('foobar'));
-        self::assertEquals(['foo/bar'], $mime->getAllMimeTypes('foobar'));
-        self::assertEquals('foo/bar', $mime->getMimeType('bar'));
-        self::assertEquals(['foo/bar'], $mime->getAllMimeTypes('bar'));
-        self::assertEquals('foo/baz', $mime->getMimeType('foobaz'));
-        self::assertEquals(['foo/baz'], $mime->getAllMimeTypes('foobaz'));
+        self::assertEquals('bar', $mimeTypes->getExtension('foo/bar'));
+        self::assertEquals(['bar', 'foobar'], $mimeTypes->getAllExtensions('foo/bar'));
+        self::assertEquals('foobaz', $mimeTypes->getExtension('foo/baz'));
+        self::assertEquals(['foobaz'], $mimeTypes->getAllExtensions('foo/baz'));
+        self::assertEquals('foo/bar', $mimeTypes->getMimeType('foobar'));
+        self::assertEquals(['foo/bar'], $mimeTypes->getAllMimeTypes('foobar'));
+        self::assertEquals('foo/bar', $mimeTypes->getMimeType('bar'));
+        self::assertEquals(['foo/bar'], $mimeTypes->getAllMimeTypes('bar'));
+        self::assertEquals('foo/baz', $mimeTypes->getMimeType('foobaz'));
+        self::assertEquals(['foo/baz'], $mimeTypes->getAllMimeTypes('foobaz'));
     }
 
     /**
@@ -97,20 +97,20 @@ class MimeMappingBuilderTest extends TestCase
      */
     public function testFromBuiltIn(): void
     {
-        $builder = MimeMappingBuilder::create();
-        $mime1 = new MimeTypes($builder->getMapping());
+        $mimeMappingBuilder = MimeMappingBuilder::create();
+        $mime1 = new MimeTypes($mimeMappingBuilder->getMapping());
 
         self::assertEquals('json', $mime1->getExtension('application/json'));
         self::assertEquals('application/json', $mime1->getMimeType('json'));
 
-        $builder->add('application/json', 'mycustomjson');
-        $mime2 = new MimeTypes($builder->getMapping());
+        $mimeMappingBuilder->add('application/json', 'mycustomjson');
+        $mime2 = new MimeTypes($mimeMappingBuilder->getMapping());
 
         self::assertEquals('mycustomjson', $mime2->getExtension('application/json'));
         self::assertEquals('application/json', $mime2->getMimeType('json'));
 
-        $builder->add('application/mycustomjson', 'json');
-        $mime3 = new MimeTypes($builder->getMapping());
+        $mimeMappingBuilder->add('application/mycustomjson', 'json');
+        $mime3 = new MimeTypes($mimeMappingBuilder->getMapping());
 
         self::assertEquals('mycustomjson', $mime3->getExtension('application/json'));
         self::assertEquals('application/mycustomjson', $mime3->getMimeType('json'));
@@ -121,12 +121,12 @@ class MimeMappingBuilderTest extends TestCase
      */
     public function testAppendExtension(): void
     {
-        $builder = MimeMappingBuilder::blank();
-        $builder->add('foo/bar', 'foobar');
-        $builder->add('foo/bar', 'bar', false);
+        $mimeMappingBuilder = MimeMappingBuilder::blank();
+        $mimeMappingBuilder->add('foo/bar', 'foobar');
+        $mimeMappingBuilder->add('foo/bar', 'bar', false);
 
-        $mime = new MimeTypes($builder->getMapping());
-        self::assertEquals('foobar', $mime->getExtension('foo/bar'));
+        $mimeTypes = new MimeTypes($mimeMappingBuilder->getMapping());
+        self::assertEquals('foobar', $mimeTypes->getExtension('foo/bar'));
     }
 
     /**
@@ -134,12 +134,12 @@ class MimeMappingBuilderTest extends TestCase
      */
     public function testAppendMime(): void
     {
-        $builder = MimeMappingBuilder::blank();
-        $builder->add('foo/bar', 'foobar');
-        $builder->add('foo/bar2', 'foobar', true, false);
+        $mimeMappingBuilder = MimeMappingBuilder::blank();
+        $mimeMappingBuilder->add('foo/bar', 'foobar');
+        $mimeMappingBuilder->add('foo/bar2', 'foobar', true, false);
 
-        $mime = new MimeTypes($builder->getMapping());
-        self::assertEquals('foo/bar', $mime->getMimeType('foobar'));
+        $mimeTypes = new MimeTypes($mimeMappingBuilder->getMapping());
+        self::assertEquals('foo/bar', $mimeTypes->getMimeType('foobar'));
     }
 
     /**
@@ -152,24 +152,24 @@ class MimeMappingBuilderTest extends TestCase
         /** @var string $file **/
         $file = tempnam(sys_get_temp_dir(), 'mapping_test');
 
-        $builder = MimeMappingBuilder::blank();
-        $builder->add('foo/one', 'one');
-        $builder->add('foo/one', 'one1');
-        $builder->add('foo/two', 'two');
-        $builder->add('foo/two2', 'two');
-        $builder->save($file);
+        $mimeMappingBuilder = MimeMappingBuilder::blank();
+        $mimeMappingBuilder->add('foo/one', 'one');
+        $mimeMappingBuilder->add('foo/one', 'one1');
+        $mimeMappingBuilder->add('foo/two', 'two');
+        $mimeMappingBuilder->add('foo/two2', 'two');
+        $mimeMappingBuilder->save($file);
 
         /** @var string $json **/
         $json = file_get_contents($file);
 
         $mappingIncluded = json_decode($json, true, flags: JSON_THROW_ON_ERROR);
-        self::assertEquals($builder->getMapping(), $mappingIncluded);
+        self::assertEquals($mimeMappingBuilder->getMapping(), $mappingIncluded);
 
         $builder2 = MimeMappingBuilder::load($file);
 
         unlink($file);
 
-        self::assertEquals($builder->getMapping(), $builder2->getMapping());
+        self::assertEquals($mimeMappingBuilder->getMapping(), $builder2->getMapping());
     }
 
     /**

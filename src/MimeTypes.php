@@ -60,10 +60,22 @@ use const JSON_THROW_ON_ERROR;
 /**
  * Class for converting MIME types to file extensions and vice versa.
  *
- * This psalm-type looks gnarly, but it covers just about everything. Will be worked on further. It makes
- * PHPStan happy for now.
+ * This psalm-type looks gnarly, but it covers just about everything.
  *
- * @psalm-type MimeTypeMap = array{mimes: array<non-empty-string, list<non-empty-string>>|non-empty-array<string, array<int<0, max>, string>>, extensions: array<non-empty-string, list<non-empty-string>>|non-empty-array<string, array<int<0, max>, string>>|array<string, array<int<0, max>, string>>}
+ * @psalm-type MimeTypeMap = array{
+ *    mimes: array<
+ *        non-empty-string, list<non-empty-string>
+ *    >|non-empty-array<
+ *        string, array<int<0, max>, string>
+ *    >,
+ *    extensions: array<
+ *        non-empty-string, list<non-empty-string>
+ *    >|non-empty-array<
+ *        string, array<int<0, max>, string>
+ *    >|array<
+ *        string, array<int<0, max>, string>
+ *    >
+ * }
  */
 class MimeTypes implements MimeTypesInterface
 {
@@ -108,6 +120,7 @@ class MimeTypes implements MimeTypesInterface
     }
 
     #[Pure]
+    #[\Override]
     public function getMimeType(string $extension): ?string
     {
         $extension = $this->cleanInput($extension);
@@ -119,6 +132,7 @@ class MimeTypes implements MimeTypesInterface
     }
 
     #[Pure]
+    #[\Override]
     public function getExtension(string $mimeType): ?string
     {
         $mimeType = $this->cleanInput($mimeType);
@@ -130,6 +144,7 @@ class MimeTypes implements MimeTypesInterface
     }
 
     #[Pure]
+    #[\Override]
     public function getAllMimeTypes(string $extension): array
     {
         $extension = $this->cleanInput($extension);
@@ -138,6 +153,7 @@ class MimeTypes implements MimeTypesInterface
     }
 
     #[Pure]
+    #[\Override]
     public function getAllExtensions(string $mimeType): array
     {
         $mimeType = $this->cleanInput($mimeType);
@@ -182,11 +198,7 @@ class MimeTypes implements MimeTypesInterface
         $input = trim($input);
 
         //@codeCoverageIgnoreStart
-        if (function_exists('mb_strtolower')) {
-            $input = \mb_strtolower($input);
-        } else {
-            $input = strtolower($input);
-        }
+        $input = function_exists('mb_strtolower') ? \mb_strtolower($input) : strtolower($input);
         //@codeCoverageIgnoreEnd
         return $input;
     }

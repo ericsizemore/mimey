@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "ac856d4b093922b96e62c7357f331a8b",
+    "content-hash": "1cc1d0c30ea746b04e01eeabb257f44b",
     "packages": [
         {
             "name": "jetbrains/phpstorm-attributes",
@@ -276,12 +276,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/PHP-CS-Fixer/PHP-CS-Fixer.git",
-                "reference": "75f1b53bd43614dc5942a760073e4b4c639c9955"
+                "reference": "167eb6c4100cdbc67ca93ee3ccd58926074e6586"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/PHP-CS-Fixer/PHP-CS-Fixer/zipball/75f1b53bd43614dc5942a760073e4b4c639c9955",
-                "reference": "75f1b53bd43614dc5942a760073e4b4c639c9955",
+                "url": "https://api.github.com/repos/PHP-CS-Fixer/PHP-CS-Fixer/zipball/167eb6c4100cdbc67ca93ee3ccd58926074e6586",
+                "reference": "167eb6c4100cdbc67ca93ee3ccd58926074e6586",
                 "shasum": ""
             },
             "require": {
@@ -360,7 +360,7 @@
                     "type": "github"
                 }
             ],
-            "time": "2024-01-04T01:37:45+00:00"
+            "time": "2024-01-05T22:25:59+00:00"
         },
         {
             "name": "myclabs/deep-copy",
@@ -607,12 +607,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/phpstan/phpstan.git",
-                "reference": "666b99e4e65941fa75bc733dc299f457c0a49d72"
+                "reference": "fa4fedef5e292c411315a195754e3059b19e7058"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/phpstan/phpstan/zipball/666b99e4e65941fa75bc733dc299f457c0a49d72",
-                "reference": "666b99e4e65941fa75bc733dc299f457c0a49d72",
+                "url": "https://api.github.com/repos/phpstan/phpstan/zipball/fa4fedef5e292c411315a195754e3059b19e7058",
+                "reference": "fa4fedef5e292c411315a195754e3059b19e7058",
                 "shasum": ""
             },
             "require": {
@@ -662,7 +662,7 @@
                     "type": "tidelift"
                 }
             ],
-            "time": "2024-01-03T18:45:12+00:00"
+            "time": "2024-01-05T15:43:22+00:00"
         },
         {
             "name": "phpstan/phpstan-phpunit",
@@ -1348,6 +1348,63 @@
                 "source": "https://github.com/php-fig/log/tree/3.0.0"
             },
             "time": "2021-07-14T16:46:02+00:00"
+        },
+        {
+            "name": "rector/rector",
+            "version": "dev-main",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/rectorphp/rector.git",
+                "reference": "3c0a61462c4e8122f07468377195474a2523a16c"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/rectorphp/rector/zipball/3c0a61462c4e8122f07468377195474a2523a16c",
+                "reference": "3c0a61462c4e8122f07468377195474a2523a16c",
+                "shasum": ""
+            },
+            "require": {
+                "php": "^7.2|^8.0",
+                "phpstan/phpstan": "^1.10.52"
+            },
+            "conflict": {
+                "rector/rector-doctrine": "*",
+                "rector/rector-downgrade-php": "*",
+                "rector/rector-phpunit": "*",
+                "rector/rector-symfony": "*"
+            },
+            "default-branch": true,
+            "bin": [
+                "bin/rector"
+            ],
+            "type": "library",
+            "autoload": {
+                "files": [
+                    "bootstrap.php"
+                ]
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "description": "Instant Upgrade and Automated Refactoring of any PHP code",
+            "keywords": [
+                "automation",
+                "dev",
+                "migration",
+                "refactoring"
+            ],
+            "support": {
+                "issues": "https://github.com/rectorphp/rector/issues",
+                "source": "https://github.com/rectorphp/rector/tree/main"
+            },
+            "funding": [
+                {
+                    "url": "https://github.com/tomasvotruba",
+                    "type": "github"
+                }
+            ],
+            "time": "2024-01-06T06:01:40+00:00"
         },
         {
             "name": "sebastian/cli-parser",
@@ -2278,12 +2335,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/symfony/console.git",
-                "reference": "e0b2ccdd08585175012a8a9999d842153835df78"
+                "reference": "7739bb6aef4a98d2a28465de5a5e2a78f66caa7a"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/symfony/console/zipball/e0b2ccdd08585175012a8a9999d842153835df78",
-                "reference": "e0b2ccdd08585175012a8a9999d842153835df78",
+                "url": "https://api.github.com/repos/symfony/console/zipball/7739bb6aef4a98d2a28465de5a5e2a78f66caa7a",
+                "reference": "7739bb6aef4a98d2a28465de5a5e2a78f66caa7a",
                 "shasum": ""
             },
             "require": {
@@ -2363,7 +2420,7 @@
                     "type": "tidelift"
                 }
             ],
-            "time": "2024-01-02T10:00:13+00:00"
+            "time": "2024-01-04T10:44:02+00:00"
         },
         {
             "name": "symfony/deprecation-contracts",
@@ -3627,7 +3684,9 @@
     ],
     "aliases": [],
     "minimum-stability": "dev",
-    "stability-flags": [],
+    "stability-flags": {
+        "rector/rector": 20
+    },
     "prefer-stable": false,
     "prefer-lowest": false,
     "platform": {

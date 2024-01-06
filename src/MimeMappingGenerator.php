@@ -67,24 +67,27 @@ use const JSON_PRETTY_PRINT;
  *
  * Reads text in the format of httpd's mime.types and generates a PHP array containing the mappings.
  *
- * The psalm-type's looks gnarly, but it covers just about everything. Will be worked on further. It makes
- * PHPStan happy for now.
+ * The psalm-type looks gnarly, but it covers just about everything.
  *
- * @psalm-type MimeTypeMap = array{mimes: array<non-empty-string, list<non-empty-string>>|non-empty-array<string, array<int<0, max>, string>>, extensions: array<non-empty-string, list<non-empty-string>>|non-empty-array<string, array<int<0, max>, string>>|array<string, array<int<0, max>, string>>}
- *
- * @psalm-type MimeTypeMapTwo =  array{mimes: non-empty-array<non-falsy-string, non-empty-array<0, non-falsy-string>>, extensions?: array<string, array<int<0, max>, string>>}
- *
- * @psalm-type MimeTypeMapThree = array{mimes?: array<string, array<int<0, max>, string>>, extensions: non-empty-array<non-falsy-string, non-empty-array<0, non-falsy-string>>}
+ * @psalm-type MimeTypeMap = array{
+ *    mimes?: array<
+ *        non-empty-string|string, list<non-empty-string>|array<int<0, max>, string>
+ *    >|non-empty-array<
+ *        non-falsy-string|string, non-empty-array<0, non-falsy-string>|array<int<0, max>, string>
+ *    >,
+ *    extensions?: array<
+ *        non-empty-string, list<non-empty-string>
+ *     >|non-empty-array<
+ *        string|non-falsy-string, array<int<0, max>, string>|non-empty-array<0, non-falsy-string>
+ *    >|array<
+ *        string, array<int<0, max>, string>
+ *    >
+ * }
  */
 class MimeMappingGenerator
 {
     /**
-     * @var  string  $mimeTypesText
-     */
-    protected string $mimeTypesText;
-
-    /**
-     * @var  MimeTypeMap|MimeTypeMapTwo|MimeTypeMapThree|array{}  $mapCache
+     * @var  MimeTypeMap|array{}  $mapCache
      */
     protected array $mapCache = [];
 
@@ -93,15 +96,12 @@ class MimeMappingGenerator
      *
      * @param  non-empty-string  $mimeTypesText  The text from the mime.types file.
      */
-    public function __construct(string $mimeTypesText)
-    {
-        $this->mimeTypesText = $mimeTypesText;
-    }
+    public function __construct(protected string $mimeTypesText) {}
 
     /**
      * Read the given mime.types text and return a mapping compatible with the MimeTypes class.
      *
-     * @return  MimeTypeMap|MimeTypeMapTwo|MimeTypeMapThree|array{}  The mapping.
+     * @return  MimeTypeMap|array{}  The mapping.
      */
     public function generateMapping(): array
     {

@@ -8,5 +8,5 @@ $destinationFile = dirname(__DIR__) . '/data/mime.types';
 
 file_put_contents($destinationFile, file_get_contents($updateUrl));
 
-echo "Downloaded mime.types from '$updateUrl' and stored at '$destinationFile'" . PHP_EOL;
+echo sprintf('Downloaded mime.types from \'%s\' and stored at \'%s\'', $updateUrl, $destinationFile) . PHP_EOL;
 echo PHP_EOL;

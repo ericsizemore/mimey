@@ -2,6 +2,8 @@
 
   * Added PHP-CS-Fixer to dev dependencies
     * Fixes throughout per PHPCS (PER, PSR-2, PSR-12)
+  * Added RectorPHP/Rector to dev dependencies
+    * Changes throughout based on Rector fixes/suggestions
   * Updated copyright/license docblocks to reduce their size, and reduce to only one.
   * Normalized composer.json and added .gitattributes
   * Updated Mime Types

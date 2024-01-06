@@ -41,6 +41,7 @@ declare(strict_types=1);
 namespace Esi\Mimey\Tests;
 
 // Core classes
+use JsonException;
 use Esi\Mimey\MimeMappingGenerator;
 
 // PHPUnit
@@ -58,7 +59,7 @@ class MimeMappingGeneratorTest extends TestCase
      */
     public function testGenerateMapping(): void
     {
-        $generator = new MimeMappingGenerator(
+        $mimeMappingGenerator = new MimeMappingGenerator(
             "#ignore\tme\n" .
             "application/json\t\t\tjson\n" .
             "image/jpeg\t\t\tjpeg jpg #ignore this too\n\n" .
@@ -66,7 +67,7 @@ class MimeMappingGeneratorTest extends TestCase
             "qux\tbar\n"
         );
 
-        $mapping = $generator->generateMapping();
+        $mapping = $mimeMappingGenerator->generateMapping();
 
         $expected = [
             'mimes' => [
@@ -89,11 +90,11 @@ class MimeMappingGeneratorTest extends TestCase
     /**
      * Test generating JSON from given mime.types text.
      *
-     * @throws \JsonException
+     * @throws JsonException
      */
     public function testGenerateJson(): void
     {
-        $generator = new MimeMappingGenerator(
+        $mimeMappingGenerator = new MimeMappingGenerator(
             <<<EOF
                 #ignore
                 application/json\tjson
@@ -101,8 +102,8 @@ class MimeMappingGeneratorTest extends TestCase
                 EOF
         );
 
-        $json = $generator->generateJson(false);
-        $minJson = $generator->generateJson();
+        $json = $mimeMappingGenerator->generateJson(false);
+        $minJson = $mimeMappingGenerator->generateJson();
 
         self::assertEquals(
             <<<EOF
@@ -140,7 +141,7 @@ class MimeMappingGeneratorTest extends TestCase
      */
     public function testGeneratePhpEnum(): void
     {
-        $generator = new MimeMappingGenerator(
+        $mimeMappingGenerator = new MimeMappingGenerator(
             <<<EOF
                 #ignore
                 application/json\tjson
@@ -148,7 +149,7 @@ class MimeMappingGeneratorTest extends TestCase
                 EOF
         );
 
-        $phpEnum = $generator->generatePhpEnum('TestMimeClass', 'TestMimeNamespace');
+        $phpEnum = $mimeMappingGenerator->generatePhpEnum('TestMimeClass', 'TestMimeNamespace');
 
         self::assertEquals(
             <<<EOF

@@ -75,6 +75,7 @@ class MimeTypesTest extends TestCase
     /**
      * Set up testing with needed data.
      */
+    #[\Override]
     protected function setUp(): void
     {
         $this->mime = new MimeTypes([
@@ -113,8 +114,6 @@ class MimeTypesTest extends TestCase
     /**
      * Tests retrieving a mime type based on extension.
      *
-     * @param string $expectedMimeType
-     * @param string $extension
      */
     #[DataProvider('getMimeTypeProvider')]
     public function testGetMimeType(string $expectedMimeType, string $extension): void
@@ -140,8 +139,6 @@ class MimeTypesTest extends TestCase
     /**
      * Tests retrieving an extension based on mime type.
      *
-     * @param string $expectedExtension
-     * @param string $mimeType
      */
     #[DataProvider('getExtensionProvider')]
     public function testGetExtension(string $expectedExtension, string $mimeType): void
@@ -179,7 +176,6 @@ class MimeTypesTest extends TestCase
      * Tests retrieving all mime types for a given extension.
      *
      * @param array<int, array<int, array<int, string>|string>>  $expectedMimeTypes
-     * @param string $extension
      */
     #[DataProvider('getAllMimeTypesProvider')]
     public function testGetAllMimeTypes(array $expectedMimeTypes, string $extension): void
@@ -214,7 +210,6 @@ class MimeTypesTest extends TestCase
      * Tests retrieving all extensions for a given mime type.
      *
      * @param array<int, array<int, array<int, string>|string>> $expectedExtensions
-     * @param string $mimeType
      */
     #[DataProvider('getAllExtensionsProvider')]
     public function testGetAllExtensions(array $expectedExtensions, string $mimeType): void
@@ -259,9 +254,9 @@ class MimeTypesTest extends TestCase
      */
     public function testBuiltInMapping(): void
     {
-        $mime = new MimeTypes();
-        self::assertEquals('json', $mime->getExtension('application/json'));
-        self::assertEquals('application/json', $mime->getMimeType('json'));
+        $mimeTypes = new MimeTypes();
+        self::assertEquals('json', $mimeTypes->getExtension('application/json'));
+        self::assertEquals('application/json', $mimeTypes->getMimeType('json'));
     }
 
     /**
@@ -275,8 +270,8 @@ class MimeTypesTest extends TestCase
         rename($original, $backup);
         file_put_contents($original, 'invalid json');
 
-        $class = new ReflectionClass(MimeTypes::class);
-        $class->setStaticPropertyValue('builtIn', null);
+        $reflectionClass = new ReflectionClass(MimeTypes::class);
+        $reflectionClass->setStaticPropertyValue('builtIn', null);
 
         try {
             self::expectException(RuntimeException::class);

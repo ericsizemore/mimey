@@ -36,7 +36,8 @@
         "phpstan/phpstan": "^1.11",
         "phpstan/phpstan-phpunit": "^1.4",
         "phpstan/phpstan-strict-rules": "^1.6",
-        "phpunit/phpunit": "^10.5"
+        "phpunit/phpunit": "^10.5",
+        "rector/rector": "dev-main"
     },
     "suggest": {
         "ext-mbstring": "For non-English (user) input parsing"

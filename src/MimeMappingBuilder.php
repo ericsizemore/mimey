@@ -63,29 +63,37 @@ use const JSON_PRETTY_PRINT;
 /**
  * Class for converting MIME types to file extensions and vice versa.
  *
- * This psalm-type looks gnarly, but it covers just about everything. Will be worked on further. It makes
- * PHPStan happy for now.
+ * This psalm-type looks gnarly, but it covers just about everything.
  *
- * @psalm-type MimeTypeMap = array{mimes: array<non-empty-string, list<non-empty-string>>|non-empty-array<string, array<int<0, max>, string>>, extensions: array<non-empty-string, list<non-empty-string>>|non-empty-array<string, array<int<0, max>, string>>|array<string, array<int<0, max>, string>>}
+ * @psalm-type MimeTypeMap = array{
+ *    mimes: array<
+ *        non-empty-string, list<non-empty-string>
+ *    >|non-empty-array<
+ *        string, array<int<0, max>, string>
+ *    >,
+ *    extensions: array<
+ *        non-empty-string, list<non-empty-string>
+ *    >|non-empty-array<
+ *        string, array<int<0, max>, string>
+ *    >|array<
+ *        string, array<int<0, max>, string>
+ *    >
+ * }
  */
 class MimeMappingBuilder
 {
-    /**
-     * The Mapping Array
-     *
-     * @var MimeTypeMap
-     */
-    protected array $mapping;
-
     /**
      * Create a new mapping builder.
      *
      * @param MimeTypeMap $mapping An associative array containing two entries. See `MimeTypes` constructor for details.
      */
-    private function __construct(array $mapping)
-    {
-        $this->mapping = $mapping;
-    }
+    private function __construct(
+        /**
+         * The Mapping Array
+         *
+         */
+        protected array $mapping
+    ) {}
 
     /**
      * Add a conversion.
@@ -180,7 +188,7 @@ class MimeMappingBuilder
             /** @var string $json **/
             $json = file_get_contents($file);
             /** @var MimeTypeMap $json **/
-            $json = json_decode($json, true, flags: JSON_THROW_ON_ERROR);
+            $json = json_decode(/** @scrutinizer ignore-type */ $json, true, flags: JSON_THROW_ON_ERROR);
 
             return new self($json);
         } catch (Throwable $e) {

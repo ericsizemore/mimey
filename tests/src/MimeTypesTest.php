@@ -6,7 +6,7 @@ declare(strict_types=1);
  * Mimey - PHP package for converting file extensions to MIME types and vice versa.
  *
  * @author    Eric Sizemore <admin@secondversion.com>
- * @version   1.1.1
+ * @version   1.2.0
  * @copyright (C) 2023-2024 Eric Sizemore
  * @license   The MIT License (MIT)
  *
@@ -82,15 +82,15 @@ class MimeTypesTest extends TestCase
             'mimes' => [
                 'json' => ['application/json'],
                 'jpeg' => ['image/jpeg'],
-                'jpg' => ['image/jpeg'],
-                'bar' => ['foo', 'qux'],
-                'baz' => ['foo'],
+                'jpg'  => ['image/jpeg'],
+                'bar'  => ['foo', 'qux'],
+                'baz'  => ['foo'],
             ],
             'extensions' => [
                 'application/json' => ['json'],
-                'image/jpeg' => ['jpeg', 'jpg'],
-                'foo' => ['bar', 'baz'],
-                'qux' => ['bar'],
+                'image/jpeg'       => ['jpeg', 'jpg'],
+                'foo'              => ['bar', 'baz'],
+                'qux'              => ['bar'],
             ],
         ]);
     }
@@ -265,7 +265,7 @@ class MimeTypesTest extends TestCase
     public function testInvalidBuiltInMapping(): void
     {
         $original = dirname(__DIR__, 2) . '/dist/mime.types.min.json';
-        $backup = dirname(__DIR__, 2) . '/dist/mime.types.min.json.backup';
+        $backup   = dirname(__DIR__, 2) . '/dist/mime.types.min.json.backup';
 
         rename($original, $backup);
         file_put_contents($original, 'invalid json');

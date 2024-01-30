@@ -9,17 +9,17 @@ require_once dirname(__DIR__) . '/vendor/autoload.php';
 
 use Esi\Mimey\MimeMappingGenerator;
 
-$mimeTypes = dirname(__DIR__) . '/data/mime.types';
-$mimeTypesCustom = dirname(__DIR__) . '/data/mime.types.custom';
-$jsonDestination = dirname(__DIR__) . '/dist/mime.types.json';
+$mimeTypes          = dirname(__DIR__) . '/data/mime.types';
+$mimeTypesCustom    = dirname(__DIR__) . '/data/mime.types.custom';
+$jsonDestination    = dirname(__DIR__) . '/dist/mime.types.json';
 $minJsonDestination = dirname(__DIR__) . '/dist/mime.types.min.json';
-$enumDestination = dirname(__DIR__) . '/dist/MimeType.php';
+$enumDestination    = dirname(__DIR__) . '/dist/MimeType.php';
 
-$mimeTypesContent = file_get_contents($mimeTypes);
+$mimeTypesContent       = file_get_contents($mimeTypes);
 $mimeTypesCustomContent = file_get_contents($mimeTypesCustom);
 
 $generator = new MimeMappingGenerator($mimeTypesCustomContent . PHP_EOL . $mimeTypesContent);
-$mapping = $generator->generateMapping();
+$mapping   = $generator->generateMapping();
 
 file_put_contents($jsonDestination, $generator->generateJson(false));
 file_put_contents($minJsonDestination, $generator->generateJson());

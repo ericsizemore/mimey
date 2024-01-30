@@ -1,13 +1,13 @@
-### 1.2.0 (Work in progress)
+### 1.2.0 (2024-01-30)
 
-  * Added PHP-CS-Fixer to dev dependencies
-    * Fixes throughout per PHPCS (PER, PSR-2, PSR-12)
-  * Added RectorPHP/Rector to dev dependencies
-    * Changes throughout based on Rector fixes/suggestions
+  * Added PHP-CS-Fixer to dev dependencies.
+    * Fixes throughout per PHPCS (PER, PSR-2, PSR-12).
+  * Added RectorPHP/Rector to dev dependencies.
+    * Changes throughout based on Rector fixes/suggestions.
   * Updated copyright/license docblocks to reduce their size, and reduce to only one.
-  * Normalized composer.json and added .gitattributes
-  * Updated Mime Types
-  * Bumped minimum PHP version to 8.2
+  * Normalized composer.json and added .gitattributes.
+  * Updated Mime Types.
+  * Bumped minimum PHP version to 8.2.
 
 ### 1.1.1 (2023-12-20)
 

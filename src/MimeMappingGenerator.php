@@ -6,7 +6,7 @@ declare(strict_types=1);
  * Mimey - PHP package for converting file extensions to MIME types and vice versa.
  *
  * @author    Eric Sizemore <admin@secondversion.com>
- * @version   1.1.1
+ * @version   1.2.0
  * @copyright (C) 2023-2024 Eric Sizemore
  * @license   The MIT License (MIT)
  *
@@ -119,7 +119,7 @@ class MimeMappingGenerator
             $parts = $line !== '' ? array_values(array_filter(explode("\t", $line))) : [];
 
             if (count($parts) === 2) {
-                $mime = trim($parts[0]);
+                $mime       = trim($parts[0]);
                 $extensions = explode(' ', $parts[1]);
 
                 foreach ($extensions as $extension) {
@@ -128,12 +128,13 @@ class MimeMappingGenerator
                     if ($mime !== '' && $extension !== '') {
                         $this->mapCache['mimes'][$extension][] = $mime;
                         $this->mapCache['extensions'][$mime][] = $extension;
-                        $this->mapCache['mimes'][$extension] = array_unique($this->mapCache['mimes'][$extension]);
-                        $this->mapCache['extensions'][$mime] = array_unique($this->mapCache['extensions'][$mime]);
+                        $this->mapCache['mimes'][$extension]   = array_unique($this->mapCache['mimes'][$extension]);
+                        $this->mapCache['extensions'][$mime]   = array_unique($this->mapCache['extensions'][$mime]);
                     }
                 }
             }
         }
+
         return $this->mapCache;
     }
 
@@ -188,12 +189,12 @@ class MimeMappingGenerator
         foreach ($values as $name => $value) {
             $stub = str_replace("%$name%", $value, $stub);
         }
+
         return $stub;
     }
 
     /**
      * @param non-empty-string|string $mimeType
-     * @return non-empty-string|string
      */
     protected function convertMimeTypeToCaseName(string $mimeType): string
     {

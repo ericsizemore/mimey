@@ -7,7 +7,6 @@ use Rector\Set\ValueObject\SetList;
 use Rector\Set\ValueObject\LevelSetList;
 use Rector\PHPUnit\Set\PHPUnitSetList;
 use Rector\CodeQuality\Rector\ClassMethod\LocallyCalledStaticMethodToNonStaticRector;
-use Rector\Core\ValueObject\PhpVersion;
 use Rector\CodeQuality\Rector\Concat\JoinStringConcatRector;
 
 return static function (RectorConfig $rectorConfig): void {
@@ -17,12 +16,6 @@ return static function (RectorConfig $rectorConfig): void {
         __DIR__ . '/bin',
     ]);
 
-    $rectorConfig->phpVersion(PhpVersion::PHP_82);
-    $rectorConfig->phpVersion(PhpVersion::PHP_83);
-    //$rectorConfig->importNames();
-
-    // here we can define, what sets of rules will be applied
-    // tip: use "SetList" class to autocomplete sets with your IDE
     $rectorConfig->sets([
         SetList::CODE_QUALITY,
         //SetList::DEAD_CODE,
@@ -31,8 +24,9 @@ return static function (RectorConfig $rectorConfig): void {
         //SetList::NAMING,
         //SetList::PRIVATIZATION,
         //SetList::EARLY_RETURN,
-        LevelSetList::UP_TO_PHP_83,
+        LevelSetList::UP_TO_PHP_82,
         PHPUnitSetList::PHPUNIT_100,
+        //PHPUnitSetList::PHPUNIT_CODE_QUALITY,
     ]);
     $rectorConfig->skip([
         LocallyCalledStaticMethodToNonStaticRector::class,

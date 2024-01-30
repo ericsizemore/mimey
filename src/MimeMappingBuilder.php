@@ -6,7 +6,7 @@ declare(strict_types=1);
  * Mimey - PHP package for converting file extensions to MIME types and vice versa.
  *
  * @author    Eric Sizemore <admin@secondversion.com>
- * @version   1.1.1
+ * @version   1.2.0
  * @copyright (C) 2023-2024 Eric Sizemore
  * @license   The MIT License (MIT)
  *
@@ -90,7 +90,6 @@ class MimeMappingBuilder
     private function __construct(
         /**
          * The Mapping Array
-         *
          */
         protected array $mapping
     ) {}
@@ -106,7 +105,7 @@ class MimeMappingBuilder
     public function add(string $mime, string $extension, bool $prependExtension = true, bool $prependMime = true): void
     {
         $existingExtensions = $this->mapping['extensions'][$mime] ?? [];
-        $existingMimes = $this->mapping['mimes'][$extension] ?? [];
+        $existingMimes      = $this->mapping['mimes'][$extension] ?? [];
 
         if ($prependExtension) {
             array_unshift($existingExtensions, $extension);

@@ -6,7 +6,7 @@ declare(strict_types=1);
  * Mimey - PHP package for converting file extensions to MIME types and vice versa.
  *
  * @author    Eric Sizemore <admin@secondversion.com>
- * @version   1.1.1
+ * @version   1.2.0
  * @copyright (C) 2023-2024 Eric Sizemore
  * @license   The MIT License (MIT)
  *
@@ -98,7 +98,7 @@ class MimeMappingBuilderTest extends TestCase
     public function testFromBuiltIn(): void
     {
         $mimeMappingBuilder = MimeMappingBuilder::create();
-        $mime1 = new MimeTypes($mimeMappingBuilder->getMapping());
+        $mime1              = new MimeTypes($mimeMappingBuilder->getMapping());
 
         self::assertEquals('json', $mime1->getExtension('application/json'));
         self::assertEquals('application/json', $mime1->getMimeType('json'));

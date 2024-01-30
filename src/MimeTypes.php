@@ -6,7 +6,7 @@ declare(strict_types=1);
  * Mimey - PHP package for converting file extensions to MIME types and vice versa.
  *
  * @author    Eric Sizemore <admin@secondversion.com>
- * @version   1.1.1
+ * @version   1.2.0
  * @copyright (C) 2023-2024 Eric Sizemore
  * @license   The MIT License (MIT)
  *
@@ -183,6 +183,7 @@ class MimeTypes implements MimeTypesInterface
                 throw new RuntimeException('Failed to parse built-in mime types at $builtInTypes', 0, $e);
             }
         }
+
         return self::$builtIn;
     }
 

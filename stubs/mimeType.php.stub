@@ -7,12 +7,12 @@ declare(strict_types=1);
 
 namespace %namespace%;
 
-use RuntimeException;
 use InvalidArgumentException;
 %interface_usage%
 enum %classname%: string implements MimeTypeInterface
 {
 %cases%
+    #[\Override]
     public function getExtension(): string
     {
         return match($this) {
@@ -20,6 +20,7 @@ enum %classname%: string implements MimeTypeInterface
         };
     }
 
+    #[\Override]
     public function getValue(): string
     {
         return $this->value;

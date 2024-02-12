@@ -6,7 +6,7 @@ declare(strict_types=1);
  * Mimey - PHP package for converting file extensions to MIME types and vice versa.
  *
  * @author    Eric Sizemore <admin@secondversion.com>
- * @version   1.2.0
+ * @version   2.0.0
  * @copyright (C) 2023-2024 Eric Sizemore
  * @license   The MIT License (MIT)
  *
@@ -43,6 +43,8 @@ namespace Esi\Mimey\Tests;
 // Core classes
 use Esi\Mimey\MimeTypes;
 
+use Iterator;
+
 // PHPUnit
 use PHPUnit\Framework\TestCase;
 use PHPUnit\Framework\Attributes\CoversClass;
@@ -61,6 +63,7 @@ use function unlink;
 
 /**
  * Class to test MimeTypes.
+ * @internal
  */
 #[CoversClass(MimeTypes::class)]
 class MimeTypesTest extends TestCase
@@ -98,123 +101,109 @@ class MimeTypesTest extends TestCase
     /**
      * Provides the data for testing retrieving a mime type based on extension.
      *
-     * @return array<int, array<int, string>>
+     * @return Iterator
      */
-    public static function getMimeTypeProvider(): array
+    public static function getMimeTypeProvider(): Iterator
     {
-        return [
-            ['application/json', 'json'],
-            ['image/jpeg', 'jpeg'],
-            ['image/jpeg', 'jpg'],
-            ['foo', 'bar'],
-            ['foo', 'baz'],
-        ];
+        yield ['application/json', 'json'];
+        yield ['image/jpeg', 'jpeg'];
+        yield ['image/jpeg', 'jpg'];
+        yield ['foo', 'bar'];
+        yield ['foo', 'baz'];
     }
 
     /**
      * Tests retrieving a mime type based on extension.
-     *
      */
     #[DataProvider('getMimeTypeProvider')]
     public function testGetMimeType(string $expectedMimeType, string $extension): void
     {
-        self::assertEquals($expectedMimeType, $this->mime->getMimeType($extension));
+        self::assertSame($expectedMimeType, $this->mime->getMimeType($extension));
     }
 
     /**
      * Provides the data for testing retrieving an extension based on mime type.
      *
-     * @return array<int, array<int, string>>
+     * @return Iterator
      */
-    public static function getExtensionProvider(): array
+    public static function getExtensionProvider(): Iterator
     {
-        return [
-            ['json', 'application/json'],
-            ['jpeg', 'image/jpeg'],
-            ['bar', 'foo'],
-            ['bar', 'qux'],
-        ];
+        yield ['json', 'application/json'];
+        yield ['jpeg', 'image/jpeg'];
+        yield ['bar', 'foo'];
+        yield ['bar', 'qux'];
     }
 
     /**
      * Tests retrieving an extension based on mime type.
-     *
      */
     #[DataProvider('getExtensionProvider')]
     public function testGetExtension(string $expectedExtension, string $mimeType): void
     {
-        self::assertEquals($expectedExtension, $this->mime->getExtension($mimeType));
+        self::assertSame($expectedExtension, $this->mime->getExtension($mimeType));
     }
 
     /**
      * Provides the data for testing retrieving all mime types for a given extension.
-     *
-     * @return array<int, array<int, array<int, string>|string>>
      */
-    public static function getAllMimeTypesProvider(): array
+    public static function getAllMimeTypesProvider(): Iterator
     {
-        return [
-            [
-                ['application/json'], 'json',
-            ],
-            [
-                ['image/jpeg'], 'jpeg',
-            ],
-            [
-                ['image/jpeg'], 'jpg',
-            ],
-            [
-                ['foo', 'qux'], 'bar',
-            ],
-            [
-                ['foo'], 'baz',
-            ],
+        yield [
+            ['application/json'], 'json',
+        ];
+        yield [
+            ['image/jpeg'], 'jpeg',
+        ];
+        yield [
+            ['image/jpeg'], 'jpg',
+        ];
+        yield [
+            ['foo', 'qux'], 'bar',
+        ];
+        yield [
+            ['foo'], 'baz',
         ];
     }
 
     /**
      * Tests retrieving all mime types for a given extension.
      *
-     * @param array<int, array<int, array<int, string>|string>>  $expectedMimeTypes
+     * @param array<string> $expectedMimeTypes
      */
     #[DataProvider('getAllMimeTypesProvider')]
     public function testGetAllMimeTypes(array $expectedMimeTypes, string $extension): void
     {
-        self::assertEquals($expectedMimeTypes, $this->mime->getAllMimeTypes($extension));
+        self::assertSame($expectedMimeTypes, $this->mime->getAllMimeTypes($extension));
     }
 
     /**
      * Provides the data for testing retrieving all extensions for a given mime type.
-     *
-     * @return array<int, array<int, array<int, string>|string>>
      */
-    public static function getAllExtensionsProvider(): array
+    public static function getAllExtensionsProvider(): Iterator
     {
-        return [
-            [
-                ['json'], 'application/json',
-            ],
-            [
-                ['jpeg', 'jpg'], 'image/jpeg',
-            ],
-            [
-                ['bar', 'baz'], 'foo',
-            ],
-            [
-                ['bar'], 'qux',
-            ],
+        yield [
+            ['json'], 'application/json',
         ];
+        yield [
+            ['jpeg', 'jpg'], 'image/jpeg',
+        ];
+        yield [
+            ['bar', 'baz'], 'foo',
+        ];
+        yield [
+            ['bar'], 'qux',
+         ];
     }
 
     /**
      * Tests retrieving all extensions for a given mime type.
      *
-     * @param array<int, array<int, array<int, string>|string>> $expectedExtensions
+     * @param array<string> $expectedExtensions
      */
     #[DataProvider('getAllExtensionsProvider')]
     public function testGetAllExtensions(array $expectedExtensions, string $mimeType): void
     {
-        self::assertEquals($expectedExtensions, $this->mime->getAllExtensions($mimeType));
+        self::assertSame($expectedExtensions, $this->mime->getAllExtensions($mimeType));
     }
 
     /**
@@ -238,7 +227,7 @@ class MimeTypesTest extends TestCase
      */
     public function testGetAllMimeTypesUndefined(): void
     {
-        self::assertEquals([], $this->mime->getAllMimeTypes('undefined'));
+        self::assertSame([], $this->mime->getAllMimeTypes('undefined'));
     }
 
     /**
@@ -246,7 +235,7 @@ class MimeTypesTest extends TestCase
      */
     public function testGetAllExtensionsUndefined(): void
     {
-        self::assertEquals([], $this->mime->getAllExtensions('undefined'));
+        self::assertSame([], $this->mime->getAllExtensions('undefined'));
     }
 
     /**
@@ -255,8 +244,8 @@ class MimeTypesTest extends TestCase
     public function testBuiltInMapping(): void
     {
         $mimeTypes = new MimeTypes();
-        self::assertEquals('json', $mimeTypes->getExtension('application/json'));
-        self::assertEquals('application/json', $mimeTypes->getMimeType('json'));
+        self::assertSame('json', $mimeTypes->getExtension('application/json'));
+        self::assertSame('application/json', $mimeTypes->getMimeType('json'));
     }
 
     /**

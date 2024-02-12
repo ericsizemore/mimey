@@ -1,3 +1,18 @@
+### 2.0.0 (Work In Progress)
+
+  * Restructuring:
+    * `MimeMappingBuilder` and `MimeMappingGenerator` are now `Mapping\Builder` and `Mapping\Generator`.
+    * `MimeTypeInterface` and `MimeTypesInterface` are now `Interface\MimeType` and `Interface\MimeTypes`
+  * Updated PHPUnit to 11.x (currently using 11.1-dev).
+    * All `assertEquals` calls are now `assertSame`.
+    * Updated data providers to return `Iterator` via `yield` instead of arrays.
+  * Removed Rector from dev-dependencies.
+  * Set PHP-CS-Fixer dev dependency to `dev-master`.
+  * Added the `Override` attribute. to the `MimeType` enum functions `getExtension` and `getValue`.
+    * Not importing the attribute, as `#[\Override]` should not cause issues in PHP < 8.3
+  * Updated the `psalm` workflow to use the latest `psalm/psalm-github-security-scan` and `github/codeql-action/upload-sarif`. 
+    
+
 ### 1.2.0 (2024-01-30)
 
   * Added PHP-CS-Fixer to dev dependencies.

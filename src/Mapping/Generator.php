@@ -6,7 +6,7 @@ declare(strict_types=1);
  * Mimey - PHP package for converting file extensions to MIME types and vice versa.
  *
  * @author    Eric Sizemore <admin@secondversion.com>
- * @version   1.2.0
+ * @version   2.0.0
  * @copyright (C) 2023-2024 Eric Sizemore
  * @license   The MIT License (MIT)
  *
@@ -38,7 +38,9 @@ declare(strict_types=1);
  *     Copyright (c) 2016 Ralph Khattar
  */
 
-namespace Esi\Mimey;
+namespace Esi\Mimey\Mapping;
+
+use Esi\Mimey\Interface\MimeType;
 
 // Exceptions
 use JsonException;
@@ -84,7 +86,7 @@ use const JSON_PRETTY_PRINT;
  *    >
  * }
  */
-class MimeMappingGenerator
+class Generator
 {
     /**
      * @var  MimeTypeMap|array{}  $mapCache
@@ -113,7 +115,7 @@ class MimeMappingGenerator
 
         foreach ($lines as $line) {
             /** @var string $line **/
-            $line = preg_replace('~\\#.*~', '', $line);
+            $line = preg_replace('~#.*~', '', $line);
             $line = trim($line);
 
             $parts = $line !== '' ? array_values(array_filter(explode("\t", $line))) : [];
@@ -158,19 +160,19 @@ class MimeMappingGenerator
      * @param   non-empty-string         $namespace
      * @return  non-empty-string|string
      */
-    public function generatePhpEnum(string $classname = 'MimeType', string $namespace = __NAMESPACE__): string
+    public function generatePhpEnum(string $classname = 'MimeType', string $namespace = 'Esi\Mimey'): string
     {
         $values = [
             'namespace'       => $namespace,
             'classname'       => $classname,
-            'interface_usage' => $namespace !== __NAMESPACE__ ? ('use ' . MimeTypeInterface::class . ";\n") : '',
+            'interface_usage' => $namespace !== __NAMESPACE__ ? ('use ' . MimeType::class . " as MimeTypeInterface;\n") : '',
             'cases'           => '',
             'type2ext'        => '',
             'ext2type'        => '',
         ];
 
         /** @var string $stub **/
-        $stub = file_get_contents(dirname(__DIR__) . '/stubs/mimeType.php.stub');
+        $stub = file_get_contents(dirname(__DIR__, 2) . '/stubs/mimeType.php.stub');
 
         $mapping = $this->generateMapping();
         $nameMap = [];

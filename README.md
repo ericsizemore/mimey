@@ -72,11 +72,13 @@ $mimes->getAllExtensions('image/jpeg'); // array('jpeg', 'jpg', 'jpe')
 
 You can add custom conversions by changing the mapping that is given to `MimeTypes`.
 
-There is a `MimeMappingBuilder` that can help with this:
+There is a `Mapping\Builder` that can help with this:
 
 ```php
+use Esi\Mimey\Mapping\Builder;
+
 // Create a builder using the built-in conversions as the basis.
-$builder = MimeMappingBuilder::create();
+$builder = Builder::create();
 
 // Add a conversion. This conversion will take precedence over existing ones.
 $builder->add('custom/mime-type', 'myextension');
@@ -115,7 +117,7 @@ The file can then be loaded to avoid overhead of repeated `$builder->add(...)` c
 
 ```php
 // Load the conversions from a cached file.
-$builder = MimeMappingBuilder::load($cacheFilePath);
+$builder = Builder::load($cacheFilePath);
 $mimes = new MimeTypes($builder->getMapping());
 ```
 
@@ -127,7 +129,22 @@ Compatible with PHP >= 8.2.
 composer require esi/mimey
 ```
 
-## Contributing
+## Credits
+
+This fork uses the same license as the original repository by @ralouphie (MIT).
+This repository is a fork of [elephox-dev/mimey](https://github.com/elephox-dev/mimey) which itself was a fork of [ralouphie/mimey](https://github.com/ralouphie/mimey).
+Thanks to them and all the contributors!
+
+### Submitting bugs and feature requests
+
+Bugs and feature requests are tracked on [GitHub](https://github.com/ericsizemore/mimey/issues)
+
+Issues are the quickest way to report a bug. If you find a bug or documentation error, please check the following first:
+
+* That there is not an Issue already open concerning the bug
+* That the issue has not already been addressed (within closed Issues, for example)
+
+### Contributing
 
 Missing a MIME type?
 
@@ -142,12 +159,46 @@ After a short review and merge, the MIME type will automagically be added to the
 
 If you want to, you can also run `composer generate-types` and add the changed files under `dist/` to your PR.
 
-## Credits
+--
 
-This fork uses the same license as the original repository by @ralouphie (MIT).
-This repository is a fork of [elephox-dev/mimey](https://github.com/elephox-dev/mimey) which itself was a fork of [ralouphie/mimey](https://github.com/ralouphie/mimey).
-Thanks to them and all the contributors!
+Mimey accepts contributions of code and documentation from the community. 
+These contributions can be made in the form of Issues or [Pull Requests](http://help.github.com/send-pull-requests/) on the [Mimey repository](https://github.com/ericsizemore/mimey).
 
+Mimey is licensed under the MIT license. When submitting new features or patches to Mimey, you are giving permission to license those features or patches under the MIT license.
 
-## License
+Mimey tries to adhere to PHPStan level 9 with strict rules and bleeding edge. Please ensure any contributions do as well.
+
+#### Guidelines
+
+Before we look into how, here are the guidelines. If your Pull Requests fail to pass these guidelines it will be declined and you will need to re-submit when you’ve made the changes. This might sound a bit tough, but it is required for me to maintain quality of the code-base.
+
+#### PHP Style
+
+Please ensure all new contributions match the [PSR-12](https://www.php-fig.org/psr/psr-12/) coding style guide. The project is not fully PSR-12 compatible, yet; however, to ensure the easiest transition to the coding guidelines, I would like to go ahead and request that any contributions follow them.
+
+#### Documentation
+
+If you change anything that requires a change to documentation then you will need to add it. New methods, parameters, changing default values, adding constants, etc are all things that will require a change to documentation. The change-log must also be updated for every change. Also PHPDoc blocks must be maintained.
+
+##### Documenting functions/variables (PHPDoc)
+
+Please ensure all new contributions adhere to:
+
+* [PSR-5 PHPDoc](https://github.com/php-fig/fig-standards/blob/master/proposed/phpdoc.md)
+* [PSR-19 PHPDoc Tags](https://github.com/php-fig/fig-standards/blob/master/proposed/phpdoc-tags.md)
+
+when documenting new functions, or changing existing documentation.
+
+#### Branching
+
+One thing at a time: A pull request should only contain one change. That does not mean only one commit, but one change - however many commits it took. The reason for this is that if you change X and Y but send a pull request for both at the same time, we might really want X but disagree with Y, meaning we cannot merge the request. Using the Git-Flow branching model you can create new branches for both of these features and send two requests.
+
+### Author
+
+Eric Sizemore - <admin@secondversion.com> - <https://www.secondversion.com>
+
+### License
+
+Mimey is licensed under the MIT License - see the `LICENSE.md` file for details
+
 [![FOSSA Status](https://app.fossa.com/api/projects/git%2Bgithub.com%2Fericsizemore%2Fmimey.svg?type=large)](https://app.fossa.com/projects/git%2Bgithub.com%2Fericsizemore%2Fmimey?ref=badge_large)

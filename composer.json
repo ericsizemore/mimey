@@ -32,12 +32,11 @@
         "jetbrains/phpstorm-attributes": "^1.0"
     },
     "require-dev": {
-        "friendsofphp/php-cs-fixer": ">=3.45",
+        "friendsofphp/php-cs-fixer": "dev-master",
         "phpstan/phpstan": "^1.11",
         "phpstan/phpstan-phpunit": "^1.4",
         "phpstan/phpstan-strict-rules": "^1.6",
-        "phpunit/phpunit": "^10.5",
-        "rector/rector": "dev-main"
+        "phpunit/phpunit": "^11.0"
     },
     "suggest": {
         "ext-mbstring": "For non-English (user) input parsing"
@@ -58,7 +57,7 @@
     },
     "extra": {
         "branch-alias": {
-            "dev-develop": "1.0-dev"
+            "dev-develop": "2.0-dev"
         }
     },
     "scripts": {
@@ -66,8 +65,6 @@
         "phpcs-fix": "vendor/bin/php-cs-fixer fix --config=.php-cs-fixer.dist.php",
         "phpcs-nofix": "vendor/bin/php-cs-fixer fix --config=.php-cs-fixer.dist.php --dry-run --diff",
         "phpstan": "vendor/bin/phpstan analyse -c phpstan.neon",
-        "rector-dry": "vendor/bin/rector process --dry-run",
-        "rector": "php vendor/bin/rector process",
         "test": "phpunit",
         "update-types": "@php bin/update.php"
     }

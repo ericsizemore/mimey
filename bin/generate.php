@@ -7,7 +7,7 @@ require_once dirname(__DIR__) . '/vendor/autoload.php';
 
 //////////////////////////////////////////////////////////////
 
-use Esi\Mimey\MimeMappingGenerator;
+use Esi\Mimey\Mapping\Generator;
 
 $mimeTypes          = dirname(__DIR__) . '/data/mime.types';
 $mimeTypesCustom    = dirname(__DIR__) . '/data/mime.types.custom';
@@ -18,7 +18,7 @@ $enumDestination    = dirname(__DIR__) . '/dist/MimeType.php';
 $mimeTypesContent       = file_get_contents($mimeTypes);
 $mimeTypesCustomContent = file_get_contents($mimeTypesCustom);
 
-$generator = new MimeMappingGenerator($mimeTypesCustomContent . PHP_EOL . $mimeTypesContent);
+$generator = new Generator($mimeTypesCustomContent . PHP_EOL . $mimeTypesContent);
 $mapping   = $generator->generateMapping();
 
 file_put_contents($jsonDestination, $generator->generateJson(false));

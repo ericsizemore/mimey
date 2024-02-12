@@ -6,7 +6,7 @@ declare(strict_types=1);
  * Mimey - PHP package for converting file extensions to MIME types and vice versa.
  *
  * @author    Eric Sizemore <admin@secondversion.com>
- * @version   1.2.0
+ * @version   2.0.0
  * @copyright (C) 2023-2024 Eric Sizemore
  * @license   The MIT License (MIT)
  *
@@ -38,7 +38,7 @@ declare(strict_types=1);
  *     Copyright (c) 2016 Ralph Khattar
  */
 
-namespace Esi\Mimey;
+namespace Esi\Mimey\Mapping;
 
 // Classes
 use JetBrains\PhpStorm\Pure;
@@ -80,7 +80,7 @@ use const JSON_PRETTY_PRINT;
  *    >
  * }
  */
-class MimeMappingBuilder
+class Builder
 {
     /**
      * Create a new mapping builder.
@@ -166,22 +166,22 @@ class MimeMappingBuilder
     /**
      * Create a new mapping builder based on the built-in types.
      *
-     * @return  MimeMappingBuilder  A mapping builder with built-in types loaded.
+     * @return  Builder  A mapping builder with built-in types loaded.
      */
-    public static function create(): MimeMappingBuilder
+    public static function create(): Builder
     {
-        return self::load(dirname(__DIR__) . '/dist/mime.types.min.json');
+        return self::load(dirname(__DIR__, 2) . '/dist/mime.types.min.json');
     }
 
     /**
      * Create a new mapping builder based on types from a file.
      *
-     * @param  string              $file  The compiled PHP file to load.
-     * @return MimeMappingBuilder         A mapping builder with types loaded from a file.
+     * @param  string   $file  The compiled PHP file to load.
+     * @return Builder         A mapping builder with types loaded from a file.
      *
      * @throws RuntimeException
      */
-    public static function load(string $file): MimeMappingBuilder
+    public static function load(string $file): Builder
     {
         try {
             /** @var string $json **/
@@ -198,10 +198,10 @@ class MimeMappingBuilder
     /**
      * Create a new mapping builder that has no types defined.
      *
-     * @return  MimeMappingBuilder  A mapping builder with no types defined.
+     * @return  Builder  A mapping builder with no types defined.
      */
     #[Pure]
-    public static function blank(): MimeMappingBuilder
+    public static function blank(): Builder
     {
         return new self(['mimes' => [], 'extensions' => []]);
     }

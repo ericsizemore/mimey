@@ -6,7 +6,7 @@ declare(strict_types=1);
  * Mimey - PHP package for converting file extensions to MIME types and vice versa.
  *
  * @author    Eric Sizemore <admin@secondversion.com>
- * @version   1.2.0
+ * @version   2.0.0
  * @copyright (C) 2023-2024 Eric Sizemore
  * @license   The MIT License (MIT)
  *
@@ -38,12 +38,12 @@ declare(strict_types=1);
  *     Copyright (c) 2016 Ralph Khattar
  */
 
-namespace Esi\Mimey;
+namespace Esi\Mimey\Interface;
 
 /**
  * MimeType Enum Interface.
  */
-interface MimeTypeInterface
+interface MimeType
 {
     public function getExtension(): string;
     public function getValue(): string;

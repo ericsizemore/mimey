@@ -6,7 +6,7 @@ declare(strict_types=1);
  * Mimey - PHP package for converting file extensions to MIME types and vice versa.
  *
  * @author    Eric Sizemore <admin@secondversion.com>
- * @version   1.2.0
+ * @version   2.0.0
  * @copyright (C) 2023-2024 Eric Sizemore
  * @license   The MIT License (MIT)
  *
@@ -42,24 +42,25 @@ namespace Esi\Mimey\Tests;
 
 // Core classes
 use JsonException;
-use Esi\Mimey\MimeMappingGenerator;
+use Esi\Mimey\Mapping\Generator;
 
 // PHPUnit
 use PHPUnit\Framework\TestCase;
 use PHPUnit\Framework\Attributes\CoversClass;
 
 /**
- * Class to test MimeMappingGenerator.
+ * Class to test Mapping Generator.
+ * @internal
  */
-#[CoversClass(MimeMappingGenerator::class)]
-class MimeMappingGeneratorTest extends TestCase
+#[CoversClass(Generator::class)]
+class GeneratorTest extends TestCase
 {
     /**
-     * Test mapping generation with givne mime.types text.
+     * Test mapping generation with given mime.types text.
      */
     public function testGenerateMapping(): void
     {
-        $mimeMappingGenerator = new MimeMappingGenerator(
+        $generator = new Generator(
             "#ignore\tme\n" .
             "application/json\t\t\tjson\n" .
             "image/jpeg\t\t\tjpeg jpg #ignore this too\n\n" .
@@ -67,7 +68,7 @@ class MimeMappingGeneratorTest extends TestCase
             "qux\tbar\n"
         );
 
-        $mapping = $mimeMappingGenerator->generateMapping();
+        $mapping = $generator->generateMapping();
 
         $expected = [
             'mimes' => [
@@ -84,7 +85,7 @@ class MimeMappingGeneratorTest extends TestCase
                 'qux'              => ['bar'],
             ],
         ];
-        self::assertEquals($expected, $mapping);
+        self::assertSame($expected, $mapping);
     }
 
     /**
@@ -94,7 +95,7 @@ class MimeMappingGeneratorTest extends TestCase
      */
     public function testGenerateJson(): void
     {
-        $mimeMappingGenerator = new MimeMappingGenerator(
+        $generator = new Generator(
             <<<EOF
                 #ignore
                 application/json\tjson
@@ -102,10 +103,10 @@ class MimeMappingGeneratorTest extends TestCase
                 EOF
         );
 
-        $json    = $mimeMappingGenerator->generateJson(false);
-        $minJson = $mimeMappingGenerator->generateJson();
+        $json    = $generator->generateJson(false);
+        $minJson = $generator->generateJson();
 
-        self::assertEquals(
+        self::assertSame(
             <<<EOF
                 {
                     "mimes": {
@@ -133,7 +134,7 @@ class MimeMappingGeneratorTest extends TestCase
             $json
         );
 
-        self::assertEquals('{"mimes":{"json":["application\/json"],"jpeg":["image\/jpeg"],"jpg":["image\/jpeg"]},"extensions":{"application\/json":["json"],"image\/jpeg":["jpeg","jpg"]}}', $minJson);
+        self::assertSame('{"mimes":{"json":["application\/json"],"jpeg":["image\/jpeg"],"jpg":["image\/jpeg"]},"extensions":{"application\/json":["json"],"image\/jpeg":["jpeg","jpg"]}}', $minJson);
     }
 
     /**
@@ -141,7 +142,7 @@ class MimeMappingGeneratorTest extends TestCase
      */
     public function testGeneratePhpEnum(): void
     {
-        $mimeMappingGenerator = new MimeMappingGenerator(
+        $generator = new Generator(
             <<<EOF
                 #ignore
                 application/json\tjson
@@ -149,9 +150,9 @@ class MimeMappingGeneratorTest extends TestCase
                 EOF
         );
 
-        $phpEnum = $mimeMappingGenerator->generatePhpEnum('TestMimeClass', 'TestMimeNamespace');
+        $phpEnum = $generator->generatePhpEnum('TestMimeClass', 'TestMimeNamespace');
 
-        self::assertEquals(
+        self::assertSame(
             <<<EOF
                 <?php
 
@@ -162,15 +163,15 @@ class MimeMappingGeneratorTest extends TestCase
 
                 namespace TestMimeNamespace;
 
-                use RuntimeException;
                 use InvalidArgumentException;
-                use Esi\Mimey\MimeTypeInterface;
+                use Esi\Mimey\Interface\MimeType as MimeTypeInterface;
 
                 enum TestMimeClass: string implements MimeTypeInterface
                 {
                     case ApplicationJson = 'application/json';
                     case ImageJpeg = 'image/jpeg';
 
+                    #[\Override]
                     public function getExtension(): string
                     {
                         return match(\$this) {
@@ -180,6 +181,7 @@ class MimeMappingGeneratorTest extends TestCase
                         };
                     }
 
+                    #[\Override]
                     public function getValue(): string
                     {
                         return \$this->value;

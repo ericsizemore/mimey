@@ -6,7 +6,7 @@ declare(strict_types=1);
  * Mimey - PHP package for converting file extensions to MIME types and vice versa.
  *
  * @author    Eric Sizemore <admin@secondversion.com>
- * @version   1.2.0
+ * @version   2.0.0
  * @copyright (C) 2023-2024 Eric Sizemore
  * @license   The MIT License (MIT)
  *
@@ -41,6 +41,7 @@ declare(strict_types=1);
 namespace Esi\Mimey;
 
 // Classes
+use Esi\Mimey\Interface\MimeTypes as MimeTypesInterface;
 use JetBrains\PhpStorm\Pure;
 
 // Exceptions
@@ -101,16 +102,16 @@ class MimeTypes implements MimeTypesInterface
      * Example:
      * <code>
      * [
-     *   'extensions' => [
-     *     'application/json' => ['json'],
-     *     'image/jpeg'       => ['jpg', 'jpeg'],
-     *     ...
-     *   ],
-     *   'mimes' => [
-     *     'json' => ['application/json'],
-     *     'jpeg' => [image/jpeg'],
-     *     ...
-     *   ]
+     *     'extensions' => [
+     *         'application/json' => ['json'],
+     *         'image/jpeg'       => ['jpg', 'jpeg'],
+     *         ...
+     *     ],
+     *     'mimes' => [
+     *         'json' => ['application/json'],
+     *         'jpeg' => ['image/jpeg'],
+     *         ...
+     *     ]
      * ]
      * </code>
      */
@@ -199,8 +200,7 @@ class MimeTypes implements MimeTypesInterface
         $input = trim($input);
 
         //@codeCoverageIgnoreStart
-        $input = function_exists('mb_strtolower') ? \mb_strtolower($input) : strtolower($input);
+        return function_exists('mb_strtolower') ? \mb_strtolower($input) : strtolower($input);
         //@codeCoverageIgnoreEnd
-        return $input;
     }
 }

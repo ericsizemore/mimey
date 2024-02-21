@@ -51,10 +51,11 @@ use Throwable;
 // Functions & constants
 use function dirname;
 use function file_get_contents;
-use function json_decode;
-use function trim;
 use function function_exists;
+use function json_decode;
+use function preg_replace;
 use function strtolower;
+use function trim;
 
 use const JSON_THROW_ON_ERROR;
 

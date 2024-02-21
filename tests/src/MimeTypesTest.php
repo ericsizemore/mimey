@@ -42,23 +42,21 @@ namespace Esi\Mimey\Tests;
 
 // Core classes
 use Esi\Mimey\MimeTypes;
-
 use Iterator;
-
-// PHPUnit
-use PHPUnit\Framework\TestCase;
-use PHPUnit\Framework\Attributes\CoversClass;
-use PHPUnit\Framework\Attributes\DataProvider;
-
 use ReflectionClass;
 
 // Exceptions
 use RuntimeException;
 
+// PHPUnit
+use PHPUnit\Framework\Attributes\CoversClass;
+use PHPUnit\Framework\Attributes\DataProvider;
+use PHPUnit\Framework\TestCase;
+
 // Functions
 use function dirname;
-use function rename;
 use function file_put_contents;
+use function rename;
 use function unlink;
 
 /**
@@ -70,8 +68,6 @@ class MimeTypesTest extends TestCase
 {
     /**
      * Contains the MimeTypes class instance.
-     *
-     * @var  MimeTypes
      */
     protected MimeTypes $mime;
 
@@ -100,8 +96,6 @@ class MimeTypesTest extends TestCase
 
     /**
      * Provides the data for testing retrieving a mime type based on extension.
-     *
-     * @return Iterator
      */
     public static function getMimeTypeProvider(): Iterator
     {
@@ -123,8 +117,6 @@ class MimeTypesTest extends TestCase
 
     /**
      * Provides the data for testing retrieving an extension based on mime type.
-     *
-     * @return Iterator
      */
     public static function getExtensionProvider(): Iterator
     {

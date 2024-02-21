@@ -276,12 +276,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/PHP-CS-Fixer/PHP-CS-Fixer.git",
-                "reference": "aba9464f67fdb9f9a9df59b6e8099dbc748352dc"
+                "reference": "87944756eea4900084d386d63acd6070ff59394b"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/PHP-CS-Fixer/PHP-CS-Fixer/zipball/aba9464f67fdb9f9a9df59b6e8099dbc748352dc",
-                "reference": "aba9464f67fdb9f9a9df59b6e8099dbc748352dc",
+                "url": "https://api.github.com/repos/PHP-CS-Fixer/PHP-CS-Fixer/zipball/87944756eea4900084d386d63acd6070ff59394b",
+                "reference": "87944756eea4900084d386d63acd6070ff59394b",
                 "shasum": ""
             },
             "require": {
@@ -361,7 +361,7 @@
                     "type": "github"
                 }
             ],
-            "time": "2024-02-11T22:03:30+00:00"
+            "time": "2024-02-19T17:22:29+00:00"
         },
         {
             "name": "myclabs/deep-copy",
@@ -608,12 +608,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/phpstan/phpstan.git",
-                "reference": "417c0290fdcd0d515c00ea04e27a4a9886788b29"
+                "reference": "43f5db9d8cb108e8840308c172e13086f8f5d3dd"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/phpstan/phpstan/zipball/417c0290fdcd0d515c00ea04e27a4a9886788b29",
-                "reference": "417c0290fdcd0d515c00ea04e27a4a9886788b29",
+                "url": "https://api.github.com/repos/phpstan/phpstan/zipball/43f5db9d8cb108e8840308c172e13086f8f5d3dd",
+                "reference": "43f5db9d8cb108e8840308c172e13086f8f5d3dd",
                 "shasum": ""
             },
             "require": {
@@ -663,7 +663,7 @@
                     "type": "tidelift"
                 }
             ],
-            "time": "2024-02-11T14:09:04+00:00"
+            "time": "2024-02-19T16:27:29+00:00"
         },
         {
             "name": "phpstan/phpstan-phpunit",
@@ -671,12 +671,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/phpstan/phpstan-phpunit.git",
-                "reference": "e95a58baebb1f2daf7067c3667bff371b202151d"
+                "reference": "77bdf9644e105833f810eefc3d6e051ac33dd939"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/phpstan/phpstan-phpunit/zipball/e95a58baebb1f2daf7067c3667bff371b202151d",
-                "reference": "e95a58baebb1f2daf7067c3667bff371b202151d",
+                "url": "https://api.github.com/repos/phpstan/phpstan-phpunit/zipball/77bdf9644e105833f810eefc3d6e051ac33dd939",
+                "reference": "77bdf9644e105833f810eefc3d6e051ac33dd939",
                 "shasum": ""
             },
             "require": {
@@ -716,7 +716,7 @@
                 "issues": "https://github.com/phpstan/phpstan-phpunit/issues",
                 "source": "https://github.com/phpstan/phpstan-phpunit/tree/1.4.x"
             },
-            "time": "2023-11-20T08:52:11+00:00"
+            "time": "2024-02-19T08:57:29+00:00"
         },
         {
             "name": "phpstan/phpstan-strict-rules",
@@ -724,12 +724,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/phpstan/phpstan-strict-rules.git",
-                "reference": "2090cfca49793b876887695f3293062070abc83c"
+                "reference": "2bc39672669f0493b3b3833f13273cbedaaa121b"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/phpstan/phpstan-strict-rules/zipball/2090cfca49793b876887695f3293062070abc83c",
-                "reference": "2090cfca49793b876887695f3293062070abc83c",
+                "url": "https://api.github.com/repos/phpstan/phpstan-strict-rules/zipball/2bc39672669f0493b3b3833f13273cbedaaa121b",
+                "reference": "2bc39672669f0493b3b3833f13273cbedaaa121b",
                 "shasum": ""
             },
             "require": {
@@ -766,7 +766,7 @@
                 "issues": "https://github.com/phpstan/phpstan-strict-rules/issues",
                 "source": "https://github.com/phpstan/phpstan-strict-rules/tree/1.6.x"
             },
-            "time": "2023-11-20T08:49:59+00:00"
+            "time": "2024-02-19T08:54:33+00:00"
         },
         {
             "name": "phpunit/php-code-coverage",
@@ -1102,12 +1102,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/sebastianbergmann/phpunit.git",
-                "reference": "b092517ed8afac69e44f0d10bfd89effe36d5a73"
+                "reference": "2b9afb5df0797185df0423ce0213aff951e5bdcf"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/sebastianbergmann/phpunit/zipball/b092517ed8afac69e44f0d10bfd89effe36d5a73",
-                "reference": "b092517ed8afac69e44f0d10bfd89effe36d5a73",
+                "url": "https://api.github.com/repos/sebastianbergmann/phpunit/zipball/2b9afb5df0797185df0423ce0213aff951e5bdcf",
+                "reference": "2b9afb5df0797185df0423ce0213aff951e5bdcf",
                 "shasum": ""
             },
             "require": {
@@ -1195,7 +1195,7 @@
                     "type": "tidelift"
                 }
             ],
-            "time": "2024-02-11T17:04:24+00:00"
+            "time": "2024-02-19T13:55:08+00:00"
         },
         {
             "name": "psr/container",
@@ -3291,12 +3291,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/symfony/process.git",
-                "reference": "bf2a95a35479a194ad59d1f3458245fb6fb291a6"
+                "reference": "67f5d2d2fc9d112700f0fb5c784c62c750e08a7a"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/symfony/process/zipball/bf2a95a35479a194ad59d1f3458245fb6fb291a6",
-                "reference": "bf2a95a35479a194ad59d1f3458245fb6fb291a6",
+                "url": "https://api.github.com/repos/symfony/process/zipball/67f5d2d2fc9d112700f0fb5c784c62c750e08a7a",
+                "reference": "67f5d2d2fc9d112700f0fb5c784c62c750e08a7a",
                 "shasum": ""
             },
             "require": {
@@ -3344,7 +3344,7 @@
                     "type": "tidelift"
                 }
             ],
-            "time": "2024-01-23T15:06:13+00:00"
+            "time": "2024-02-13T08:26:20+00:00"
         },
         {
             "name": "symfony/service-contracts",

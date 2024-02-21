@@ -11,7 +11,7 @@
   * Added the `Override` attribute. to the `MimeType` enum functions `getExtension` and `getValue`.
     * Not importing the attribute, as `#[\Override]` should not cause issues in PHP < 8.3
   * Updated the `psalm` workflow to use the latest `psalm/psalm-github-security-scan` and `github/codeql-action/upload-sarif`. 
-    
+  * See UPGRADING.md for upgrade instructions/overview.
 
 ### 1.2.0 (2024-01-30)
 

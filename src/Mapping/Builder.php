@@ -51,14 +51,14 @@ use Throwable;
 // Functions & constants
 use function array_unshift;
 use function array_unique;
-use function json_encode;
-use function file_put_contents;
 use function dirname;
 use function file_get_contents;
+use function file_put_contents;
 use function json_decode;
+use function json_encode;
 
-use const JSON_THROW_ON_ERROR;
 use const JSON_PRETTY_PRINT;
+use const JSON_THROW_ON_ERROR;
 
 /**
  * Class for converting MIME types to file extensions and vice versa.
@@ -143,9 +143,7 @@ class Builder
      */
     public function compile(bool $pretty = false): string
     {
-        $mapping = $this->getMapping();
-
-        return json_encode($mapping, flags: JSON_THROW_ON_ERROR | ($pretty ? JSON_PRETTY_PRINT : 0));
+        return json_encode($this->getMapping(), flags: JSON_THROW_ON_ERROR | ($pretty ? JSON_PRETTY_PRINT : 0));
     }
 
     /**

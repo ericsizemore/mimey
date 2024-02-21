@@ -41,24 +41,24 @@ declare(strict_types=1);
 namespace Esi\Mimey\Tests;
 
 // Core classes
-use Esi\Mimey\MimeTypes;
 use Esi\Mimey\Mapping\Builder;
+use Esi\Mimey\MimeTypes;
 
 // PHPUnit
-use PHPUnit\Framework\TestCase;
 use PHPUnit\Framework\Attributes\CoversClass;
 use PHPUnit\Framework\Attributes\UsesClass;
+use PHPUnit\Framework\TestCase;
 
 // Exceptions
 use JsonException;
 use RuntimeException;
 
 // Functions & constants
-use function tempnam;
-use function sys_get_temp_dir;
 use function file_get_contents;
 use function file_put_contents;
 use function json_decode;
+use function sys_get_temp_dir;
+use function tempnam;
 use function unlink;
 
 use const JSON_THROW_ON_ERROR;
@@ -152,8 +152,7 @@ class BuilderTest extends TestCase
      */
     public function testSave(): void
     {
-        /** @var string $file **/
-        $file = tempnam(sys_get_temp_dir(), 'mapping_test');
+        $file = (string) tempnam(sys_get_temp_dir(), 'mapping_test');
 
         $builder = Builder::blank();
         $builder->add('foo/one', 'one');
@@ -162,8 +161,7 @@ class BuilderTest extends TestCase
         $builder->add('foo/two2', 'two');
         $builder->save($file);
 
-        /** @var string $json **/
-        $json = file_get_contents($file);
+        $json = (string) file_get_contents($file);
 
         $mappingIncluded = json_decode($json, true, flags: JSON_THROW_ON_ERROR);
         self::assertSame($builder->getMapping(), $mappingIncluded);
@@ -182,8 +180,7 @@ class BuilderTest extends TestCase
      */
     public function testLoadInvalid(): void
     {
-        /** @var string $file **/
-        $file = tempnam(sys_get_temp_dir(), 'mapping_test');
+        $file = (string) tempnam(sys_get_temp_dir(), 'mapping_test');
         file_put_contents($file, 'invalid json');
 
         self::expectException(RuntimeException::class);

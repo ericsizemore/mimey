@@ -46,23 +46,26 @@ use Esi\Mimey\Interface\MimeType;
 use JsonException;
 
 // Functions & constants
+use function array_filter;
+use function array_unique;
+use function array_values;
+use function count;
+use function dirname;
+use function explode;
+use function file_get_contents;
+use function json_encode;
 use function preg_replace;
+use function sprintf;
+use function str_pad;
+use function str_replace;
+use function strlen;
+use function trim;
 use function ucfirst;
 use function ucwords;
-use function str_replace;
-use function sprintf;
-use function file_get_contents;
-use function dirname;
-use function json_encode;
-use function array_unique;
-use function trim;
-use function explode;
-use function count;
-use function array_values;
-use function array_filter;
 
-use const JSON_THROW_ON_ERROR;
 use const JSON_PRETTY_PRINT;
+use const JSON_THROW_ON_ERROR;
+use const STR_PAD_LEFT;
 
 /**
  * Generates a mapping for use in the MimeTypes class.
@@ -114,8 +117,7 @@ class Generator
         $lines = explode("\n", $this->mimeTypesText);
 
         foreach ($lines as $line) {
-            /** @var string $line **/
-            $line = preg_replace('~#.*~', '', $line);
+            $line = (string) preg_replace('~#.*~', '', $line);
             $line = trim($line);
 
             $parts = $line !== '' ? array_values(array_filter(explode("\t", $line))) : [];
@@ -171,8 +173,7 @@ class Generator
             'ext2type'        => '',
         ];
 
-        /** @var string $stub **/
-        $stub = file_get_contents(dirname(__DIR__, 2) . '/stubs/mimeType.php.stub');
+        $stub = (string) file_get_contents(dirname(__DIR__, 2) . '/stubs/mimeType.php.stub');
 
         $mapping = $this->generateMapping();
         $nameMap = [];
@@ -180,12 +181,12 @@ class Generator
         foreach ($mapping['extensions'] as $mime => $extensions) { // @phpstan-ignore-line
             $nameMap[$mime] = $this->convertMimeTypeToCaseName($mime);
 
-            $values['cases'] .= sprintf("    case %s = '%s';\n", $nameMap[$mime], $mime);
-            $values['type2ext'] .= sprintf("            self::%s => '%s',\n", $nameMap[$mime], $extensions[0]);
+            $values['cases'] .= sprintf(Generator::spaceIndent(4, "case %s = '%s';\n"), $nameMap[$mime], $mime);
+            $values['type2ext'] .= sprintf(Generator::spaceIndent(12, "self::%s => '%s',\n"), $nameMap[$mime], $extensions[0]);
         }
 
         foreach ($mapping['mimes'] as $extension => $mimes) { // @phpstan-ignore-line
-            $values['ext2type'] .= sprintf("            '%s' => self::%s,\n", $extension, $nameMap[$mimes[0]]);
+            $values['ext2type'] .= sprintf(Generator::spaceIndent(12, "'%s' => self::%s,\n"), $extension, $nameMap[$mimes[0]]);
         }
 
         foreach ($values as $name => $value) {
@@ -200,7 +201,17 @@ class Generator
      */
     protected function convertMimeTypeToCaseName(string $mimeType): string
     {
-        // @phpstan-ignore-next-line
-        return preg_replace('/([\/\-_+.]+)/', '', ucfirst(ucwords($mimeType, '/-_+.')));
+        return (string) preg_replace('/([\/\-_+.]+)/', '', ucfirst(ucwords($mimeType, '/-_+.')));
+    }
+
+    protected static function spaceIndent(int $spaces, string $string): string
+    {
+        if ($spaces <= 0) {
+            $spaces = 4;
+        }
+
+        $spaces += strlen($string);
+
+        return str_pad($string, $spaces, ' ', STR_PAD_LEFT);
     }
 }

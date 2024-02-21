@@ -41,12 +41,14 @@ declare(strict_types=1);
 namespace Esi\Mimey\Tests;
 
 // Core classes
-use JsonException;
 use Esi\Mimey\Mapping\Generator;
 
+// Exceptions
+use JsonException;
+
 // PHPUnit
-use PHPUnit\Framework\TestCase;
 use PHPUnit\Framework\Attributes\CoversClass;
+use PHPUnit\Framework\TestCase;
 
 /**
  * Class to test Mapping Generator.

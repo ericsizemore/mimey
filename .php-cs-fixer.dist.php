@@ -23,7 +23,7 @@ $config
             ],
         ],
         'ordered_imports'         => false,
-        //'global_namespace_import' => ['import_classes' => true, 'import_constants' => true, 'import_functions' => true],
+        'global_namespace_import' => ['import_classes' => true, 'import_constants' => true, 'import_functions' => true],
     ])
     ->setLineEnding("\n")
     ->setFinder(

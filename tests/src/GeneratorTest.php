@@ -64,7 +64,7 @@ class GeneratorTest extends TestCase
     {
         $spaceIndent = new ReflectionMethod(Generator::class, 'spaceIndent');
         $result = $spaceIndent->invoke($spaceIndent, 0, 'test');
-
+        /** @var string $result */
         self::assertStringStartsWith('    ', $result);
         self::assertSame(8, strlen($result));
     }

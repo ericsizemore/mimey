@@ -45,10 +45,13 @@ use Esi\Mimey\Mapping\Generator;
 
 // Exceptions
 use JsonException;
+use ReflectionMethod;
 
 // PHPUnit
 use PHPUnit\Framework\Attributes\CoversClass;
 use PHPUnit\Framework\TestCase;
+
+use function strlen;
 
 /**
  * Class to test Mapping Generator.
@@ -57,6 +60,15 @@ use PHPUnit\Framework\TestCase;
 #[CoversClass(Generator::class)]
 class GeneratorTest extends TestCase
 {
+    public function testSpaceIndent(): void
+    {
+        $spaceIndent = new ReflectionMethod(Generator::class, 'spaceIndent');
+        $result = $spaceIndent->invoke($spaceIndent, 0, 'test');
+
+        self::assertStringStartsWith('    ', $result);
+        self::assertSame(8, strlen($result));
+    }
+
     /**
      * Test mapping generation with given mime.types text.
      */

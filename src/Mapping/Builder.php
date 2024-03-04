@@ -41,6 +41,7 @@ declare(strict_types=1);
 namespace Esi\Mimey\Mapping;
 
 // Classes
+use Esi\Mimey\Interface\BuilderInterface;
 use JetBrains\PhpStorm\Pure;
 
 // Exceptions
@@ -80,7 +81,7 @@ use const JSON_THROW_ON_ERROR;
  *    >
  * }
  */
-class Builder
+class Builder implements BuilderInterface
 {
     /**
      * Create a new mapping builder.
@@ -94,14 +95,7 @@ class Builder
         protected array $mapping
     ) {}
 
-    /**
-     * Add a conversion.
-     *
-     * @param string $mime              The MIME type.
-     * @param string $extension         The extension.
-     * @param bool   $prependExtension  Whether this should be the preferred conversion for MIME type to extension.
-     * @param bool   $prependMime       Whether this should be the preferred conversion for extension to MIME type.
-     */
+    #[\Override]
     public function add(string $mime, string $extension, bool $prependExtension = true, bool $prependMime = true): void
     {
         $existingExtensions = $this->mapping['extensions'][$mime] ?? [];
@@ -123,62 +117,25 @@ class Builder
         $this->mapping['mimes'][$extension] = array_unique($existingMimes);
     }
 
-    /**
-     * Retrieves the current mapping array.
-     *
-     * @return MimeTypeMap The mapping.
-     */
+    #[\Override]
     public function getMapping(): array
     {
         return $this->mapping;
     }
 
-    /**
-     * Compile the current mapping to PHP.
-     *
-     * @param  bool    $pretty  Whether to pretty print the output.
-     * @return string           The compiled PHP code to save to a file.
-     *
-     * @throws JsonException
-     */
+    #[\Override]
     public function compile(bool $pretty = false): string
     {
         return json_encode($this->getMapping(), flags: JSON_THROW_ON_ERROR | ($pretty ? JSON_PRETTY_PRINT : 0));
     }
 
-    /**
-     * Save the current mapping to a file.
-     *
-     * @param  string     $file     The file to save to.
-     * @param  int        $flags    Flags for `file_put_contents`.
-     * @param  resource   $context  Context for `file_put_contents`.
-     * @return false|int            The number of bytes that were written to the file, or false on failure.
-     *
-     * @throws JsonException
-     */
+    #[\Override]
     public function save(string $file, int $flags = 0, mixed $context = null): false | int
     {
         return file_put_contents($file, $this->compile(), $flags, $context);
     }
 
-    /**
-     * Create a new mapping builder based on the built-in types.
-     *
-     * @return  Builder  A mapping builder with built-in types loaded.
-     */
-    public static function create(): Builder
-    {
-        return self::load(dirname(__DIR__, 2) . '/dist/mime.types.min.json');
-    }
-
-    /**
-     * Create a new mapping builder based on types from a file.
-     *
-     * @param  string   $file  The compiled PHP file to load.
-     * @return Builder         A mapping builder with types loaded from a file.
-     *
-     * @throws RuntimeException
-     */
+    #[\Override]
     public static function load(string $file): Builder
     {
         try {
@@ -191,6 +148,16 @@ class Builder
         } catch (Throwable $e) {
             throw new RuntimeException('Unable to parse built-in types at ' . $file, 0, $e);
         }
+    }
+
+    /**
+     * Create a new mapping builder based on the built-in types.
+     *
+     * @return  Builder  A mapping builder with built-in types loaded.
+     */
+    public static function create(): Builder
+    {
+        return self::load(dirname(__DIR__, 2) . '/dist/mime.types.min.json');
     }
 
     /**

@@ -47,6 +47,7 @@ use JsonException;
 
 // Functions & constants
 use function array_filter;
+use function array_map;
 use function array_unique;
 use function array_values;
 use function count;
@@ -74,7 +75,7 @@ use const STR_PAD_LEFT;
  *
  * The psalm-type looks gnarly, but it covers just about everything.
  *
- * @psalm-type MimeTypeMap = array{
+ * @phpstan-type MimeTypeMap = array{
  *    mimes?: array<
  *        non-empty-string|string, list<non-empty-string>|array<int<0, max>, string>
  *    >|non-empty-array<
@@ -117,18 +118,19 @@ class Generator
         $lines = explode("\n", $this->mimeTypesText);
 
         foreach ($lines as $line) {
-            $line = (string) preg_replace('~#.*~', '', $line);
-            $line = trim($line);
+            $line = trim((string) preg_replace('~#.*~', '', $line));
 
-            $parts = $line !== '' ? array_values(array_filter(explode("\t", $line))) : [];
+            $parts = [];
+
+            if ($line !== '') {
+                $parts = array_values(array_filter(explode("\t", $line)));
+            }
 
             if (count($parts) === 2) {
                 $mime       = trim($parts[0]);
-                $extensions = explode(' ', $parts[1]);
+                $extensions = array_map('trim', explode(' ', $parts[1]));
 
                 foreach ($extensions as $extension) {
-                    $extension = trim($extension);
-
                     if ($mime !== '' && $extension !== '') {
                         $this->mapCache['mimes'][$extension][] = $mime;
                         $this->mapCache['extensions'][$mime][] = $extension;

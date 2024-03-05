@@ -4,9 +4,11 @@
 declare(strict_types=1);
 
 $updateUrl       = 'https://svn.apache.org/repos/asf/httpd/httpd/trunk/docs/conf/mime.types';
-$destinationFile = dirname(__DIR__) . '/data/mime.types';
+$destinationFile = \dirname(__DIR__) . '/data/mime.types';
 
-file_put_contents($destinationFile, file_get_contents($updateUrl));
+$mimeTypes = \file_get_contents($updateUrl);
 
-echo sprintf('Downloaded mime.types from \'%s\' and stored at \'%s\'', $updateUrl, $destinationFile) . PHP_EOL;
-echo PHP_EOL;
+\file_put_contents($destinationFile, $mimeTypes);
+
+echo \sprintf("Downloaded mime.types from '%s' and stored at '%s'", $updateUrl, $destinationFile) . \PHP_EOL;
+echo \PHP_EOL;

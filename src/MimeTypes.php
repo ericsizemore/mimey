@@ -42,7 +42,6 @@ namespace Esi\Mimey;
 
 // Classes
 use Esi\Mimey\Interface\MimeTypes as MimeTypesInterface;
-use JetBrains\PhpStorm\Pure;
 
 // Exceptions
 use RuntimeException;
@@ -53,7 +52,6 @@ use function dirname;
 use function file_get_contents;
 use function function_exists;
 use function json_decode;
-use function preg_replace;
 use function strtolower;
 use function trim;
 
@@ -64,7 +62,7 @@ use const JSON_THROW_ON_ERROR;
  *
  * This psalm-type looks gnarly, but it covers just about everything.
  *
- * @psalm-type MimeTypeMap = array{
+ * @phpstan-type MimeTypeMap = array{
  *    mimes: array<
  *        non-empty-string, list<non-empty-string>
  *    >|non-empty-array<
@@ -101,7 +99,6 @@ class MimeTypes implements MimeTypesInterface
      *                                     array of MIME types. Entry "extensions" being an associative
      *                                     array of MIME type to array of extensions.
      * Example:
-     * <code>
      * [
      *     'extensions' => [
      *         'application/json' => ['json'],
@@ -114,53 +111,34 @@ class MimeTypes implements MimeTypesInterface
      *         ...
      *     ]
      * ]
-     * </code>
      */
     public function __construct(?array $mapping = null)
     {
         $this->mapping = $mapping ?? self::getBuiltIn();
     }
 
-    #[Pure]
     #[\Override]
     public function getMimeType(string $extension): ?string
     {
-        $extension = $this->cleanInput($extension);
-
-        if (isset($this->mapping['mimes'][$extension])) {
-            return $this->mapping['mimes'][$extension][0]; // @phpstan-ignore-line
-        }
-        return null;
+        return $this->mapping['mimes'][$this->cleanInput($extension)][0] ?? null;
     }
 
-    #[Pure]
     #[\Override]
     public function getExtension(string $mimeType): ?string
     {
-        $mimeType = $this->cleanInput($mimeType);
-
-        if (isset($this->mapping['extensions'][$mimeType])) {
-            return $this->mapping['extensions'][$mimeType][0]; // @phpstan-ignore-line
-        }
-        return null;
+        return $this->mapping['extensions'][$this->cleanInput($mimeType)][0] ?? null;
     }
 
-    #[Pure]
     #[\Override]
     public function getAllMimeTypes(string $extension): array
     {
-        $extension = $this->cleanInput($extension);
-
-        return $this->mapping['mimes'][$extension] ?? []; // @phpstan-ignore-line
+        return $this->mapping['mimes'][$this->cleanInput($extension)] ?? [];
     }
 
-    #[Pure]
     #[\Override]
     public function getAllExtensions(string $mimeType): array
     {
-        $mimeType = $this->cleanInput($mimeType);
-
-        return $this->mapping['extensions'][$mimeType] ?? []; // @phpstan-ignore-line
+        return $this->mapping['extensions'][$this->cleanInput($mimeType)] ?? [];
     }
 
     /**
@@ -174,11 +152,8 @@ class MimeTypes implements MimeTypesInterface
             $builtInTypes = dirname(__DIR__) . '/dist/mime.types.min.json';
 
             try {
-                /** @var string $json **/
-                $json = file_get_contents($builtInTypes);
-
-                /** @var MimeTypeMap $json **/
-                $json = json_decode($json, true, flags: JSON_THROW_ON_ERROR);
+                /** @var MimeTypeMap $json */
+                $json = json_decode((string) file_get_contents($builtInTypes), true, flags: JSON_THROW_ON_ERROR);
 
                 self::$builtIn = $json;
             } catch (Throwable $e) {

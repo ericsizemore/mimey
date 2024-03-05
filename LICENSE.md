@@ -1,6 +1,6 @@
 The MIT License (MIT)
 
-Copyright (c) 2023 Eric Sizemore
+Copyright (c) 2023-2024 Eric Sizemore
 Copyright (c) 2022 Ricardo Boss
 Copyright (c) 2016 Ralph Khattar
 

@@ -42,10 +42,8 @@ namespace Esi\Mimey\Mapping;
 
 // Classes
 use Esi\Mimey\Interface\BuilderInterface;
-use JetBrains\PhpStorm\Pure;
 
 // Exceptions
-use JsonException;
 use RuntimeException;
 use Throwable;
 
@@ -64,36 +62,17 @@ use const JSON_THROW_ON_ERROR;
 /**
  * Class for converting MIME types to file extensions and vice versa.
  *
- * This psalm-type looks gnarly, but it covers just about everything.
- *
- * @psalm-type MimeTypeMap = array{
- *    mimes: array<
- *        non-empty-string, list<non-empty-string>
- *    >|non-empty-array<
- *        string, array<int<0, max>, string>
- *    >,
- *    extensions: array<
- *        non-empty-string, list<non-empty-string>
- *    >|non-empty-array<
- *        string, array<int<0, max>, string>
- *    >|array<
- *        string, array<int<0, max>, string>
- *    >
- * }
+ * @phpstan-import-type MimeTypeMap from \Esi\Mimey\MimeTypes
  */
 class Builder implements BuilderInterface
 {
     /**
      * Create a new mapping builder.
      *
-     * @param MimeTypeMap $mapping An associative array containing two entries. See `MimeTypes` constructor for details.
+     * @param  MimeTypeMap  $mapping  An associative array containing two entries.
+     *                                See `MimeTypes` constructor for details.
      */
-    private function __construct(
-        /**
-         * The Mapping Array
-         */
-        protected array $mapping
-    ) {}
+    private function __construct(protected array $mapping) {}
 
     #[\Override]
     public function add(string $mime, string $extension, bool $prependExtension = true, bool $prependMime = true): void
@@ -165,7 +144,6 @@ class Builder implements BuilderInterface
      *
      * @return  Builder  A mapping builder with no types defined.
      */
-    #[Pure]
     public static function blank(): Builder
     {
         return new self(['mimes' => [], 'extensions' => []]);

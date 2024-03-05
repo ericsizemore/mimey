@@ -46,20 +46,7 @@ use RuntimeException;
 /**
  * This psalm-type looks gnarly, but it covers just about everything.
  *
- * @psalm-type MimeTypeMap = array{
- *    mimes: array<
- *        non-empty-string, list<non-empty-string>
- *    >|non-empty-array<
- *        string, array<int<0, max>, string>
- *    >,
- *    extensions: array<
- *        non-empty-string, list<non-empty-string>
- *    >|non-empty-array<
- *        string, array<int<0, max>, string>
- *    >|array<
- *        string, array<int<0, max>, string>
- *    >
- * }
+ * @phpstan-import-type MimeTypeMap from \Esi\Mimey\MimeTypes
  */
 interface BuilderInterface
 {

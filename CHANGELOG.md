@@ -4,6 +4,7 @@
     * `MimeMappingBuilder` and `MimeMappingGenerator` are now `Mapping\Builder` and `Mapping\Generator`.
     * `MimeTypeInterface` and `MimeTypesInterface` are now `Interface\MimeType` and `Interface\MimeTypes`.
   * Added a new interface for `Mapping\Builder` -> `Interface\BuilderInterface`.
+  * Removed `jetbrains/phpstorm-attributes` as a dependency.
   * Updated PHPUnit to 11.x (currently using 11.1-dev).
     * All `assertEquals` calls are now `assertSame`.
     * Updated data providers to return `Iterator` via `yield` instead of arrays.

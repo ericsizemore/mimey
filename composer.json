@@ -13,12 +13,12 @@
         {
             "name": "Ralph Khattar",
             "email": "ralph.khattar@gmail.com",
-            "role": "Contributor"
+            "role": "Original Developer"
         },
         {
             "name": "Ricardo Boss",
             "email": "contact@ricardoboss.de",
-            "role": "Contributor"
+            "role": "Fork Developer"
         }
     ],
     "support": {
@@ -28,8 +28,7 @@
         "security": "https://github.com/ericsizemore/mimey/security/policy"
     },
     "require": {
-        "php": "^8.2 <8.5",
-        "jetbrains/phpstorm-attributes": "^1.0"
+        "php": "^8.2 <8.5"
     },
     "require-dev": {
         "friendsofphp/php-cs-fixer": "dev-master",
@@ -42,6 +41,7 @@
         "ext-mbstring": "For non-English (user) input parsing"
     },
     "minimum-stability": "dev",
+    "prefer-stable": true,
     "autoload": {
         "psr-4": {
             "Esi\\Mimey\\": [

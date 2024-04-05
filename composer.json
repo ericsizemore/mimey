@@ -34,6 +34,20 @@
         "source": "https://github.com/ericsizemore/mimey/tree/develop/src",
         "security": "https://github.com/ericsizemore/mimey/security/policy"
     },
+    "funding": [
+        {
+            "type": "custom",
+            "url": "https://ko-fi.com/ericsizemore"
+        },
+        {
+            "type": "github",
+            "url": "https://github.com/ericsizemore"
+        },
+        {
+            "type": "tidelift",
+            "url": "https://tidelift.com/funding/github/packagist/esi/mimey"
+        }
+    ],
     "require": {
         "php": "^8.2 <8.5"
     },

@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <phpunit xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-		 xsi:noNamespaceSchemaLocation="vendor/phpunit/phpunit/phpunit.xsd"
+         xsi:noNamespaceSchemaLocation="vendor/phpunit/phpunit/phpunit.xsd"
          backupGlobals="true"
          executionOrder="depends,defects"
-		 bootstrap="tests/bootstrap.php"
+         bootstrap="tests/bootstrap.php"
          cacheDirectory="build/phpunit/cache"
          displayDetailsOnTestsThatTriggerDeprecations="true"
          displayDetailsOnTestsThatTriggerErrors="true"
@@ -20,15 +20,15 @@
             <directory>tests</directory>
         </testsuite>
     </testsuites>
-	<source restrictDeprecations="true" restrictNotices="true" restrictWarnings="true">
-		<include>
-			<directory>src</directory>
-		</include>
-	</source>
+    <source restrictNotices="true" restrictWarnings="true" ignoreIndirectDeprecations="true">
+        <include>
+            <directory>src</directory>
+        </include>
+    </source>
     <coverage cacheDirectory="build/phpunit/cache">
         <report>
             <clover outputFile="build/logs/clover.xml"/>
-            <html outputDirectory="build/logs/coverage" />
+            <html outputDirectory="build/logs/coverage"/>
         </report>
     </coverage>
 </phpunit>

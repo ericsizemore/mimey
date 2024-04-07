@@ -22,20 +22,14 @@ declare(strict_types=1);
 
 namespace Esi\Mimey\Tests;
 
-// Core classes
 use Esi\Mimey\MimeTypes;
 use Iterator;
 use PHPUnit\Framework\Attributes\CoversClass;
-
-// Exceptions
 use PHPUnit\Framework\Attributes\DataProvider;
-
-// PHPUnit
 use PHPUnit\Framework\TestCase;
 use ReflectionClass;
 use RuntimeException;
 
-// Functions
 use function file_put_contents;
 use function rename;
 use function unlink;

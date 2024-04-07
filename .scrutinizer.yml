@@ -23,6 +23,9 @@ filter:
     excluded_paths:
         - 'tests/*'
         - 'bin/*'
+        - 'dist/*'
+        - 'stubs/*'
+        - 'data/*'
 
 checks:
     php: true

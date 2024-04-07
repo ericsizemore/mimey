@@ -22,20 +22,14 @@ declare(strict_types=1);
 
 namespace Esi\Mimey\Tests;
 
-// Core classes
 use Esi\Mimey\Mapping\Builder;
 use Esi\Mimey\MimeTypes;
-
-// PHPUnit
 use JsonException;
 use PHPUnit\Framework\Attributes\CoversClass;
 use PHPUnit\Framework\Attributes\UsesClass;
-
-// Exceptions
 use PHPUnit\Framework\TestCase;
 use RuntimeException;
 
-// Functions & constants
 use function file_get_contents;
 use function file_put_contents;
 use function json_decode;
@@ -103,6 +97,7 @@ class BuilderTest extends TestCase
         self::assertSame('mycustomjson', $mime3->getExtension('application/json'));
         self::assertSame('application/mycustomjson', $mime3->getMimeType('json'));
     }
+
     /**
      * Test with a new mapping builder that has no types defined.
      */

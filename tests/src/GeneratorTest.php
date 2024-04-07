@@ -22,14 +22,9 @@ declare(strict_types=1);
 
 namespace Esi\Mimey\Tests;
 
-// Core classes
 use Esi\Mimey\Mapping\Generator;
-
-// Exceptions
 use JsonException;
 use PHPUnit\Framework\Attributes\CoversClass;
-
-// PHPUnit
 use PHPUnit\Framework\TestCase;
 use ReflectionMethod;
 
@@ -201,6 +196,7 @@ class GeneratorTest extends TestCase
             $phpEnum
         );
     }
+
     public function testSpaceIndent(): void
     {
         $spaceIndent = new ReflectionMethod(Generator::class, 'spaceIndent');

@@ -3,34 +3,16 @@
 declare(strict_types=1);
 
 /**
- * Mimey - PHP package for converting file extensions to MIME types and vice versa.
+ * This file is part of Esi\Mimey.
  *
- * @author    Eric Sizemore <admin@secondversion.com>
- * @version   2.0.0
- * @copyright (C) 2023-2024 Eric Sizemore
- * @license   The MIT License (MIT)
+ * (c) Eric Sizemore <admin@secondversion.com>
+ * (c) Ricardo Boss <contact@ricardoboss.de>
+ * (c) Ralph Khattar <ralph.khattar@gmail.com>
  *
- * Copyright (C) 2023-2024 Eric Sizemore<https://www.secondversion.com/>.
- *
- * Permission is hereby granted, free of charge, to any person obtaining a copy
- * of this software and associated documentation files (the "Software"), to
- * deal in the Software without restriction, including without limitation the
- * rights to use, copy, modify, merge, publish, distribute, sublicense, and/or
- * sell copies of the Software, and to permit persons to whom the Software is
- * furnished to do so, subject to the following conditions:
- *
- * The above copyright notice and this permission notice shall be included in
- * all copies or substantial portions of the Software.
- *
- * THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
- * IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
- * FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
- * AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
- * LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
- * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
- * THE SOFTWARE.
+ * This source file is subject to the MIT license. For the full copyright,
+ * license information, and credits/acknowledgements, please view the LICENSE
+ * and README files that were distributed with this source code.
  */
-
 /**
  * Esi\Mimey is a fork of Elephox\Mimey (https://github.com/elephox-dev/mimey) which is:
  *     Copyright (c) 2022 Ricardo Boss
@@ -41,17 +23,12 @@ declare(strict_types=1);
 namespace Esi\Mimey\Mapping;
 
 use Esi\Mimey\Interface\MimeType;
-
-// Exceptions
 use JsonException;
 
-// Functions & constants
 use function array_filter;
 use function array_map;
 use function array_unique;
 use function array_values;
-use function count;
-use function dirname;
 use function explode;
 use function file_get_contents;
 use function json_encode;
@@ -59,7 +36,6 @@ use function preg_replace;
 use function sprintf;
 use function str_pad;
 use function str_replace;
-use function strlen;
 use function trim;
 use function ucfirst;
 use function ucwords;
@@ -93,21 +69,35 @@ use const STR_PAD_LEFT;
 class Generator
 {
     /**
-     * @var  MimeTypeMap|array{}  $mapCache
+     * @var MimeTypeMap|array{}
      */
     protected array $mapCache = [];
 
     /**
      * Create a new generator instance with the given mime.types text.
      *
-     * @param  non-empty-string  $mimeTypesText  The text from the mime.types file.
+     * @param non-empty-string $mimeTypesText The text from the mime.types file.
      */
     public function __construct(protected string $mimeTypesText) {}
 
     /**
+     * Generate the JSON from the mapCache.
+     *
+     * @param bool $minify Whether to minify the generated JSON.
+     *
+     * @return non-empty-string
+     *
+     * @throws JsonException
+     */
+    public function generateJson(bool $minify = true): string
+    {
+        return json_encode($this->generateMapping(), flags: JSON_THROW_ON_ERROR | ($minify ? 0 : JSON_PRETTY_PRINT));
+    }
+
+    /**
      * Read the given mime.types text and return a mapping compatible with the MimeTypes class.
      *
-     * @return  MimeTypeMap|array{}  The mapping.
+     * @return MimeTypeMap|array{} The mapping.
      */
     public function generateMapping(): array
     {
@@ -123,10 +113,12 @@ class Generator
             $parts = [];
 
             if ($line !== '') {
-                $parts = array_values(array_filter(explode("\t", $line)));
+                $parts = array_values(array_filter(explode("\t", $line), static function (string $value): bool {
+                    return (trim($value) !== '');
+                }));
             }
 
-            if (count($parts) === 2) {
+            if (\count($parts) === 2) {
                 $mime       = trim($parts[0]);
                 $extensions = array_map('trim', explode(' ', $parts[1]));
 
@@ -145,24 +137,12 @@ class Generator
     }
 
     /**
-     * Generate the JSON from the mapCache.
-     *
-     * @param   bool              $minify  Whether to minify the generated JSON.
-     * @return  non-empty-string
-     *
-     * @throws JsonException
-     */
-    public function generateJson(bool $minify = true): string
-    {
-        return json_encode($this->generateMapping(), flags: JSON_THROW_ON_ERROR | ($minify ? 0 : JSON_PRETTY_PRINT));
-    }
-
-    /**
      * Generates the PHP Enum found in `dist`.
      *
-     * @param   non-empty-string         $classname
-     * @param   non-empty-string         $namespace
-     * @return  non-empty-string|string
+     * @param non-empty-string $classname
+     * @param non-empty-string $namespace
+     *
+     * @return non-empty-string|string
      */
     public function generatePhpEnum(string $classname = 'MimeType', string $namespace = 'Esi\Mimey'): string
     {
@@ -175,7 +155,7 @@ class Generator
             'ext2type'        => '',
         ];
 
-        $stub = (string) file_get_contents(dirname(__DIR__, 2) . '/stubs/mimeType.php.stub');
+        $stub = (string) file_get_contents(\dirname(__DIR__, 2) . '/stubs/mimeType.php.stub');
 
         $mapping = $this->generateMapping();
         $nameMap = [];
@@ -206,13 +186,16 @@ class Generator
         return (string) preg_replace('/([\/\-_+.]+)/', '', ucfirst(ucwords($mimeType, '/-_+.')));
     }
 
+    /**
+     * Helper function for self::generatePhpEnum()
+     */
     protected static function spaceIndent(int $spaces, string $string): string
     {
         if ($spaces <= 0) {
             $spaces = 4;
         }
 
-        $spaces += strlen($string);
+        $spaces += \strlen($string);
 
         return str_pad($string, $spaces, ' ', STR_PAD_LEFT);
     }

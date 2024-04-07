@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "0defdd1fde2cac503bacc2a21a9a0d28",
+    "content-hash": "c4da1d761de0838c290c44ff418c6083",
     "packages": [],
     "packages-dev": [
         {
@@ -318,16 +318,16 @@
         },
         {
             "name": "friendsofphp/php-cs-fixer",
-            "version": "dev-master",
+            "version": "v3.52.1",
             "source": {
                 "type": "git",
                 "url": "https://github.com/PHP-CS-Fixer/PHP-CS-Fixer.git",
-                "reference": "0e69940277f81ee3011906c546a1166b275ad6b7"
+                "reference": "6e77207f0d851862ceeb6da63e6e22c01b1587bc"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/PHP-CS-Fixer/PHP-CS-Fixer/zipball/0e69940277f81ee3011906c546a1166b275ad6b7",
-                "reference": "0e69940277f81ee3011906c546a1166b275ad6b7",
+                "url": "https://api.github.com/repos/PHP-CS-Fixer/PHP-CS-Fixer/zipball/6e77207f0d851862ceeb6da63e6e22c01b1587bc",
+                "reference": "6e77207f0d851862ceeb6da63e6e22c01b1587bc",
                 "shasum": ""
             },
             "require": {
@@ -351,7 +351,6 @@
             },
             "require-dev": {
                 "facile-it/paraunit": "^1.3 || ^2.0",
-                "infection/infection": "^0.27.11",
                 "justinrainbow/json-schema": "^5.2",
                 "keradus/cli-executor": "^2.1",
                 "mikey179/vfsstream": "^1.6.11",
@@ -367,7 +366,6 @@
                 "ext-dom": "For handling output formats in XML",
                 "ext-mbstring": "For handling non-UTF8 characters."
             },
-            "default-branch": true,
             "bin": [
                 "php-cs-fixer"
             ],
@@ -400,7 +398,7 @@
             ],
             "support": {
                 "issues": "https://github.com/PHP-CS-Fixer/PHP-CS-Fixer/issues",
-                "source": "https://github.com/PHP-CS-Fixer/PHP-CS-Fixer/tree/master"
+                "source": "https://github.com/PHP-CS-Fixer/PHP-CS-Fixer/tree/v3.52.1"
             },
             "funding": [
                 {
@@ -408,7 +406,7 @@
                     "type": "github"
                 }
             ],
-            "time": "2024-04-04T16:22:16+00:00"
+            "time": "2024-03-19T21:02:43+00:00"
         },
         {
             "name": "myclabs/deep-copy",
@@ -651,12 +649,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/phpstan/phpstan.git",
-                "reference": "df0007478b121e50404abab3393b2f38697672c6"
+                "reference": "8ff5626705253103d249dabc55f845f9bbc6cc85"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/phpstan/phpstan/zipball/df0007478b121e50404abab3393b2f38697672c6",
-                "reference": "df0007478b121e50404abab3393b2f38697672c6",
+                "url": "https://api.github.com/repos/phpstan/phpstan/zipball/8ff5626705253103d249dabc55f845f9bbc6cc85",
+                "reference": "8ff5626705253103d249dabc55f845f9bbc6cc85",
                 "shasum": ""
             },
             "require": {
@@ -702,7 +700,7 @@
                     "type": "github"
                 }
             ],
-            "time": "2024-04-04T12:49:45+00:00"
+            "time": "2024-04-06T14:21:32+00:00"
         },
         {
             "name": "phpstan/phpstan-phpunit",
@@ -763,12 +761,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/phpstan/phpstan-strict-rules.git",
-                "reference": "b5233d58637aadee4428961365196b205b557844"
+                "reference": "1a51fae7892bf7488cc7edf106ad579235bf53a0"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/phpstan/phpstan-strict-rules/zipball/b5233d58637aadee4428961365196b205b557844",
-                "reference": "b5233d58637aadee4428961365196b205b557844",
+                "url": "https://api.github.com/repos/phpstan/phpstan-strict-rules/zipball/1a51fae7892bf7488cc7edf106ad579235bf53a0",
+                "reference": "1a51fae7892bf7488cc7edf106ad579235bf53a0",
                 "shasum": ""
             },
             "require": {
@@ -805,7 +803,7 @@
                 "issues": "https://github.com/phpstan/phpstan-strict-rules/issues",
                 "source": "https://github.com/phpstan/phpstan-strict-rules/tree/1.6.x"
             },
-            "time": "2024-04-03T12:37:37+00:00"
+            "time": "2024-04-06T07:45:29+00:00"
         },
         {
             "name": "phpunit/php-code-coverage",
@@ -3634,9 +3632,7 @@
     ],
     "aliases": [],
     "minimum-stability": "dev",
-    "stability-flags": {
-        "friendsofphp/php-cs-fixer": 20
-    },
+    "stability-flags": [],
     "prefer-stable": true,
     "prefer-lowest": false,
     "platform": {

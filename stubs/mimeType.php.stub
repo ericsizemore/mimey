@@ -2,6 +2,8 @@
 
 /**
  * @generated enum generated using bin/generate.php, please DO NOT EDIT!
+ *
+ * @codeCoverageIgnore
  */
 declare(strict_types=1);
 

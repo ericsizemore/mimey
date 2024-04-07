@@ -3,34 +3,16 @@
 declare(strict_types=1);
 
 /**
- * Mimey - PHP package for converting file extensions to MIME types and vice versa.
+ * This file is part of Esi\Mimey.
  *
- * @author    Eric Sizemore <admin@secondversion.com>
- * @version   2.0.0
- * @copyright (C) 2023-2024 Eric Sizemore
- * @license   The MIT License (MIT)
+ * (c) Eric Sizemore <admin@secondversion.com>
+ * (c) Ricardo Boss <contact@ricardoboss.de>
+ * (c) Ralph Khattar <ralph.khattar@gmail.com>
  *
- * Copyright (C) 2023-2024 Eric Sizemore<https://www.secondversion.com/>.
- *
- * Permission is hereby granted, free of charge, to any person obtaining a copy
- * of this software and associated documentation files (the "Software"), to
- * deal in the Software without restriction, including without limitation the
- * rights to use, copy, modify, merge, publish, distribute, sublicense, and/or
- * sell copies of the Software, and to permit persons to whom the Software is
- * furnished to do so, subject to the following conditions:
- *
- * The above copyright notice and this permission notice shall be included in
- * all copies or substantial portions of the Software.
- *
- * THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
- * IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
- * FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
- * AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
- * LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
- * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
- * THE SOFTWARE.
+ * This source file is subject to the MIT license. For the full copyright,
+ * license information, and credits/acknowledgements, please view the LICENSE
+ * and README files that were distributed with this source code.
  */
-
 /**
  * Esi\Mimey is a fork of Elephox\Mimey (https://github.com/elephox-dev/mimey) which is:
  *     Copyright (c) 2022 Ricardo Boss
@@ -46,34 +28,38 @@ namespace Esi\Mimey\Interface;
 interface MimeTypes
 {
     /**
-     * Get the first MIME type that matches the given file extension.
+     * Get all file extensions (without the dots) that match the given MIME type.
      *
-     * @param   string       $extension  The file extension to check.
-     * @return  string|null              The first matching MIME type or null if nothing matches.
-     */
-    public function getMimeType(string $extension): ?string;
-
-    /**
-     * Get the first file extension (without the dot) that matches the given MIME type.
+     * @param string $mimeType The MIME type to check.
      *
-     * @param  string       $mimeType  The MIME type to check.
-     * @return string|null             The first matching extension or null if nothing matches.
+     * @return array<int<0, max>, string> An array of file extensions that match the given MIME type; can be empty.
      */
-    public function getExtension(string $mimeType): ?string;
+    public function getAllExtensions(string $mimeType): array;
 
     /**
      * Get all MIME types that match the given extension.
      *
-     * @param  string                      $extension  The file extension to check.
-     * @return array<int<0, max>, string>              An array of MIME types that match the given extension; can be empty.
+     * @param string $extension The file extension to check.
+     *
+     * @return array<int<0, max>, string> An array of MIME types that match the given extension; can be empty.
      */
     public function getAllMimeTypes(string $extension): array;
 
     /**
-     * Get all file extensions (without the dots) that match the given MIME type.
+     * Get the first file extension (without the dot) that matches the given MIME type.
      *
-     * @param  string                      $mimeType  The MIME type to check.
-     * @return array<int<0, max>, string>             An array of file extensions that match the given MIME type; can be empty.
+     * @param string $mimeType The MIME type to check.
+     *
+     * @return string|null The first matching extension or null if nothing matches.
      */
-    public function getAllExtensions(string $mimeType): array;
+    public function getExtension(string $mimeType): ?string;
+
+    /**
+     * Get the first MIME type that matches the given file extension.
+     *
+     * @param string $extension The file extension to check.
+     *
+     * @return string|null The first matching MIME type or null if nothing matches.
+     */
+    public function getMimeType(string $extension): ?string;
 }

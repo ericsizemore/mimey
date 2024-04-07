@@ -3,34 +3,16 @@
 declare(strict_types=1);
 
 /**
- * Mimey - PHP package for converting file extensions to MIME types and vice versa.
+ * This file is part of Esi\Mimey.
  *
- * @author    Eric Sizemore <admin@secondversion.com>
- * @version   2.0.0
- * @copyright (C) 2023-2024 Eric Sizemore
- * @license   The MIT License (MIT)
+ * (c) Eric Sizemore <admin@secondversion.com>
+ * (c) Ricardo Boss <contact@ricardoboss.de>
+ * (c) Ralph Khattar <ralph.khattar@gmail.com>
  *
- * Copyright (C) 2023-2024 Eric Sizemore<https://www.secondversion.com/>.
- *
- * Permission is hereby granted, free of charge, to any person obtaining a copy
- * of this software and associated documentation files (the "Software"), to
- * deal in the Software without restriction, including without limitation the
- * rights to use, copy, modify, merge, publish, distribute, sublicense, and/or
- * sell copies of the Software, and to permit persons to whom the Software is
- * furnished to do so, subject to the following conditions:
- *
- * The above copyright notice and this permission notice shall be included in
- * all copies or substantial portions of the Software.
- *
- * THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
- * IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
- * FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
- * AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
- * LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
- * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
- * THE SOFTWARE.
+ * This source file is subject to the MIT license. For the full copyright,
+ * license information, and credits/acknowledgements, please view the LICENSE
+ * and README files that were distributed with this source code.
  */
-
 /**
  * Esi\Mimey is a fork of Elephox\Mimey (https://github.com/elephox-dev/mimey) which is:
  *     Copyright (c) 2022 Ricardo Boss
@@ -45,12 +27,12 @@ use Esi\Mimey\Mapping\Builder;
 use Esi\Mimey\MimeTypes;
 
 // PHPUnit
+use JsonException;
 use PHPUnit\Framework\Attributes\CoversClass;
 use PHPUnit\Framework\Attributes\UsesClass;
-use PHPUnit\Framework\TestCase;
 
 // Exceptions
-use JsonException;
+use PHPUnit\Framework\TestCase;
 use RuntimeException;
 
 // Functions & constants
@@ -65,6 +47,7 @@ use const JSON_THROW_ON_ERROR;
 
 /**
  * Class to test Mapping Builder.
+ *
  * @internal
  */
 #[CoversClass(Builder::class)]
@@ -72,27 +55,29 @@ use const JSON_THROW_ON_ERROR;
 class BuilderTest extends TestCase
 {
     /**
-     * Test with a new mapping builder that has no types defined.
+     * Test appending an extension.
      */
-    public function testFromEmpty(): void
+    public function testAppendExtension(): void
     {
         $builder = Builder::blank();
         $builder->add('foo/bar', 'foobar');
-        $builder->add('foo/bar', 'bar');
-        $builder->add('foo/baz', 'foobaz');
+        $builder->add('foo/bar', 'bar', false);
 
         $mimeTypes = new MimeTypes($builder->getMapping());
+        self::assertSame('foobar', $mimeTypes->getExtension('foo/bar'));
+    }
 
-        self::assertSame('bar', $mimeTypes->getExtension('foo/bar'));
-        self::assertSame(['bar', 'foobar'], $mimeTypes->getAllExtensions('foo/bar'));
-        self::assertSame('foobaz', $mimeTypes->getExtension('foo/baz'));
-        self::assertSame(['foobaz'], $mimeTypes->getAllExtensions('foo/baz'));
+    /**
+     * Test appending a mime.
+     */
+    public function testAppendMime(): void
+    {
+        $builder = Builder::blank();
+        $builder->add('foo/bar', 'foobar');
+        $builder->add('foo/bar2', 'foobar', true, false);
+
+        $mimeTypes = new MimeTypes($builder->getMapping());
         self::assertSame('foo/bar', $mimeTypes->getMimeType('foobar'));
-        self::assertSame(['foo/bar'], $mimeTypes->getAllMimeTypes('foobar'));
-        self::assertSame('foo/bar', $mimeTypes->getMimeType('bar'));
-        self::assertSame(['foo/bar'], $mimeTypes->getAllMimeTypes('bar'));
-        self::assertSame('foo/baz', $mimeTypes->getMimeType('foobaz'));
-        self::assertSame(['foo/baz'], $mimeTypes->getAllMimeTypes('foobaz'));
     }
 
     /**
@@ -118,31 +103,42 @@ class BuilderTest extends TestCase
         self::assertSame('mycustomjson', $mime3->getExtension('application/json'));
         self::assertSame('application/mycustomjson', $mime3->getMimeType('json'));
     }
-
     /**
-     * Test appending an extension.
+     * Test with a new mapping builder that has no types defined.
      */
-    public function testAppendExtension(): void
+    public function testFromEmpty(): void
     {
         $builder = Builder::blank();
         $builder->add('foo/bar', 'foobar');
-        $builder->add('foo/bar', 'bar', false);
+        $builder->add('foo/bar', 'bar');
+        $builder->add('foo/baz', 'foobaz');
 
         $mimeTypes = new MimeTypes($builder->getMapping());
-        self::assertSame('foobar', $mimeTypes->getExtension('foo/bar'));
+
+        self::assertSame('bar', $mimeTypes->getExtension('foo/bar'));
+        self::assertSame(['bar', 'foobar'], $mimeTypes->getAllExtensions('foo/bar'));
+        self::assertSame('foobaz', $mimeTypes->getExtension('foo/baz'));
+        self::assertSame(['foobaz'], $mimeTypes->getAllExtensions('foo/baz'));
+        self::assertSame('foo/bar', $mimeTypes->getMimeType('foobar'));
+        self::assertSame(['foo/bar'], $mimeTypes->getAllMimeTypes('foobar'));
+        self::assertSame('foo/bar', $mimeTypes->getMimeType('bar'));
+        self::assertSame(['foo/bar'], $mimeTypes->getAllMimeTypes('bar'));
+        self::assertSame('foo/baz', $mimeTypes->getMimeType('foobaz'));
+        self::assertSame(['foo/baz'], $mimeTypes->getAllMimeTypes('foobaz'));
     }
 
     /**
-     * Test appending a mime.
+     * Test loading a mapping file that contains invalid JSON.
+     *
+     * @throws JsonException
      */
-    public function testAppendMime(): void
+    public function testLoadInvalid(): void
     {
-        $builder = Builder::blank();
-        $builder->add('foo/bar', 'foobar');
-        $builder->add('foo/bar2', 'foobar', true, false);
+        $file = (string) tempnam(sys_get_temp_dir(), 'mapping_test');
+        file_put_contents($file, 'invalid json');
 
-        $mimeTypes = new MimeTypes($builder->getMapping());
-        self::assertSame('foo/bar', $mimeTypes->getMimeType('foobar'));
+        self::expectException(RuntimeException::class);
+        Builder::load($file);
     }
 
     /**
@@ -171,19 +167,5 @@ class BuilderTest extends TestCase
         unlink($file);
 
         self::assertSame($builder->getMapping(), $builder2->getMapping());
-    }
-
-    /**
-     * Test loading a mapping file that contains invalid JSON.
-     *
-     * @throws JsonException
-     */
-    public function testLoadInvalid(): void
-    {
-        $file = (string) tempnam(sys_get_temp_dir(), 'mapping_test');
-        file_put_contents($file, 'invalid json');
-
-        self::expectException(RuntimeException::class);
-        Builder::load($file);
     }
 }

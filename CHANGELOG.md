@@ -4,15 +4,17 @@
     * `MimeMappingBuilder` and `MimeMappingGenerator` are now `Mapping\Builder` and `Mapping\Generator`.
     * `MimeTypeInterface` and `MimeTypesInterface` are now `Interface\MimeType` and `Interface\MimeTypes`.
   * Added a new interface for `Mapping\Builder` -> `Interface\BuilderInterface`.
+  * Fix `Mapping\Generator::generateMapping()`'s use of `array_filter` to not rely on loose comparison.
   * Removed `jetbrains/phpstorm-attributes` as a dependency.
-  * Updated PHPUnit to 11.x (currently using 11.1-dev).
+  * Updated PHPUnit to 11.1.
     * All `assertEquals` calls are now `assertSame`.
     * Updated data providers to return `Iterator` via `yield` instead of arrays.
   * Removed Rector from dev-dependencies.
   * Set PHP-CS-Fixer dev dependency to `dev-master`.
   * Added the `Override` attribute. to the `MimeType` enum functions `getExtension` and `getValue`.
     * Not importing the attribute, as `#[\Override]` should not cause issues in PHP < 8.3
-  * Updated the `psalm` workflow to use the latest `psalm/psalm-github-security-scan` and `github/codeql-action/upload-sarif`. 
+  * Updated the `psalm` workflow to use the latest `psalm/psalm-github-security-scan` and `github/codeql-action/upload-sarif`.
+  * Changed the header of all PHP files to be more compact.
   * See UPGRADING.md for upgrade instructions/overview.
 
 ### 1.2.0 (2024-01-30)

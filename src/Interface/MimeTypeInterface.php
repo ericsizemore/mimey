@@ -25,7 +25,7 @@ namespace Esi\Mimey\Interface;
 /**
  * MimeType Enum Interface.
  */
-interface MimeType
+interface MimeTypeInterface
 {
     public function getExtension(): string;
     public function getValue(): string;

@@ -11,10 +11,10 @@
       * `src/MimeMappingBuilder.php` -> `src/Mapping/Builder.php`
     * `Esi\Mimey\MimeMappingGenerator` is now `Esi\Mimey\Mapping\Generator`.
       * `src/MimeMappingGenerator.php` -> `src/Mapping/Generator.php`
-    * `Esi\Mimey\MimeTypeInterface` is now `Esi\Mimey\Interface\MimeType`
-      * `src/MimeTypeInterface.php` -> `src/Interface/MimeType.php`
-    * `Esi\Mimey\MimeTypesInterface` is now `Esi\Mimey\Interface\MimeTypes`
-      * `src/MimeTypesInterface.php` -> `src/Interface/MimeTypes.php`
+    * `Esi\Mimey\MimeTypeInterface` is now `Esi\Mimey\Interface\MimeTypeInterface`
+      * `src/MimeTypeInterface.php` -> `src/Interface/MimeTypeInterface.php`
+    * `Esi\Mimey\MimeTypesInterface` is now `Esi\Mimey\Interface\MimeTypesInterface`
+      * `src/MimeTypesInterface.php` -> `src/Interface/MimeTypesInterface.php`
   * For example. Instead of:
 ```php
 use Esi\Mimey\MimeMappingBuilder;

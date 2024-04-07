@@ -22,7 +22,7 @@ declare(strict_types=1);
 
 namespace Esi\Mimey;
 
-use Esi\Mimey\Interface\MimeTypes as MimeTypesInterface;
+use Esi\Mimey\Interface\MimeTypesInterface;
 use RuntimeException;
 use Throwable;
 
@@ -74,6 +74,7 @@ class MimeTypes implements MimeTypesInterface
      *                                  Entry "mimes" being an associative array of extension to
      *                                  array of MIME types. Entry "extensions" being an associative
      *                                  array of MIME type to array of extensions.
+     *
      *                                  Example:
      *                                  [
      *                                      'extensions' => [

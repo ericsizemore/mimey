@@ -3,7 +3,6 @@ Mimey
 
 PHP package for converting file extensions to MIME types and vice versa.
 
-[![FOSSA Status](https://app.fossa.com/api/projects/git%2Bgithub.com%2Fericsizemore%2Fmimey.svg?type=shield)](https://app.fossa.com/projects/git%2Bgithub.com%2Fericsizemore%2Fmimey?ref=badge_shield)
 [![Build Status](https://scrutinizer-ci.com/g/ericsizemore/mimey/badges/build.png?b=develop)](https://scrutinizer-ci.com/g/ericsizemore/mimey/build-status/develop)
 [![Code Coverage](https://scrutinizer-ci.com/g/ericsizemore/mimey/badges/coverage.png?b=develop)](https://scrutinizer-ci.com/g/ericsizemore/mimey/?branch=develop)
 [![Scrutinizer Code Quality](https://scrutinizer-ci.com/g/ericsizemore/mimey/badges/quality-score.png?b=develop)](https://scrutinizer-ci.com/g/ericsizemore/mimey/?branch=develop)
@@ -199,6 +198,4 @@ Eric Sizemore - <admin@secondversion.com> - <https://www.secondversion.com>
 
 ## License
 
-Mimey is licensed under the MIT License - see the `LICENSE.md` file for details
-
-[![FOSSA Status](https://app.fossa.com/api/projects/git%2Bgithub.com%2Fericsizemore%2Fmimey.svg?type=large)](https://app.fossa.com/projects/git%2Bgithub.com%2Fericsizemore%2Fmimey?ref=badge_large)
+Mimey is licensed under the MIT License - see the `LICENSE.md` file for details.

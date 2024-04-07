@@ -22,7 +22,7 @@ declare(strict_types=1);
 
 namespace Esi\Mimey\Mapping;
 
-use Esi\Mimey\Interface\MimeType;
+use Esi\Mimey\Interface\MimeTypeInterface;
 use JsonException;
 
 use function array_filter;
@@ -149,7 +149,7 @@ class Generator
         $values = [
             'namespace'       => $namespace,
             'classname'       => $classname,
-            'interface_usage' => $namespace !== __NAMESPACE__ ? ('use ' . MimeType::class . " as MimeTypeInterface;\n") : '',
+            'interface_usage' => $namespace !== __NAMESPACE__ ? ('use ' . MimeTypeInterface::class . ";\n") : '',
             'cases'           => '',
             'type2ext'        => '',
             'ext2type'        => '',
@@ -187,7 +187,7 @@ class Generator
     }
 
     /**
-     * Helper function for self::generatePhpEnum()
+     * Helper function for self::generatePhpEnum().
      */
     protected static function spaceIndent(int $spaces, string $string): string
     {

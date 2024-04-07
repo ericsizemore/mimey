@@ -25,7 +25,7 @@ namespace Esi\Mimey\Interface;
 /**
  * An interface for converting between MIME types and file extensions.
  */
-interface MimeTypes
+interface MimeTypesInterface
 {
     /**
      * Get all file extensions (without the dots) that match the given MIME type.

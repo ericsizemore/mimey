@@ -201,6 +201,85 @@ class GeneratorTest extends TestCase
     }
 
     /**
+     * Test generating the PHP Enum from the given mime.types text.
+     */
+    public function testGeneratePhpEnumDefault(): void
+    {
+        $generator = new Generator(
+            <<<EOF
+                #ignore
+                application/json\tjson
+                image/jpeg\tjpeg jpg
+                EOF
+        );
+
+        $phpEnum = $generator->generatePhpEnum();
+
+        self::assertSame(
+            <<<EOF
+                <?php
+
+                /**
+                 * @generated enum generated using bin/generate.php, please DO NOT EDIT!
+                 *
+                 * @codeCoverageIgnore
+                 */
+                declare(strict_types=1);
+
+                namespace Esi\Mimey;
+
+                use InvalidArgumentException;
+                use Esi\Mimey\Interface\MimeTypeInterface;
+
+                enum MimeType: string implements MimeTypeInterface
+                {
+                    case ApplicationJson = 'application/json';
+                    case ImageJpeg = 'image/jpeg';
+
+                    #[\Override]
+                    public function getExtension(): string
+                    {
+                        return match(\$this) {
+                            self::ApplicationJson => 'json',
+                            self::ImageJpeg => 'jpeg',
+
+                        };
+                    }
+
+                    #[\Override]
+                    public function getValue(): string
+                    {
+                        return \$this->value;
+                    }
+
+                    public static function fromExtension(string \$extension): MimeType
+                    {
+                        \$type = self::tryFromExtension(\$extension);
+
+                        if (\$type === null) {
+                            throw new InvalidArgumentException('Unknown extension: ' . \$extension);
+                        }
+                        return \$type;
+                    }
+
+                    public static function tryFromExtension(string \$extension): ?MimeType
+                    {
+                        return match(\$extension) {
+                            'json' => self::ApplicationJson,
+                            'jpeg' => self::ImageJpeg,
+                            'jpg' => self::ImageJpeg,
+
+                            default => null,
+                        };
+                    }
+                }
+
+                EOF,
+            $phpEnum
+        );
+    }
+
+    /**
      * Test generating the PHP Enum when given invalid mime.types text.
      */
     public function testGeneratePhpEnumInvalid(): void
@@ -210,6 +289,36 @@ class GeneratorTest extends TestCase
                 #ignore
                 #application/json\tjson
                 #image/jpeg\tjpeg jpg
+                EOF
+        );
+
+        $this->expectException(RuntimeException::class);
+        $generator->generatePhpEnum('TestMimeClass', 'TestMimeNamespace');
+    }
+
+    /**
+     * Test generating the PHP Enum when given invalid mime.types text.
+     *
+     * @psalm-suppress InvalidArgument
+     */
+    public function testGeneratePhpEnumInvalidNoParam(): void
+    {
+        $generator = new Generator('');
+
+        $this->expectException(RuntimeException::class);
+        $generator->generatePhpEnum('TestMimeClass', 'TestMimeNamespace');
+    }
+
+    /**
+     * Test generating the PHP Enum when given invalid mime.types text.
+     */
+    public function testGeneratePhpEnumInvalidNoTab(): void
+    {
+        $generator = new Generator(
+            <<<'EOF'
+                #ignore
+                application/jsonjson
+                image/jpegjpegjpg
                 EOF
         );
 

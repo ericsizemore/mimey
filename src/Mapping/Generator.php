@@ -139,12 +139,12 @@ class Generator
     public function generatePhpEnum(string $classname = 'MimeType', string $namespace = 'Esi\Mimey'): string
     {
         $values = [
-            'namespace'       => $namespace,
-            'classname'       => $classname,
-            'interface_usage' => $namespace !== __NAMESPACE__ ? ('use ' . MimeTypeInterface::class . ";\n") : '',
-            'cases'           => '',
-            'type2ext'        => '',
-            'ext2type'        => '',
+            '%namespace%'       => $namespace,
+            '%classname%'       => $classname,
+            '%interface_usage%' => $namespace !== __NAMESPACE__ ? ('use ' . MimeTypeInterface::class . ";\n") : '',
+            '%cases%'           => '',
+            '%type2ext%'        => '',
+            '%ext2type%'        => '',
         ];
 
         $stubContents = (string) file_get_contents(\dirname(__DIR__, 2) . '/stubs/mimeType.php.stub');
@@ -160,19 +160,19 @@ class Generator
         foreach ($mapping['extensions'] as $mime => $extensions) {
             $nameMap[$mime] = $this->convertMimeTypeToCaseName($mime);
 
-            $values['cases'] .= sprintf(Generator::spaceIndent(4, "case %s = '%s';\n"), $nameMap[$mime], $mime);
-            $values['type2ext'] .= sprintf(Generator::spaceIndent(12, "self::%s => '%s',\n"), $nameMap[$mime], $extensions[0]);
+            $values['%cases%'] .= sprintf(Generator::spaceIndent(4, "case %s = '%s';\n"), $nameMap[$mime], $mime);
+            $values['%type2ext%'] .= sprintf(Generator::spaceIndent(12, "self::%s => '%s',\n"), $nameMap[$mime], $extensions[0]);
         }
 
         foreach ($mapping['mimes'] as $extension => $mimes) {
-            $values['ext2type'] .= sprintf(Generator::spaceIndent(12, "'%s' => self::%s,\n"), $extension, $nameMap[$mimes[0]]);
+            $values['%ext2type%'] .= sprintf(Generator::spaceIndent(12, "'%s' => self::%s,\n"), $extension, $nameMap[$mimes[0]]);
         }
 
-        foreach ($values as $name => $value) {
-            $stubContents = str_replace("%$name%", $value, $stubContents);
-        }
-
-        return $stubContents;
+        return str_replace(
+            array_keys($values),
+            array_values($values),
+            $stubContents
+        );
     }
 
     /**
@@ -188,7 +188,7 @@ class Generator
     }
 
     /**
-     * Helper function for self::generateMapping()
+     * Helper function for self::generateMapping().
      *
      * @param list<string> $parts
      */

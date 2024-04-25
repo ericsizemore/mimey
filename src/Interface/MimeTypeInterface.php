@@ -24,6 +24,8 @@ namespace Esi\Mimey\Interface;
 
 /**
  * MimeType Enum Interface.
+ *
+ * @psalm-api
  */
 interface MimeTypeInterface
 {

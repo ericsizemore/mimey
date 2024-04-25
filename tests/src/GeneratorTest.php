@@ -27,11 +27,14 @@ use JsonException;
 use PHPUnit\Framework\Attributes\CoversClass;
 use PHPUnit\Framework\TestCase;
 use ReflectionMethod;
+use RuntimeException;
 
 /**
  * Class to test Mapping Generator.
  *
  * @internal
+ *
+ * @psalm-api
  */
 #[CoversClass(Generator::class)]
 class GeneratorTest extends TestCase
@@ -197,11 +200,109 @@ class GeneratorTest extends TestCase
         );
     }
 
+    /**
+     * Test generating the PHP Enum given empty classname and namespace.
+     */
+    public function testGeneratePhpEnumEmptyParams(): void
+    {
+        $generator = new Generator(
+            <<<EOF
+                #ignore
+                application/json\tjson
+                image/jpeg\tjpeg jpg
+                EOF
+        );
+
+        $phpEnum = $generator->generatePhpEnum('', '');
+
+        self::assertSame(
+            <<<EOF
+                <?php
+
+                /**
+                 * @generated enum generated using bin/generate.php, please DO NOT EDIT!
+                 *
+                 * @codeCoverageIgnore
+                 */
+                declare(strict_types=1);
+
+                namespace Esi\Mimey;
+
+                use InvalidArgumentException;
+                use Esi\Mimey\Interface\MimeTypeInterface;
+
+                enum MimeType: string implements MimeTypeInterface
+                {
+                    case ApplicationJson = 'application/json';
+                    case ImageJpeg = 'image/jpeg';
+
+                    #[\Override]
+                    public function getExtension(): string
+                    {
+                        return match(\$this) {
+                            self::ApplicationJson => 'json',
+                            self::ImageJpeg => 'jpeg',
+
+                        };
+                    }
+
+                    #[\Override]
+                    public function getValue(): string
+                    {
+                        return \$this->value;
+                    }
+
+                    public static function fromExtension(string \$extension): MimeType
+                    {
+                        \$type = self::tryFromExtension(\$extension);
+
+                        if (\$type === null) {
+                            throw new InvalidArgumentException('Unknown extension: ' . \$extension);
+                        }
+                        return \$type;
+                    }
+
+                    public static function tryFromExtension(string \$extension): ?MimeType
+                    {
+                        return match(\$extension) {
+                            'json' => self::ApplicationJson,
+                            'jpeg' => self::ImageJpeg,
+                            'jpg' => self::ImageJpeg,
+
+                            default => null,
+                        };
+                    }
+                }
+
+                EOF,
+            $phpEnum
+        );
+    }
+
+    /**
+     * Test generating the PHP Enum when given invalid mime.types text.
+     */
+    public function testGeneratePhpEnumInvalid(): void
+    {
+        $generator = new Generator(
+            <<<EOF
+                #ignore
+                #application/json\tjson
+                #image/jpeg\tjpeg jpg
+                EOF
+        );
+
+        $this->expectException(RuntimeException::class);
+        $generator->generatePhpEnum('TestMimeClass', 'TestMimeNamespace');
+    }
+
     public function testSpaceIndent(): void
     {
         $spaceIndent = new ReflectionMethod(Generator::class, 'spaceIndent');
-        $result      = $spaceIndent->invoke($spaceIndent, 0, 'test');
+
         /** @var string $result */
+        $result = $spaceIndent->invoke($spaceIndent, 0, 'test');
+
         self::assertStringStartsWith('    ', $result);
         self::assertSame(8, \strlen($result));
     }

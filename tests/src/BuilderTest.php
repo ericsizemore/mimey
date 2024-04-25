@@ -43,6 +43,8 @@ use const JSON_THROW_ON_ERROR;
  * Class to test Mapping Builder.
  *
  * @internal
+ *
+ * @psalm-api
  */
 #[CoversClass(Builder::class)]
 #[UsesClass(MimeTypes::class)]
@@ -150,7 +152,43 @@ class BuilderTest extends TestCase
         $builder->add('foo/one', 'one1');
         $builder->add('foo/two', 'two');
         $builder->add('foo/two2', 'two');
-        $builder->save($file);
+        $succeeded = $builder->save($file);
+
+        self::assertIsInt($succeeded);
+
+        $json = (string) file_get_contents($file);
+
+        $mappingIncluded = json_decode($json, true, flags: JSON_THROW_ON_ERROR);
+        self::assertSame($builder->getMapping(), $mappingIncluded);
+
+        $builder2 = Builder::load($file);
+
+        unlink($file);
+
+        self::assertSame($builder->getMapping(), $builder2->getMapping());
+    }
+
+    public function testSaveWithContext(): void
+    {
+        $file = (string) tempnam(sys_get_temp_dir(), 'mapping_test_context');
+
+        $context = stream_context_create([
+            'http' => [
+                // Add HTTP headers if needed
+                'header' => "Content-Type: text/plain\r\n",
+                // Specify timeout
+                'timeout' => 30,
+            ],
+        ]);
+
+        $builder = Builder::blank();
+        $builder->add('foo/one', 'one');
+        $builder->add('foo/one', 'one1');
+        $builder->add('foo/two', 'two');
+        $builder->add('foo/two2', 'two');
+        $succeeded = $builder->save('file://' . $file, context: $context);
+
+        self::assertIsInt($succeeded);
 
         $json = (string) file_get_contents($file);
 

@@ -89,7 +89,11 @@ class Builder implements BuilderInterface
     #[\Override]
     public function save(string $file, int $flags = 0, mixed $context = null): false | int
     {
-        return file_put_contents($file, $this->compile(), $flags, $context);
+        if (\is_resource($context)) {
+            return file_put_contents($file, $this->compile(), $flags, $context);
+        }
+
+        return file_put_contents($file, $this->compile(), $flags);
     }
 
     /**

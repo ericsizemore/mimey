@@ -18,8 +18,11 @@ $enumDestination    = \dirname(__DIR__) . '/dist/MimeType.php';
 $mimeTypesContent       = \file_get_contents($mimeTypes);
 $mimeTypesCustomContent = \file_get_contents($mimeTypesCustom);
 
+\assert($mimeTypesContent !== false);
+\assert($mimeTypesCustomContent !== false);
+
 $generator = new Generator($mimeTypesCustomContent . \PHP_EOL . $mimeTypesContent);
-$mapping   = $generator->generateMapping();
+$generator->generateMapping();
 
 file_put_contents($jsonDestination, $generator->generateJson(false));
 file_put_contents($minJsonDestination, $generator->generateJson());

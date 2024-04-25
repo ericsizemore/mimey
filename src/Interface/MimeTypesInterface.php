@@ -24,6 +24,8 @@ namespace Esi\Mimey\Interface;
 
 /**
  * An interface for converting between MIME types and file extensions.
+ *
+ * @psalm-api
  */
 interface MimeTypesInterface
 {

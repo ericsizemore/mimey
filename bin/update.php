@@ -8,6 +8,8 @@ $destinationFile = \dirname(__DIR__) . '/data/mime.types';
 
 $mimeTypes = \file_get_contents($updateUrl);
 
+\assert($mimeTypes !== false);
+
 \file_put_contents($destinationFile, $mimeTypes);
 
 echo \sprintf("Downloaded mime.types from '%s' and stored at '%s'", $updateUrl, $destinationFile) . \PHP_EOL;

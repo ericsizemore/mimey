@@ -10,7 +10,11 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ### Added
 
-  * New dev dependencies: `phpstan/extension-installer` and `phpstan/phpstan-deprecation-rules`.
+  * New dev dependencies:
+    * `phpstan/extension-installer`
+    * `phpstan/phpstan-deprecation-rules`.
+    * `psalm/plugin-phpunit`
+    * `vimeo/psalm`
   * Added issue templates and a pull request template.
   * Added `CONTRIBUTING.md` for additional contributing information.
   * Added `backward-compatibility.md` for my backward compatibility promise.
@@ -19,6 +23,11 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ### Changed
 
   * Updated dev dependencies.
+  * `Generator::generatePhpEnum()` can now throw a `RuntimeException` if `generateMapping` returns an empty array.
+
+### Fixed
+
+  * Implemented fixes throughout based on Psalm.
 
 
 ## [2.0.0] - 2024-04-07

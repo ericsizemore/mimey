@@ -38,6 +38,8 @@ use function unlink;
  * Class to test MimeTypes.
  *
  * @internal
+ *
+ * @psalm-api
  */
 #[CoversClass(MimeTypes::class)]
 class MimeTypesTest extends TestCase

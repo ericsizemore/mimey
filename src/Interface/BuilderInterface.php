@@ -29,6 +29,8 @@ use RuntimeException;
  * This psalm-type looks gnarly, but it covers just about everything.
  *
  * @phpstan-import-type MimeTypeMap from \Esi\Mimey\MimeTypes
+ *
+ * @psalm-api
  */
 interface BuilderInterface
 {
@@ -63,15 +65,15 @@ interface BuilderInterface
     /**
      * Save the current mapping to a file.
      *
-     * @param string   $file    The file to save to.
-     * @param int      $flags   Flags for `file_put_contents`.
-     * @param resource $context Context for `file_put_contents`.
+     * @param string        $file    The file to save to.
+     * @param int           $flags   Flags for `file_put_contents`.
+     * @param null|resource $context Context for `file_put_contents`.
      *
      * @throws JsonException
      *
      * @return false|int The number of bytes that were written to the file, or false on failure.
      */
-    public function save(string $file, int $flags = 0, mixed $context = null): false | int;
+    public function save(string $file, int $flags = 0, mixed $context = null): false|int;
 
     /**
      * Create a new mapping builder based on types from a file.

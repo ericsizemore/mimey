@@ -1,0 +1,17 @@
+name: Psalm Static analysis
+
+on: [push, pull_request]
+
+jobs:
+  psalm:
+    name: Psalm
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Psalm
+        uses: docker://vimeo/psalm-github-actions:latest
+        with:
+          args: --shepherd
+          composer_require_dev: true
+          security_analysis: false

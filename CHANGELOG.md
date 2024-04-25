@@ -6,6 +6,21 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
 
+## [Unreleased]
+
+### Added
+
+  * New dev dependencies: `phpstan/extension-installer` and `phpstan/phpstan-deprecation-rules`.
+  * Added issue templates and a pull request template.
+  * Added `CONTRIBUTING.md` for additional contributing information.
+  * Added `backward-compatibility.md` for my backward compatibility promise.
+  * Added `CODE_OF_CONDUCT.md` for a Contributor Code of Conduct.
+
+### Changed
+
+  * Updated dev dependencies.
+
+
 ## [2.0.0] - 2024-04-07
 
 Mostly a 'restructuring' release, to set the foundation going forward. See UPGRADING.md for upgrade instructions/overview.
@@ -94,7 +109,7 @@ Initial fork from [elephox-dev/mimey](https://github.com/elephox-dev/mimey)
   * Small updates here and there to code/documentation formatting/etc.
     * So essentially, this is not a new feature/update release. More of just bringing it inline with my preferences.
 
-
+[unreleased]: https://github.com/ericsizemore/mimey/tree/develop
 [2.0.0]: https://github.com/ericsizemore/mimey/releases/tag/v2.0.0
 [1.2.0]: https://github.com/ericsizemore/mimey/releases/tag/v1.2.0
 [1.1.1]: https://github.com/ericsizemore/mimey/releases/tag/v1.1.1

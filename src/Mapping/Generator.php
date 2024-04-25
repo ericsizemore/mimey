@@ -69,7 +69,7 @@ use const STR_PAD_LEFT;
 class Generator
 {
     /**
-     * @var MimeTypeMap|array{}
+     * @var array{}|MimeTypeMap
      */
     protected array $mapCache = [];
 
@@ -85,9 +85,9 @@ class Generator
      *
      * @param bool $minify Whether to minify the generated JSON.
      *
-     * @return non-empty-string
-     *
      * @throws JsonException
+     *
+     * @return non-empty-string
      */
     public function generateJson(bool $minify = true): string
     {
@@ -97,7 +97,7 @@ class Generator
     /**
      * Read the given mime.types text and return a mapping compatible with the MimeTypes class.
      *
-     * @return MimeTypeMap|array{} The mapping.
+     * @return array{}|MimeTypeMap The mapping.
      */
     public function generateMapping(): array
     {
@@ -113,9 +113,7 @@ class Generator
             $parts = [];
 
             if ($line !== '') {
-                $parts = array_values(array_filter(explode("\t", $line), static function (string $value): bool {
-                    return (trim($value) !== '');
-                }));
+                $parts = array_values(array_filter(explode("\t", $line), static fn (string $value): bool => (trim($value) !== '')));
             }
 
             if (\count($parts) === 2) {

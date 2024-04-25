@@ -47,9 +47,9 @@ interface BuilderInterface
      *
      * @param bool $pretty Whether to pretty print the output.
      *
-     * @return string The compiled PHP code to save to a file.
-     *
      * @throws JsonException
+     *
+     * @return string The compiled PHP code to save to a file.
      */
     public function compile(bool $pretty = false): string;
 
@@ -67,9 +67,9 @@ interface BuilderInterface
      * @param int      $flags   Flags for `file_put_contents`.
      * @param resource $context Context for `file_put_contents`.
      *
-     * @return false|int The number of bytes that were written to the file, or false on failure.
-     *
      * @throws JsonException
+     *
+     * @return false|int The number of bytes that were written to the file, or false on failure.
      */
     public function save(string $file, int $flags = 0, mixed $context = null): false | int;
 
@@ -78,9 +78,9 @@ interface BuilderInterface
      *
      * @param string $file The compiled PHP file to load.
      *
-     * @return BuilderInterface A mapping builder with types loaded from a file.
-     *
      * @throws RuntimeException
+     *
+     * @return BuilderInterface A mapping builder with types loaded from a file.
      */
     public static function load(string $file): BuilderInterface;
 }

@@ -70,7 +70,7 @@ class MimeTypes implements MimeTypesInterface
      *
      * If no mappings are defined, they will default to the ones included with this package.
      *
-     * @param MimeTypeMap|null $mapping An associative array containing two entries.
+     * @param null|MimeTypeMap $mapping An associative array containing two entries.
      *                                  Entry "mimes" being an associative array of extension to
      *                                  array of MIME types. Entry "extensions" being an associative
      *                                  array of MIME type to array of extensions.

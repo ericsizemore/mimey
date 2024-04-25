@@ -50,7 +50,7 @@ interface MimeTypesInterface
      *
      * @param string $mimeType The MIME type to check.
      *
-     * @return string|null The first matching extension or null if nothing matches.
+     * @return null|string The first matching extension or null if nothing matches.
      */
     public function getExtension(string $mimeType): ?string;
 
@@ -59,7 +59,7 @@ interface MimeTypesInterface
      *
      * @param string $extension The file extension to check.
      *
-     * @return string|null The first matching MIME type or null if nothing matches.
+     * @return null|string The first matching MIME type or null if nothing matches.
      */
     public function getMimeType(string $extension): ?string;
 }

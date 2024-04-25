@@ -120,22 +120,7 @@ class Generator
                 static fn (string $value): bool => trim($value) !== ''
             ));
 
-            if (\count($parts) === 2) {
-                $mime       = trim($parts[0]);
-                $extensions = explode(' ', $parts[1]);
-
-                foreach ($extensions as $extension) {
-                    $extension = trim($extension);
-
-                    if ($mime !== '' && $extension !== '') {
-                        $this->mapCache['mimes'][$extension][] = $mime;
-                        $this->mapCache['extensions'][$mime][] = $extension;
-                        $this->mapCache['mimes'][$extension]   = array_unique($this->mapCache['mimes'][$extension]);
-                        $this->mapCache['extensions'][$mime]   = array_unique($this->mapCache['extensions'][$mime]);
-
-                    }
-                }
-            }
+            $this->generateMapCache($parts);
         }
 
         return $this->mapCache;
@@ -144,8 +129,8 @@ class Generator
     /**
      * Generates the PHP Enum found in `dist`.
      *
-     * @param string $classname
-     * @param string $namespace
+     * @param non-empty-string $classname
+     * @param non-empty-string $namespace
      *
      * @throws RuntimeException
      *
@@ -153,14 +138,6 @@ class Generator
      */
     public function generatePhpEnum(string $classname = 'MimeType', string $namespace = 'Esi\Mimey'): string
     {
-        if ($classname === '') {
-            $classname = 'MimeType';
-        }
-
-        if ($namespace === '') {
-            $namespace = 'Esi\Mimey';
-        }
-
         $values = [
             'namespace'       => $namespace,
             'classname'       => $classname,
@@ -208,6 +185,30 @@ class Generator
         }
 
         return $mimeType;
+    }
+
+    /**
+     * Helper function for self::generateMapping()
+     *
+     * @param list<string> $parts
+     */
+    protected function generateMapCache(array $parts): void
+    {
+        if (\count($parts) === 2) {
+            $mime       = trim($parts[0]);
+            $extensions = explode(' ', $parts[1]);
+
+            foreach ($extensions as $extension) {
+                $extension = trim($extension);
+
+                if ($mime !== '' && $extension !== '') {
+                    $this->mapCache['mimes'][$extension][] = $mime;
+                    $this->mapCache['extensions'][$mime][] = $extension;
+                    $this->mapCache['mimes'][$extension]   = array_unique($this->mapCache['mimes'][$extension]);
+                    $this->mapCache['extensions'][$mime]   = array_unique($this->mapCache['extensions'][$mime]);
+                }
+            }
+        }
     }
 
     /**

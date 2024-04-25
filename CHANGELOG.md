@@ -24,6 +24,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
   * Updated dev dependencies.
   * `Generator::generatePhpEnum()` can now throw a `RuntimeException` if `generateMapping` returns an empty array.
+  * Refactored `Generator::generateMapping()` make use of a helper function to reduce function complexity.
 
 ### Fixed
 

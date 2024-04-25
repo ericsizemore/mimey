@@ -8,8 +8,9 @@ PHP package for converting file extensions to MIME types and vice versa.
 [![Scrutinizer Code Quality](https://scrutinizer-ci.com/g/ericsizemore/mimey/badges/quality-score.png?b=develop)](https://scrutinizer-ci.com/g/ericsizemore/mimey/?branch=develop)
 [![PHPStan](https://github.com/ericsizemore/mimey/actions/workflows/ci.yml/badge.svg)](https://github.com/ericsizemore/mimey/actions/workflows/ci.yml)
 [![Tests](https://github.com/ericsizemore/mimey/actions/workflows/tests.yml/badge.svg)](https://github.com/ericsizemore/mimey/actions/workflows/tests.yml)
-[![Psalm Security Scan](https://github.com/ericsizemore/mimey/actions/workflows/psalm.yml/badge.svg)](https://github.com/ericsizemore/mimey/actions/workflows/psalm.yml)
-
+[![Psalm Static analysis](https://github.com/ericsizemore/mimey/actions/workflows/psalm.yml/badge.svg?branch=develop)](https://github.com/ericsizemore/mimey/actions/workflows/psalm.yml)
+[![Type Coverage](https://shepherd.dev/github/ericsizemore/mimey/coverage.svg)](https://shepherd.dev/github/ericsizemore/mimey)
+[![Psalm Level](https://shepherd.dev/github/ericsizemore/mimey/level.svg)](https://shepherd.dev/github/ericsizemore/mimey)
 [![Latest Stable Version](https://img.shields.io/packagist/v/esi/mimey.svg)](https://packagist.org/packages/esi/mimey)
 [![Downloads per Month](https://img.shields.io/packagist/dm/esi/mimey.svg)](https://packagist.org/packages/esi/mimey)
 [![License](https://img.shields.io/packagist/l/esi/mimey.svg)](https://packagist.org/packages/esi/mimey)

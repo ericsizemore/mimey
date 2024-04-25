@@ -1,0 +1,6 @@
+parameters:
+	ignoreErrors:
+		-
+			message: "#^Parameter \\#1 \\$mimeTypesText of class Esi\\\\Mimey\\\\Mapping\\\\Generator constructor expects non\\-empty\\-string, '' given\\.$#"
+			count: 1
+			path: tests/src/GeneratorTest.php

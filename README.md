@@ -11,6 +11,7 @@ PHP package for converting file extensions to MIME types and vice versa.
 [![Psalm Static analysis](https://github.com/ericsizemore/mimey/actions/workflows/psalm.yml/badge.svg?branch=develop)](https://github.com/ericsizemore/mimey/actions/workflows/psalm.yml)
 [![Type Coverage](https://shepherd.dev/github/ericsizemore/mimey/coverage.svg)](https://shepherd.dev/github/ericsizemore/mimey)
 [![Psalm Level](https://shepherd.dev/github/ericsizemore/mimey/level.svg)](https://shepherd.dev/github/ericsizemore/mimey)
+[![SymfonyInsight](https://insight.symfony.com/projects/1aa43c39-77fe-453c-98aa-77087d734195/mini.svg)](https://insight.symfony.com/projects/1aa43c39-77fe-453c-98aa-77087d734195)
 [![Latest Stable Version](https://img.shields.io/packagist/v/esi/mimey.svg)](https://packagist.org/packages/esi/mimey)
 [![Downloads per Month](https://img.shields.io/packagist/dm/esi/mimey.svg)](https://packagist.org/packages/esi/mimey)
 [![License](https://img.shields.io/packagist/l/esi/mimey.svg)](https://packagist.org/packages/esi/mimey)

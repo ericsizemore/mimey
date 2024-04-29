@@ -20,7 +20,7 @@ declare(strict_types=1);
  *     Copyright (c) 2016 Ralph Khattar
  */
 
-namespace Esi\Mimey\Interface;
+namespace Esi\Mimey\Interfaces;
 
 use JsonException;
 use RuntimeException;

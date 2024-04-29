@@ -22,7 +22,7 @@ declare(strict_types=1);
 
 namespace Esi\Mimey;
 
-use Esi\Mimey\Interface\MimeTypesInterface;
+use Esi\Mimey\Interfaces\MimeTypesInterface;
 use RuntimeException;
 use Throwable;
 

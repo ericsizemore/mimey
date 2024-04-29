@@ -22,7 +22,7 @@ declare(strict_types=1);
 
 namespace Esi\Mimey\Mapping;
 
-use Esi\Mimey\Interface\BuilderInterface;
+use Esi\Mimey\Interfaces\BuilderInterface;
 use RuntimeException;
 use Throwable;
 

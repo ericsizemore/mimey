@@ -22,7 +22,7 @@ declare(strict_types=1);
 
 namespace Esi\Mimey\Mapping;
 
-use Esi\Mimey\Interface\MimeTypeInterface;
+use Esi\Mimey\Interfaces\MimeTypeInterface;
 use JsonException;
 use RuntimeException;
 

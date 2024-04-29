@@ -10,7 +10,7 @@ declare(strict_types=1);
 namespace Esi\Mimey;
 
 use InvalidArgumentException;
-use Esi\Mimey\Interface\MimeTypeInterface;
+use Esi\Mimey\Interfaces\MimeTypeInterface;
 
 enum MimeType: string implements MimeTypeInterface
 {

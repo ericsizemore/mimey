@@ -1,5 +1,13 @@
 # UPGRADING
 
+## 2.0.0 to 2.1.0
+
+Unfortunately, when deciding to use the `Esi\Mimey\Interface` namespace to hold all library interfaces, while it has not caused any issues, `Interface` is technically a reserved keyword. To potentially prevent any issues, 2.1.0 changes this to `Esi\Mimey\Interfaces`.
+
+This should have no affect on most users. If you are using any of the interfaces directly, just update the call to that interface. For example:
+
+  * `Esi\Mimey\Interface\MimeTypeInterface` -> `Esi\Mimey\Interfaces\MimeTypeInterface`
+
 ## 1.x to 2.x
 
   * `dist/MimeType.php` remains the same.

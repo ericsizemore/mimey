@@ -6,7 +6,9 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
 
-## [Unreleased]
+## [2.1.0] - 2024-04-29
+
+Tagging as non-patch release due to a change in the interfaces namespace. See [UPGRADING](UPGRADING.md).
 
 ### Added
 
@@ -25,6 +27,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
   * Updated dev dependencies.
   * `Generator::generatePhpEnum()` can now throw a `RuntimeException` if `generateMapping` returns an empty array.
   * Refactored `Generator::generateMapping()` make use of a helper function to reduce function complexity.
+  * Renamed `Esi\Mimey\Interface` namespace to `Esi\Mimey\Interfaces`
 
 ### Fixed
 
@@ -120,6 +123,7 @@ Initial fork from [elephox-dev/mimey](https://github.com/elephox-dev/mimey)
     * So essentially, this is not a new feature/update release. More of just bringing it inline with my preferences.
 
 [unreleased]: https://github.com/ericsizemore/mimey/tree/develop
+[2.1.0]: https://github.com/ericsizemore/mimey/releases/tag/v2.1.0
 [2.0.0]: https://github.com/ericsizemore/mimey/releases/tag/v2.0.0
 [1.2.0]: https://github.com/ericsizemore/mimey/releases/tag/v1.2.0
 [1.1.1]: https://github.com/ericsizemore/mimey/releases/tag/v1.1.1

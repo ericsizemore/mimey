@@ -150,7 +150,7 @@ class GeneratorTest extends TestCase
                 namespace TestMimeNamespace;
 
                 use InvalidArgumentException;
-                use Esi\Mimey\Interface\MimeTypeInterface;
+                use Esi\Mimey\Interfaces\MimeTypeInterface;
 
                 enum TestMimeClass: string implements MimeTypeInterface
                 {
@@ -229,7 +229,7 @@ class GeneratorTest extends TestCase
                 namespace Esi\Mimey;
 
                 use InvalidArgumentException;
-                use Esi\Mimey\Interface\MimeTypeInterface;
+                use Esi\Mimey\Interfaces\MimeTypeInterface;
 
                 enum MimeType: string implements MimeTypeInterface
                 {

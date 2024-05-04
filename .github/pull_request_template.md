@@ -15,7 +15,7 @@ examples: "feat: add new implementation" or "fix: remove unused imports"
 
 ### Author/Contributor
 
-- [ ] You have read [CONTRIBUTING](https://github.com/ericsizemore/pagination/blob/master/CONTRIBUTING.md)
+- [ ] You have read [CONTRIBUTING](https://github.com/ericsizemore/mimey/blob/master/CONTRIBUTING.md)
 - [ ] If documentation is needed for this change, has that been included in this pull request
 - [ ] run `composer run-script test` and ensure you have test coverage for the lines you are introducing
 - [ ] run `composer run-script phpstan` and fix any issues that you have introduced

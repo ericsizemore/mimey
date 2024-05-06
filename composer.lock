@@ -1056,16 +1056,16 @@
         },
         {
             "name": "friendsofphp/php-cs-fixer",
-            "version": "v3.54.0",
+            "version": "v3.55.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/PHP-CS-Fixer/PHP-CS-Fixer.git",
-                "reference": "2aecbc8640d7906c38777b3dcab6f4ca79004d08"
+                "reference": "c9eeacb559bfa0bcc7f778cfb7b42715c83d2c7e"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/PHP-CS-Fixer/PHP-CS-Fixer/zipball/2aecbc8640d7906c38777b3dcab6f4ca79004d08",
-                "reference": "2aecbc8640d7906c38777b3dcab6f4ca79004d08",
+                "url": "https://api.github.com/repos/PHP-CS-Fixer/PHP-CS-Fixer/zipball/c9eeacb559bfa0bcc7f778cfb7b42715c83d2c7e",
+                "reference": "c9eeacb559bfa0bcc7f778cfb7b42715c83d2c7e",
                 "shasum": ""
             },
             "require": {
@@ -1137,7 +1137,7 @@
             ],
             "support": {
                 "issues": "https://github.com/PHP-CS-Fixer/PHP-CS-Fixer/issues",
-                "source": "https://github.com/PHP-CS-Fixer/PHP-CS-Fixer/tree/v3.54.0"
+                "source": "https://github.com/PHP-CS-Fixer/PHP-CS-Fixer/tree/v3.55.0"
             },
             "funding": [
                 {
@@ -1145,7 +1145,7 @@
                     "type": "github"
                 }
             ],
-            "time": "2024-04-17T08:12:13+00:00"
+            "time": "2024-05-06T00:10:15+00:00"
         },
         {
             "name": "myclabs/deep-copy",
@@ -1705,12 +1705,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/phpstan/phpstan.git",
-                "reference": "c84a0729d1db645cb321cc1f9e5ec278b7136908"
+                "reference": "9007d02056dc86664a0238272ddfc4e055cf8a8b"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/phpstan/phpstan/zipball/c84a0729d1db645cb321cc1f9e5ec278b7136908",
-                "reference": "c84a0729d1db645cb321cc1f9e5ec278b7136908",
+                "url": "https://api.github.com/repos/phpstan/phpstan/zipball/9007d02056dc86664a0238272ddfc4e055cf8a8b",
+                "reference": "9007d02056dc86664a0238272ddfc4e055cf8a8b",
                 "shasum": ""
             },
             "require": {
@@ -1756,7 +1756,7 @@
                     "type": "github"
                 }
             ],
-            "time": "2024-05-03T19:11:36+00:00"
+            "time": "2024-05-04T14:22:54+00:00"
         },
         {
             "name": "phpstan/phpstan-deprecation-rules",
@@ -4941,12 +4941,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/vimeo/psalm.git",
-                "reference": "08afc45a81d1f7c5145341ddf4c3c2c8b1985ed2"
+                "reference": "16b24bdc94e052b5ce69fd232a77416a1f6ec3e6"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/vimeo/psalm/zipball/08afc45a81d1f7c5145341ddf4c3c2c8b1985ed2",
-                "reference": "08afc45a81d1f7c5145341ddf4c3c2c8b1985ed2",
+                "url": "https://api.github.com/repos/vimeo/psalm/zipball/16b24bdc94e052b5ce69fd232a77416a1f6ec3e6",
+                "reference": "16b24bdc94e052b5ce69fd232a77416a1f6ec3e6",
                 "shasum": ""
             },
             "require": {
@@ -5042,7 +5042,7 @@
                 "issues": "https://github.com/vimeo/psalm/issues",
                 "source": "https://github.com/vimeo/psalm"
             },
-            "time": "2024-04-11T20:02:02+00:00"
+            "time": "2024-05-05T16:11:12+00:00"
         },
         {
             "name": "webmozart/assert",

@@ -1,4 +1,4 @@
-name: Update Mime Types
+name: "Update Mime Types"
 
 on:
   schedule:
@@ -7,37 +7,38 @@ on:
 
 jobs:
   update:
-    name: Update Mime Types
+    name: "Update Mime Types"
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
         with:
-           fetch-depth: 10
+           ref: ${{ github.head_ref }}
+           token: ${{ secrets.PAT }}
 
-      - name: Install PHP
+      - name: "Install PHP"
         uses: shivammathur/setup-php@master
         with:
            php-version: 8.2
            extensions: mbstring, 
            coverage: xdebug,
 
-      - name: Validate composer.json and composer.lock
+      - name: "Validate composer.json and composer.lock"
         run: composer validate --strict
 
-      - name: Setup Composer, install dependencies
+      - name: "Setup Composer, install dependencies"
         uses: ramsey/composer-install@v3
         with:
            composer-options: "--prefer-dist --optimize-autoloader"
            require-lock-file: "true"
 
-      - name: Run update
+      - name: "Run update"
         run: composer run-script update-types
 
-      - name: Run test suite
+      - name: "Run test suite"
         run: composer run-script test
 
-      - name: Coverage check
+      - name: "Coverage check"
         run: composer run-script coverage-check
 
-      - name: Commit and push changes
-        uses: EndBug/add-and-commit@v9
+      - name: "Commit and push changes"
+        uses: stefanzweifel/git-auto-commit-action@v5

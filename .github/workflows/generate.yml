@@ -58,7 +58,7 @@ jobs:
            commit_author: "${{ steps.import-gpg.outputs.name }} <${{ steps.import-gpg.outputs.email }}>"
            commit_user_name: ${{ steps.import-gpg.outputs.name }}
            commit_user_email: ${{ steps.import-gpg.outputs.email }}
-           commit_message: 'chore: Update mime types'
+           commit_message: 'chore: Generate mime types'
            commit_options: '-S --amend --no-edit'
            push_options: '--force'
            skip_fetch: true

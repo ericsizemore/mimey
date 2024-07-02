@@ -6,6 +6,21 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
 
+## [Unreleased]
+
+### Added
+
+  * New unit tests to increase code coverage by testing `builtIn` mapping data.
+
+### Changed
+
+  * in `src/Mapping/Generator.php` the `$mimeTypesText` property is now readonly.
+  * in `src/MimeTypes.php` the `$mapping` property converted to [constructor property promotion](https://wiki.php.net/rfc/constructor_promotion).
+  * The `update.yml` and `generate.yml` workflows within `.github/workflows` were updated:
+    * [`EndBug/add-and-commit`](https://github.com/EndBug/add-and-commit) action replaced with [`stefanzweifel/git-auto-commit-action`](https://github.com/stefanzweifel/git-auto-commit-action).
+    * Added [`crazy-max/ghaction-import-gpg`](https://github.com/crazy-max/ghaction-import-gpg) to import a GPG key for signing any commits made when updating/generating types.
+
+
 ## [2.1.0] - 2024-04-29
 
 Tagging as non-patch release due to a change in the interfaces namespace. See [UPGRADING](UPGRADING.md).

@@ -56,11 +56,6 @@ use const JSON_THROW_ON_ERROR;
 class MimeTypes implements MimeTypesInterface
 {
     /**
-     * @var ?MimeTypeMap The mapping array.
-     */
-    protected ?array $mapping = null;
-
-    /**
      * @var ?MimeTypeMap The cached built-in mapping array.
      */
     private static ?array $builtIn = null;
@@ -89,9 +84,9 @@ class MimeTypes implements MimeTypesInterface
      *                                      ]
      *                                  ]
      */
-    public function __construct(?array $mapping = null)
+    public function __construct(protected ?array $mapping = null)
     {
-        $this->mapping = $mapping ?? self::getBuiltIn();
+        $this->mapping ??= self::getBuiltIn();
     }
 
     #[\Override]

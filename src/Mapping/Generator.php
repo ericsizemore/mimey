@@ -78,7 +78,7 @@ class Generator
      *
      * @param non-empty-string $mimeTypesText The text from the mime.types file.
      */
-    public function __construct(protected string $mimeTypesText) {}
+    public function __construct(protected readonly string $mimeTypesText) {}
 
     /**
      * Generate the JSON from the mapCache.

@@ -664,6 +664,7 @@ enum MimeType: string implements MimeTypeInterface
     case ImageG3fax = 'image/g3fax';
     case ImageGif = 'image/gif';
     case ImageIef = 'image/ief';
+    case ImageJxl = 'image/jxl';
     case ImageKtx = 'image/ktx';
     case ImagePng = 'image/png';
     case ImagePrsBtif = 'image/prs.btif';
@@ -1452,6 +1453,7 @@ enum MimeType: string implements MimeTypeInterface
             self::ImageG3fax => 'g3',
             self::ImageGif => 'gif',
             self::ImageIef => 'ief',
+            self::ImageJxl => 'jxl',
             self::ImageKtx => 'ktx',
             self::ImagePng => 'png',
             self::ImagePrsBtif => 'btif',
@@ -2403,6 +2405,7 @@ enum MimeType: string implements MimeTypeInterface
             'g3' => self::ImageG3fax,
             'gif' => self::ImageGif,
             'ief' => self::ImageIef,
+            'jxl' => self::ImageJxl,
             'ktx' => self::ImageKtx,
             'png' => self::ImagePng,
             'btif' => self::ImagePrsBtif,

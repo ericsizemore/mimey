@@ -129,7 +129,7 @@ class MimeTypes implements MimeTypesInterface
 
                 self::$builtIn = $json;
             } catch (Throwable $e) {
-                throw new RuntimeException(sprintf('Failed to parse built-in mime types at %s', $builtInTypes), 0, $e);
+                throw new RuntimeException(\sprintf('Failed to parse built-in mime types at %s', $builtInTypes), 0, $e);
             }
         }
 

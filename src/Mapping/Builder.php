@@ -32,7 +32,6 @@ use function file_get_contents;
 use function file_put_contents;
 use function json_decode;
 use function json_encode;
-use function sprintf;
 
 use const JSON_PRETTY_PRINT;
 use const JSON_THROW_ON_ERROR;
@@ -127,7 +126,7 @@ class Builder implements BuilderInterface
 
             return new self($json);
         } catch (Throwable $e) {
-            throw new RuntimeException(sprintf('Unable to parse built-in types at %s', $file), 0, $e);
+            throw new RuntimeException(\sprintf('Unable to parse built-in types at %s', $file), 0, $e);
         }
     }
 }

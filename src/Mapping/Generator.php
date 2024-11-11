@@ -33,7 +33,6 @@ use function explode;
 use function file_get_contents;
 use function json_encode;
 use function preg_replace;
-use function sprintf;
 use function str_pad;
 use function str_replace;
 use function trim;
@@ -160,12 +159,12 @@ class Generator
         foreach ($mapping['extensions'] as $mime => $extensions) {
             $nameMap[$mime] = $this->convertMimeTypeToCaseName($mime);
 
-            $values['%cases%'] .= sprintf(Generator::spaceIndent(4, "case %s = '%s';\n"), $nameMap[$mime], $mime);
-            $values['%type2ext%'] .= sprintf(Generator::spaceIndent(12, "self::%s => '%s',\n"), $nameMap[$mime], $extensions[0]);
+            $values['%cases%'] .= \sprintf(Generator::spaceIndent(4, "case %s = '%s';\n"), $nameMap[$mime], $mime);
+            $values['%type2ext%'] .= \sprintf(Generator::spaceIndent(12, "self::%s => '%s',\n"), $nameMap[$mime], $extensions[0]);
         }
 
         foreach ($mapping['mimes'] as $extension => $mimes) {
-            $values['%ext2type%'] .= sprintf(Generator::spaceIndent(12, "'%s' => self::%s,\n"), $extension, $nameMap[$mimes[0]]);
+            $values['%ext2type%'] .= \sprintf(Generator::spaceIndent(12, "'%s' => self::%s,\n"), $extension, $nameMap[$mimes[0]]);
         }
 
         return str_replace(

@@ -83,6 +83,44 @@ class MimeTypesTest extends TestCase
     }
 
     /**
+     * Test built in mapping, with specific data to further test MimeTypes::getBuiltIn().
+     */
+    public function testBuiltInMappingWithSetData(): void
+    {
+        $original = \dirname(__DIR__, 2) . '/dist/mime.types.min.json';
+        $backup   = \dirname(__DIR__, 2) . '/dist/mime.types.min.json.backup';
+
+        rename($original, $backup);
+        file_put_contents($original, (string) json_encode([
+            'mimes' => [
+                'json' => ['application/json'],
+                'jpeg' => ['image/jpeg'],
+                'jpg'  => ['image/jpeg'],
+                'bar'  => ['foo', 'qux'],
+                'baz'  => ['foo'],
+            ],
+            'extensions' => [
+                'application/json' => ['json'],
+                'image/jpeg'       => ['jpeg', 'jpg'],
+                'foo'              => ['bar', 'baz'],
+                'qux'              => ['bar'],
+            ],
+        ]));
+
+        try {
+            $mimeTypes = new MimeTypes();
+
+            self::assertSame('json', $mimeTypes->getExtension('application/json'));
+            self::assertSame('application/json', $mimeTypes->getMimeType('json'));
+            self::assertSame('json', $this->mime->getExtension('application/json'));
+            self::assertSame('application/json', $this->mime->getMimeType('json'));
+        } finally {
+            unlink($original);
+            rename($backup, $original);
+        }
+    }
+
+    /**
      * Tests retrieving all extensions for a given mime type.
      *
      * @param array<string> $expectedExtensions
@@ -171,44 +209,6 @@ class MimeTypesTest extends TestCase
         try {
             self::expectException(RuntimeException::class);
             new MimeTypes();
-        } finally {
-            unlink($original);
-            rename($backup, $original);
-        }
-    }
-
-    /**
-     * Test built in mapping, with specific data to further test MimeTypes::getBuiltIn().
-     */
-    public function testBuiltInMappingWithSetData(): void
-    {
-        $original = \dirname(__DIR__, 2) . '/dist/mime.types.min.json';
-        $backup   = \dirname(__DIR__, 2) . '/dist/mime.types.min.json.backup';
-
-        rename($original, $backup);
-        file_put_contents($original, (string) json_encode([
-            'mimes' => [
-                'json' => ['application/json'],
-                'jpeg' => ['image/jpeg'],
-                'jpg'  => ['image/jpeg'],
-                'bar'  => ['foo', 'qux'],
-                'baz'  => ['foo'],
-            ],
-            'extensions' => [
-                'application/json' => ['json'],
-                'image/jpeg'       => ['jpeg', 'jpg'],
-                'foo'              => ['bar', 'baz'],
-                'qux'              => ['bar'],
-            ],
-        ]));
-
-        try {
-            $mimeTypes = new MimeTypes();
-    
-            self::assertSame('json', $mimeTypes->getExtension('application/json'));
-            self::assertSame('application/json', $mimeTypes->getMimeType('json'));
-            self::assertSame('json', $this->mime->getExtension('application/json'));
-            self::assertSame('application/json', $this->mime->getMimeType('json'));
         } finally {
             unlink($original);
             rename($backup, $original);

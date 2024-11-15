@@ -6,7 +6,9 @@ declare(strict_types=1);
  * Mimey - PHP package for converting file extensions to MIME types and vice versa.
  *
  * @author    Eric Sizemore <admin@secondversion.com>
+ *
  * @version   1.2.0
+ *
  * @copyright (C) 2023-2024 Eric Sizemore
  * @license   The MIT License (MIT)
  *
@@ -40,25 +42,19 @@ declare(strict_types=1);
 
 namespace Esi\Mimey;
 
-// Classes
-use JetBrains\PhpStorm\Pure;
-
-// Exceptions
 use JsonException;
 use RuntimeException;
 use Throwable;
 
-// Functions & constants
-use function array_unshift;
 use function array_unique;
-use function json_encode;
-use function file_put_contents;
-use function dirname;
+use function array_unshift;
 use function file_get_contents;
+use function file_put_contents;
 use function json_decode;
+use function json_encode;
 
-use const JSON_THROW_ON_ERROR;
 use const JSON_PRETTY_PRINT;
+use const JSON_THROW_ON_ERROR;
 
 /**
  * Class for converting MIME types to file extensions and vice versa.
@@ -89,7 +85,7 @@ class MimeMappingBuilder
      */
     private function __construct(
         /**
-         * The Mapping Array
+         * The Mapping Array.
          */
         protected array $mapping
     ) {}
@@ -97,10 +93,10 @@ class MimeMappingBuilder
     /**
      * Add a conversion.
      *
-     * @param string $mime              The MIME type.
-     * @param string $extension         The extension.
-     * @param bool   $prependExtension  Whether this should be the preferred conversion for MIME type to extension.
-     * @param bool   $prependMime       Whether this should be the preferred conversion for extension to MIME type.
+     * @param string $mime             The MIME type.
+     * @param string $extension        The extension.
+     * @param bool   $prependExtension Whether this should be the preferred conversion for MIME type to extension.
+     * @param bool   $prependMime      Whether this should be the preferred conversion for extension to MIME type.
      */
     public function add(string $mime, string $extension, bool $prependExtension = true, bool $prependMime = true): void
     {
@@ -124,6 +120,22 @@ class MimeMappingBuilder
     }
 
     /**
+     * Compile the current mapping to PHP.
+     *
+     * @param bool $pretty Whether to pretty print the output.
+     *
+     * @throws JsonException
+     *
+     * @return string The compiled PHP code to save to a file.
+     */
+    public function compile(bool $pretty = false): string
+    {
+        $mapping = $this->getMapping();
+
+        return json_encode($mapping, flags: JSON_THROW_ON_ERROR | ($pretty ? JSON_PRETTY_PRINT : 0));
+    }
+
+    /**
      * Retrieves the current mapping array.
      *
      * @return MimeTypeMap The mapping.
@@ -134,29 +146,15 @@ class MimeMappingBuilder
     }
 
     /**
-     * Compile the current mapping to PHP.
-     *
-     * @param  bool    $pretty  Whether to pretty print the output.
-     * @return string           The compiled PHP code to save to a file.
-     *
-     * @throws JsonException
-     */
-    public function compile(bool $pretty = false): string
-    {
-        $mapping = $this->getMapping();
-
-        return json_encode($mapping, flags: JSON_THROW_ON_ERROR | ($pretty ? JSON_PRETTY_PRINT : 0));
-    }
-
-    /**
      * Save the current mapping to a file.
      *
-     * @param  string     $file     The file to save to.
-     * @param  int        $flags    Flags for `file_put_contents`.
-     * @param  resource   $context  Context for `file_put_contents`.
-     * @return false|int            The number of bytes that were written to the file, or false on failure.
+     * @param string   $file    The file to save to.
+     * @param int      $flags   Flags for `file_put_contents`.
+     * @param resource $context Context for `file_put_contents`.
      *
      * @throws JsonException
+     *
+     * @return false|int The number of bytes that were written to the file, or false on failure.
      */
     public function save(string $file, int $flags = 0, mixed $context = null): false | int
     {
@@ -164,45 +162,45 @@ class MimeMappingBuilder
     }
 
     /**
+     * Create a new mapping builder that has no types defined.
+     *
+     * @return MimeMappingBuilder A mapping builder with no types defined.
+     */
+    public static function blank(): MimeMappingBuilder
+    {
+        return new self(['mimes' => [], 'extensions' => []]);
+    }
+
+    /**
      * Create a new mapping builder based on the built-in types.
      *
-     * @return  MimeMappingBuilder  A mapping builder with built-in types loaded.
+     * @return MimeMappingBuilder A mapping builder with built-in types loaded.
      */
     public static function create(): MimeMappingBuilder
     {
-        return self::load(dirname(__DIR__) . '/dist/mime.types.min.json');
+        return self::load(\dirname(__DIR__) . '/dist/mime.types.min.json');
     }
 
     /**
      * Create a new mapping builder based on types from a file.
      *
-     * @param  string              $file  The compiled PHP file to load.
-     * @return MimeMappingBuilder         A mapping builder with types loaded from a file.
+     * @param string $file The compiled PHP file to load.
      *
      * @throws RuntimeException
+     *
+     * @return MimeMappingBuilder A mapping builder with types loaded from a file.
      */
     public static function load(string $file): MimeMappingBuilder
     {
         try {
-            /** @var string $json **/
+            /** @var string $json * */
             $json = file_get_contents($file);
-            /** @var MimeTypeMap $json **/
+            /** @var MimeTypeMap $json * */
             $json = json_decode(/** @scrutinizer ignore-type */ $json, true, flags: JSON_THROW_ON_ERROR);
 
             return new self($json);
         } catch (Throwable $e) {
             throw new RuntimeException('Unable to parse built-in types at ' . $file, 0, $e);
         }
-    }
-
-    /**
-     * Create a new mapping builder that has no types defined.
-     *
-     * @return  MimeMappingBuilder  A mapping builder with no types defined.
-     */
-    #[Pure]
-    public static function blank(): MimeMappingBuilder
-    {
-        return new self(['mimes' => [], 'extensions' => []]);
     }
 }

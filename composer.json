@@ -3,6 +3,13 @@
     "description": "PHP package for converting file extensions to MIME types and vice versa.",
     "license": "MIT",
     "type": "library",
+    "keywords": [
+        "mime",
+        "mime-types",
+        "mime-type",
+        "apache-mimetypes",
+        "file-mime-type"
+    ],
     "authors": [
         {
             "name": "Eric Sizemore",
@@ -13,12 +20,12 @@
         {
             "name": "Ralph Khattar",
             "email": "ralph.khattar@gmail.com",
-            "role": "Contributor"
+            "role": "Original Developer"
         },
         {
             "name": "Ricardo Boss",
             "email": "contact@ricardoboss.de",
-            "role": "Contributor"
+            "role": "Fork Developer"
         }
     ],
     "support": {
@@ -27,22 +34,38 @@
         "source": "https://github.com/ericsizemore/mimey/tree/develop/src",
         "security": "https://github.com/ericsizemore/mimey/security/policy"
     },
+    "funding": [
+        {
+            "type": "custom",
+            "url": "https://ko-fi.com/ericsizemore"
+        },
+        {
+            "type": "github",
+            "url": "https://github.com/ericsizemore"
+        },
+        {
+            "type": "tidelift",
+            "url": "https://tidelift.com/funding/github/packagist/esi/mimey"
+        }
+    ],
     "require": {
-        "php": "^8.2 <8.5",
-        "jetbrains/phpstorm-attributes": "^1.0"
+        "php": "^8.2 <8.5"
     },
     "require-dev": {
-        "friendsofphp/php-cs-fixer": ">=3.45",
-        "phpstan/phpstan": "^1.11",
-        "phpstan/phpstan-phpunit": "^1.4",
-        "phpstan/phpstan-strict-rules": "^1.6",
-        "phpunit/phpunit": "^10.5",
-        "rector/rector": "dev-main"
+        "esi/phpunit-coverage-check": "^2.0",
+        "friendsofphp/php-cs-fixer": "^3.64",
+        "phpstan/extension-installer": "^1.4",
+        "phpstan/phpstan": "^2.0",
+        "phpstan/phpstan-deprecation-rules": "^2.0",
+        "phpstan/phpstan-phpunit": "^2.0",
+        "phpstan/phpstan-strict-rules": "^2.0",
+        "phpunit/phpunit": "^11.4"
     },
     "suggest": {
         "ext-mbstring": "For non-English (user) input parsing"
     },
     "minimum-stability": "dev",
+    "prefer-stable": true,
     "autoload": {
         "psr-4": {
             "Esi\\Mimey\\": [
@@ -56,18 +79,22 @@
             "Esi\\Mimey\\Tests\\": "tests/src/"
         }
     },
+    "config": {
+        "allow-plugins": {
+            "phpstan/extension-installer": true
+        }
+    },
     "extra": {
         "branch-alias": {
             "dev-develop": "1.0-dev"
         }
     },
     "scripts": {
+        "coverage-check": "vendor/bin/coverage-check build/logs/clover.xml 100",
+        "cs:check": "vendor/bin/php-cs-fixer fix --config=.php-cs-fixer.dist.php --dry-run --diff",
+        "cs:fix": "vendor/bin/php-cs-fixer fix --config=.php-cs-fixer.dist.php",
         "generate-types": "@php bin/generate.php",
-        "phpcs-fix": "vendor/bin/php-cs-fixer fix --config=.php-cs-fixer.dist.php",
-        "phpcs-nofix": "vendor/bin/php-cs-fixer fix --config=.php-cs-fixer.dist.php --dry-run --diff",
         "phpstan": "vendor/bin/phpstan analyse -c phpstan.neon",
-        "rector-dry": "vendor/bin/rector process --dry-run",
-        "rector": "php vendor/bin/rector process",
         "test": "phpunit",
         "update-types": "@php bin/update.php"
     }

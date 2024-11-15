@@ -6,7 +6,9 @@ declare(strict_types=1);
  * Mimey - PHP package for converting file extensions to MIME types and vice versa.
  *
  * @author    Eric Sizemore <admin@secondversion.com>
+ *
  * @version   1.2.0
+ *
  * @copyright (C) 2023-2024 Eric Sizemore
  * @license   The MIT License (MIT)
  *
@@ -40,20 +42,13 @@ declare(strict_types=1);
 
 namespace Esi\Mimey;
 
-// Classes
-use JetBrains\PhpStorm\Pure;
-
-// Exceptions
 use RuntimeException;
 use Throwable;
 
-// Functions & constants
-use function dirname;
 use function file_get_contents;
 use function json_decode;
-use function trim;
-use function function_exists;
 use function strtolower;
+use function trim;
 
 use const JSON_THROW_ON_ERROR;
 
@@ -80,58 +75,60 @@ use const JSON_THROW_ON_ERROR;
 class MimeTypes implements MimeTypesInterface
 {
     /**
-     * @var ?MimeTypeMap The cached built-in mapping array.
-     */
-    private static ?array $builtIn = null;
-
-    /**
      * @var ?MimeTypeMap The mapping array.
      */
     protected ?array $mapping = null;
+    /**
+     * @var ?MimeTypeMap The cached built-in mapping array.
+     */
+    private static ?array $builtIn = null;
 
     /**
      * Create a new mime types instance with the given mappings.
      *
      * If no mappings are defined, they will default to the ones included with this package.
      *
-     * @param  MimeTypeMap|null  $mapping  An associative array containing two entries.
-     *                                     Entry "mimes" being an associative array of extension to
-     *                                     array of MIME types. Entry "extensions" being an associative
-     *                                     array of MIME type to array of extensions.
-     * Example:
-     * <code>
-     * [
-     *   'extensions' => [
-     *     'application/json' => ['json'],
-     *     'image/jpeg'       => ['jpg', 'jpeg'],
-     *     ...
-     *   ],
-     *   'mimes' => [
-     *     'json' => ['application/json'],
-     *     'jpeg' => [image/jpeg'],
-     *     ...
-     *   ]
-     * ]
-     * </code>
+     * @param null|MimeTypeMap $mapping An associative array containing two entries.
+     *                                  Entry "mimes" being an associative array of extension to
+     *                                  array of MIME types. Entry "extensions" being an associative
+     *                                  array of MIME type to array of extensions.
+     *                                  Example:
+     *                                  <code>
+     *                                  [
+     *                                  'extensions' => [
+     *                                  'application/json' => ['json'],
+     *                                  'image/jpeg'       => ['jpg', 'jpeg'],
+     *                                  ...
+     *                                  ],
+     *                                  'mimes' => [
+     *                                  'json' => ['application/json'],
+     *                                  'jpeg' => [image/jpeg'],
+     *                                  ...
+     *                                  ]
+     *                                  ]
+     *                                  </code>
      */
     public function __construct(?array $mapping = null)
     {
         $this->mapping = $mapping ?? self::getBuiltIn();
     }
 
-    #[Pure]
     #[\Override]
-    public function getMimeType(string $extension): ?string
+    public function getAllExtensions(string $mimeType): array
+    {
+        $mimeType = $this->cleanInput($mimeType);
+
+        return $this->mapping['extensions'][$mimeType] ?? []; // @phpstan-ignore-line
+    }
+
+    #[\Override]
+    public function getAllMimeTypes(string $extension): array
     {
         $extension = $this->cleanInput($extension);
 
-        if (isset($this->mapping['mimes'][$extension])) {
-            return $this->mapping['mimes'][$extension][0]; // @phpstan-ignore-line
-        }
-        return null;
+        return $this->mapping['mimes'][$extension] ?? []; // @phpstan-ignore-line
     }
 
-    #[Pure]
     #[\Override]
     public function getExtension(string $mimeType): ?string
     {
@@ -143,22 +140,15 @@ class MimeTypes implements MimeTypesInterface
         return null;
     }
 
-    #[Pure]
     #[\Override]
-    public function getAllMimeTypes(string $extension): array
+    public function getMimeType(string $extension): ?string
     {
         $extension = $this->cleanInput($extension);
 
-        return $this->mapping['mimes'][$extension] ?? []; // @phpstan-ignore-line
-    }
-
-    #[Pure]
-    #[\Override]
-    public function getAllExtensions(string $mimeType): array
-    {
-        $mimeType = $this->cleanInput($mimeType);
-
-        return $this->mapping['extensions'][$mimeType] ?? []; // @phpstan-ignore-line
+        if (isset($this->mapping['mimes'][$extension])) {
+            return $this->mapping['mimes'][$extension][0]; // @phpstan-ignore-line
+        }
+        return null;
     }
 
     /**
@@ -169,13 +159,13 @@ class MimeTypes implements MimeTypesInterface
     protected static function getBuiltIn(): array
     {
         if (self::$builtIn === null) {
-            $builtInTypes = dirname(__DIR__) . '/dist/mime.types.min.json';
+            $builtInTypes = \dirname(__DIR__) . '/dist/mime.types.min.json';
 
             try {
-                /** @var string $json **/
+                /** @var string $json * */
                 $json = file_get_contents($builtInTypes);
 
-                /** @var MimeTypeMap $json **/
+                /** @var MimeTypeMap $json * */
                 $json = json_decode($json, true, flags: JSON_THROW_ON_ERROR);
 
                 self::$builtIn = $json;
@@ -199,7 +189,7 @@ class MimeTypes implements MimeTypesInterface
         $input = trim($input);
 
         //@codeCoverageIgnoreStart
-        $input = function_exists('mb_strtolower') ? \mb_strtolower($input) : strtolower($input);
+        $input = \function_exists('mb_strtolower') ? mb_strtolower($input) : strtolower($input);
         //@codeCoverageIgnoreEnd
         return $input;
     }

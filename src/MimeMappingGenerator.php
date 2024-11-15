@@ -6,7 +6,9 @@ declare(strict_types=1);
  * Mimey - PHP package for converting file extensions to MIME types and vice versa.
  *
  * @author    Eric Sizemore <admin@secondversion.com>
+ *
  * @version   1.2.0
+ *
  * @copyright (C) 2023-2024 Eric Sizemore
  * @license   The MIT License (MIT)
  *
@@ -40,27 +42,22 @@ declare(strict_types=1);
 
 namespace Esi\Mimey;
 
-// Exceptions
 use JsonException;
 
-// Functions & constants
+use function array_filter;
+use function array_unique;
+use function array_values;
+use function explode;
+use function file_get_contents;
+use function json_encode;
 use function preg_replace;
+use function str_replace;
+use function trim;
 use function ucfirst;
 use function ucwords;
-use function str_replace;
-use function sprintf;
-use function file_get_contents;
-use function dirname;
-use function json_encode;
-use function array_unique;
-use function trim;
-use function explode;
-use function count;
-use function array_values;
-use function array_filter;
 
-use const JSON_THROW_ON_ERROR;
 use const JSON_PRETTY_PRINT;
+use const JSON_THROW_ON_ERROR;
 
 /**
  * Generates a mapping for use in the MimeTypes class.
@@ -87,21 +84,35 @@ use const JSON_PRETTY_PRINT;
 class MimeMappingGenerator
 {
     /**
-     * @var  MimeTypeMap|array{}  $mapCache
+     * @var array{}|MimeTypeMap
      */
     protected array $mapCache = [];
 
     /**
      * Create a new generator instance with the given mime.types text.
      *
-     * @param  non-empty-string  $mimeTypesText  The text from the mime.types file.
+     * @param non-empty-string $mimeTypesText The text from the mime.types file.
      */
     public function __construct(protected string $mimeTypesText) {}
 
     /**
+     * Generate the JSON from the mapCache.
+     *
+     * @param bool $minify Whether to minify the generated JSON.
+     *
+     * @throws JsonException
+     *
+     * @return non-empty-string
+     */
+    public function generateJson(bool $minify = true): string
+    {
+        return json_encode($this->generateMapping(), flags: JSON_THROW_ON_ERROR | ($minify ? 0 : JSON_PRETTY_PRINT));
+    }
+
+    /**
      * Read the given mime.types text and return a mapping compatible with the MimeTypes class.
      *
-     * @return  MimeTypeMap|array{}  The mapping.
+     * @return array{}|MimeTypeMap The mapping.
      */
     public function generateMapping(): array
     {
@@ -112,13 +123,19 @@ class MimeMappingGenerator
         $lines = explode("\n", $this->mimeTypesText);
 
         foreach ($lines as $line) {
-            /** @var string $line **/
-            $line = preg_replace('~\\#.*~', '', $line);
+            $line = preg_replace('~#.*~', '', $line) ?? $line;
             $line = trim($line);
 
-            $parts = $line !== '' ? array_values(array_filter(explode("\t", $line))) : [];
+            if ($line === '') {
+                continue;
+            }
 
-            if (count($parts) === 2) {
+            $parts = array_values(array_filter(
+                explode("\t", $line),
+                static fn (string $value): bool => trim($value) !== ''
+            ));
+
+            if (\count($parts) === 2) {
                 $mime       = trim($parts[0]);
                 $extensions = explode(' ', $parts[1]);
 
@@ -139,24 +156,12 @@ class MimeMappingGenerator
     }
 
     /**
-     * Generate the JSON from the mapCache.
-     *
-     * @param   bool              $minify  Whether to minify the generated JSON.
-     * @return  non-empty-string
-     *
-     * @throws JsonException
-     */
-    public function generateJson(bool $minify = true): string
-    {
-        return json_encode($this->generateMapping(), flags: JSON_THROW_ON_ERROR | ($minify ? 0 : JSON_PRETTY_PRINT));
-    }
-
-    /**
      * Generates the PHP Enum found in `dist`.
      *
-     * @param   non-empty-string         $classname
-     * @param   non-empty-string         $namespace
-     * @return  non-empty-string|string
+     * @param non-empty-string $classname
+     * @param non-empty-string $namespace
+     *
+     * @return non-empty-string|string
      */
     public function generatePhpEnum(string $classname = 'MimeType', string $namespace = __NAMESPACE__): string
     {
@@ -169,8 +174,8 @@ class MimeMappingGenerator
             'ext2type'        => '',
         ];
 
-        /** @var string $stub **/
-        $stub = file_get_contents(dirname(__DIR__) . '/stubs/mimeType.php.stub');
+        /** @var string $stub * */
+        $stub = file_get_contents(\dirname(__DIR__) . '/stubs/mimeType.php.stub');
 
         $mapping = $this->generateMapping();
         $nameMap = [];
@@ -178,12 +183,12 @@ class MimeMappingGenerator
         foreach ($mapping['extensions'] as $mime => $extensions) { // @phpstan-ignore-line
             $nameMap[$mime] = $this->convertMimeTypeToCaseName($mime);
 
-            $values['cases'] .= sprintf("    case %s = '%s';\n", $nameMap[$mime], $mime);
-            $values['type2ext'] .= sprintf("            self::%s => '%s',\n", $nameMap[$mime], $extensions[0]);
+            $values['cases'] .= \sprintf("    case %s = '%s';\n", $nameMap[$mime], $mime);
+            $values['type2ext'] .= \sprintf("            self::%s => '%s',\n", $nameMap[$mime], $extensions[0]);
         }
 
         foreach ($mapping['mimes'] as $extension => $mimes) { // @phpstan-ignore-line
-            $values['ext2type'] .= sprintf("            '%s' => self::%s,\n", $extension, $nameMap[$mimes[0]]);
+            $values['ext2type'] .= \sprintf("            '%s' => self::%s,\n", $extension, $nameMap[$mimes[0]]);
         }
 
         foreach ($values as $name => $value) {

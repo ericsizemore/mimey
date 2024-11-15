@@ -6,7 +6,9 @@ declare(strict_types=1);
  * Mimey - PHP package for converting file extensions to MIME types and vice versa.
  *
  * @author    Eric Sizemore <admin@secondversion.com>
+ *
  * @version   1.2.0
+ *
  * @copyright (C) 2023-2024 Eric Sizemore
  * @license   The MIT License (MIT)
  *
@@ -40,53 +42,19 @@ declare(strict_types=1);
 
 namespace Esi\Mimey\Tests;
 
-// Core classes
-use JsonException;
 use Esi\Mimey\MimeMappingGenerator;
-
-// PHPUnit
-use PHPUnit\Framework\TestCase;
+use JsonException;
 use PHPUnit\Framework\Attributes\CoversClass;
+use PHPUnit\Framework\TestCase;
 
 /**
  * Class to test MimeMappingGenerator.
+ *
+ * @internal
  */
 #[CoversClass(MimeMappingGenerator::class)]
 class MimeMappingGeneratorTest extends TestCase
 {
-    /**
-     * Test mapping generation with givne mime.types text.
-     */
-    public function testGenerateMapping(): void
-    {
-        $mimeMappingGenerator = new MimeMappingGenerator(
-            "#ignore\tme\n" .
-            "application/json\t\t\tjson\n" .
-            "image/jpeg\t\t\tjpeg jpg #ignore this too\n\n" .
-            "foo\tbar baz\n" .
-            "qux\tbar\n"
-        );
-
-        $mapping = $mimeMappingGenerator->generateMapping();
-
-        $expected = [
-            'mimes' => [
-                'json' => ['application/json'],
-                'jpeg' => ['image/jpeg'],
-                'jpg'  => ['image/jpeg'],
-                'bar'  => ['foo', 'qux'],
-                'baz'  => ['foo'],
-            ],
-            'extensions' => [
-                'application/json' => ['json'],
-                'image/jpeg'       => ['jpeg', 'jpg'],
-                'foo'              => ['bar', 'baz'],
-                'qux'              => ['bar'],
-            ],
-        ];
-        self::assertEquals($expected, $mapping);
-    }
-
     /**
      * Test generating JSON from given mime.types text.
      *
@@ -134,6 +102,38 @@ class MimeMappingGeneratorTest extends TestCase
         );
 
         self::assertEquals('{"mimes":{"json":["application\/json"],"jpeg":["image\/jpeg"],"jpg":["image\/jpeg"]},"extensions":{"application\/json":["json"],"image\/jpeg":["jpeg","jpg"]}}', $minJson);
+    }
+    /**
+     * Test mapping generation with givne mime.types text.
+     */
+    public function testGenerateMapping(): void
+    {
+        $mimeMappingGenerator = new MimeMappingGenerator(
+            "#ignore\tme\n" .
+            "application/json\t\t\tjson\n" .
+            "image/jpeg\t\t\tjpeg jpg #ignore this too\n\n" .
+            "foo\tbar baz\n" .
+            "qux\tbar\n"
+        );
+
+        $mapping = $mimeMappingGenerator->generateMapping();
+
+        $expected = [
+            'mimes' => [
+                'json' => ['application/json'],
+                'jpeg' => ['image/jpeg'],
+                'jpg'  => ['image/jpeg'],
+                'bar'  => ['foo', 'qux'],
+                'baz'  => ['foo'],
+            ],
+            'extensions' => [
+                'application/json' => ['json'],
+                'image/jpeg'       => ['jpeg', 'jpg'],
+                'foo'              => ['bar', 'baz'],
+                'qux'              => ['bar'],
+            ],
+        ];
+        self::assertEquals($expected, $mapping);
     }
 
     /**

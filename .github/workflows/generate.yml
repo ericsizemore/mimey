@@ -1,4 +1,4 @@
-name: Generate Mime Types
+name: "Generate Mime Types"
 
 on:
   workflow_dispatch:
@@ -10,14 +10,15 @@ on:
 
 jobs:
   update:
-    name: Generate Mime Types
+    name: "Generate Mime Types"
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
         with:
-           fetch-depth: 10
+          fetch-depth: 2
+          token: ${{ secrets.PAT }}
 
-      - name: Install PHP
+      - name: "Install PHP"
         uses: shivammathur/setup-php@master
         with:
            php-version: 8.2
@@ -25,29 +26,41 @@ jobs:
            coverage: xdebug,
            tools: composer:v2
 
-      - name: Validate composer.json and composer.lock
+      - name: "Validate composer.json and composer.lock"
         run: composer validate --strict
 
-      - name: Cache Composer packages
-        id: composer-cache
-        run: |
-          echo "dir=$(composer config cache-files-dir)" >> $GITHUB_OUTPUT
-
-      - uses: actions/cache@v4
+      - name: "Setup Composer, install dependencies"
+        uses: ramsey/composer-install@v3
         with:
-          path: ${{ steps.composer-cache.outputs.dir }}
-          key: ${{ runner.os }}-composer-${{ hashFiles('**/composer.lock') }}
-          restore-keys: |
-            ${{ runner.os }}-composer-
+          composer-options: "--prefer-dist --optimize-autoloader"
+          require-lock-file: "true"
 
-      - name: Install dependencies
-        run: composer install --prefer-dist --no-progress
-
-      - name: Run update
+      - name: "Run update"
         run: composer run-script generate-types
 
-      - name: Run test suite
+      - name: "Run test suite"
         run: composer run-script test
 
-      - name: Commit and push changes
-        uses: EndBug/add-and-commit@v9
+      - name: "Coverage check"
+        run: composer run-script coverage-check
+
+      - name: "Import GPG key"
+        id: import-gpg
+        uses: crazy-max/ghaction-import-gpg@v6
+        with:
+          gpg_private_key: ${{ secrets.GPG_PRIVATE_KEY }}
+          passphrase: ${{ secrets.GPG_PASSPHRASE }}
+          git_user_signingkey: true
+          git_commit_gpgsign: true
+
+      - name: "Commit and push changes"
+        uses: stefanzweifel/git-auto-commit-action@v5
+        with:
+          commit_author: "${{ steps.import-gpg.outputs.name }} <${{ steps.import-gpg.outputs.email }}>"
+          commit_user_name: ${{ steps.import-gpg.outputs.name }}
+          commit_user_email: ${{ steps.import-gpg.outputs.email }}
+          commit_message: 'chore: Generate mime types'
+          commit_options: '-S --amend --no-edit'
+          push_options: '--force'
+          skip_fetch: true
+          branch: 1.2.x

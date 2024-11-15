@@ -30,6 +30,8 @@ Small maintenance release, no major changes.
 
 ### Fixed
 
+* Fix MimeMappingGenerator::generateMapping()'s use of array_filter to not rely on loose comparison.
+
 ### Removed
 
 * Removed jetbrains/phpstorm-attributes dependency

@@ -1,4 +1,4 @@
-name: PHPStan
+name: "PHPStan"
 
 on:
   push:
@@ -9,28 +9,28 @@ on:
 # Is it overkill to run PHPStan using different PHP versions? Probably :)
 jobs:
   phpstan:
-    name: PHPStan Static Analysis  ${{ matrix.php }}
+    name: "PHPStan Static Analysis  ${{ matrix.php }}"
     runs-on: ubuntu-latest
     strategy:
       matrix:
-        php: [ '8.2', '8.3' ]
+        php: [ '8.2', '8.3', '8.4' ]
     steps:
       - uses: actions/checkout@v4
 
-      - name: Install PHP ${{ matrix.php }}
+      - name: "Install PHP ${{ matrix.php }}"
         uses: shivammathur/setup-php@master
         with:
            php-version: ${{ matrix.php }}
            extensions: mbstring
 
-      - name: Validate composer.json and composer.lock
+      - name: "Validate composer.json and composer.lock"
         run: composer validate --strict
 
-      - name: Setup Composer, install dependencies
+      - name: "Setup Composer, install dependencies"
         uses: ramsey/composer-install@v3
         with:
            composer-options: "--prefer-dist --optimize-autoloader"
            require-lock-file: "true"
 
-      - name: Run PHPStan
+      - name: "Run PHPStan"
         run: composer run-script phpstan

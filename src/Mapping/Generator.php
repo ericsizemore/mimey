@@ -171,11 +171,7 @@ class Generator
 
     protected function convertMimeTypeToCaseName(string $mimeType): string
     {
-        if ($mimeType !== '') {
-            return preg_replace('/([\/\-_+.]+)/', '', ucfirst(ucwords($mimeType, '/-_+.'))) ?? $mimeType;
-        }
-
-        return $mimeType;
+        return preg_replace('/([\/\-_+.]+)/', '', ucfirst(ucwords($mimeType, '/-_+.'))) ?? $mimeType;
     }
 
     /**

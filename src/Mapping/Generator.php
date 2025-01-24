@@ -108,7 +108,7 @@ class Generator
         $lines = array_filter(array_map(
             static fn (string $line): string => trim(preg_replace('~#.*~', '', $line) ?? $line),
             explode("\n", $this->mimeTypesText)
-        ), static fn (string $value): bool => $value !== '');
+        ), static fn (string $value): bool => trim($value) !== '');
 
         foreach ($lines as $line) {
             $parts = array_values(array_filter(

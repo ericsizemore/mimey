@@ -96,16 +96,16 @@ In very rare cases I may delete a tag in order to remove a broken release. The n
 
 Branches in this project's Git repository are private implementation details. For example, I delete branches for versions of Mimey that are no longer supported. In general:
 
-* The `master` branch will contain the currently released major version (and `<minor>` or `<patch>` versions that fall under it).
+* The `develop` branch will contain the currently released major version (and `<minor>` or `<patch>` versions that fall under it).
 * Previous major versions will be under a `<major>.x` branch.
 * `Next` or development code of a new major version will be under a `<major>.x-dev` branch.
 
 For example, let's say the latest released version of this project is 3.0.0, the last major version is 2, and the next major version is 4.
 
-* The `master` branch will be all version 3 code, which includes: 3.0.1, 3.1.0, 3.2.0, etc.
+* The `develop` branch will be all version 3 code, which includes: 3.0.1, 3.1.0, 3.2.0, etc.
 * The previous major version, version 2, will be under `2.x` (which includes: 2.0.1, 2.1.0, 2.2.0, etc.).
 * The `Next` or development code for a new major version, version 4, will be in `4.x-dev`.
-  * Once v4.0.0 is officially released, it will be merged into `master` and the `4.x-dev` branch will be deleted.
+  * Once v4.0.0 is officially released, it will be merged into `develop` and the `4.x-dev` branch will be deleted.
   * Which then makes version 3 the previous major version, so it would have a new branch created for it: `3.x`
 
 ## Updates

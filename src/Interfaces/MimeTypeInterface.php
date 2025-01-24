@@ -30,5 +30,6 @@ namespace Esi\Mimey\Interfaces;
 interface MimeTypeInterface
 {
     public function getExtension(): string;
+
     public function getValue(): string;
 }

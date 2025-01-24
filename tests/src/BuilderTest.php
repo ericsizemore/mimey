@@ -48,7 +48,7 @@ use const JSON_THROW_ON_ERROR;
  */
 #[CoversClass(Builder::class)]
 #[UsesClass(MimeTypes::class)]
-class BuilderTest extends TestCase
+final class BuilderTest extends TestCase
 {
     /**
      * Test appending an extension.
@@ -152,6 +152,7 @@ class BuilderTest extends TestCase
         $builder->add('foo/one', 'one1');
         $builder->add('foo/two', 'two');
         $builder->add('foo/two2', 'two');
+
         $succeeded = $builder->save($file);
 
         self::assertIsInt($succeeded);
@@ -186,6 +187,7 @@ class BuilderTest extends TestCase
         $builder->add('foo/one', 'one1');
         $builder->add('foo/two', 'two');
         $builder->add('foo/two2', 'two');
+
         $succeeded = $builder->save('file://' . $file, context: $context);
 
         self::assertIsInt($succeeded);

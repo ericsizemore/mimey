@@ -11,6 +11,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ### Added
 
   * New unit tests to increase code coverage by testing `builtIn` mapping data.
+  * Added `rector/rector` as a dev-dependency.
 
 ### Changed
 
@@ -19,6 +20,24 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
   * The `update.yml` and `generate.yml` workflows within `.github/workflows` were updated:
     * [`EndBug/add-and-commit`](https://github.com/EndBug/add-and-commit) action replaced with [`stefanzweifel/git-auto-commit-action`](https://github.com/stefanzweifel/git-auto-commit-action).
     * Added [`crazy-max/ghaction-import-gpg`](https://github.com/crazy-max/ghaction-import-gpg) to import a GPG key for signing any commits made when updating/generating types.
+  * Some small refactoring within `Mapping\Generator`.
+  * Updated `composer.json`, specifically the 'scripts' section, to bring it more inline with my other repos/libraries:
+
+| Instead of:                        | Run:                              |
+|------------------------------------|-----------------------------------|
+| composer run-script coverage-check | composer run-script code-coverage |
+| composer run-script cs:check       | composer run-script phpcs:check   |
+| composer run-script cs:fix         | composer run-script phpcs:fix     |
+| composer run-script test           | composer run-script phpunit       |
+
+  * Merged several workflows into one `continuous-integration.yml`.
+
+### Removed
+
+  * Removed the following `.github/workflows` files, in favor of merging them as noted above in the `Changed` section:
+    * ci.yml
+    * psalm.yml
+    * tests.yml
 
 
 ## [2.1.0] - 2024-04-29

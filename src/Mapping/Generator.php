@@ -27,6 +27,7 @@ use JsonException;
 use RuntimeException;
 
 use function array_filter;
+use function array_map;
 use function array_unique;
 use function array_values;
 use function explode;
@@ -104,16 +105,12 @@ class Generator
             return $this->mapCache;
         }
 
-        $lines = explode("\n", $this->mimeTypesText);
+        $lines = array_filter(array_map(
+            static fn (string $line): string => trim(preg_replace('~#.*~', '', $line) ?? $line),
+            explode("\n", $this->mimeTypesText)
+        ), static fn (string $value): bool => $value !== '');
 
         foreach ($lines as $line) {
-            $line = preg_replace('~#.*~', '', $line) ?? $line;
-            $line = trim($line);
-
-            if ($line === '') {
-                continue;
-            }
-
             $parts = array_values(array_filter(
                 explode("\t", $line),
                 static fn (string $value): bool => trim($value) !== ''
@@ -132,8 +129,6 @@ class Generator
      * @param non-empty-string $namespace
      *
      * @throws RuntimeException
-     *
-     * @return string
      */
     public function generatePhpEnum(string $classname = 'MimeType', string $namespace = 'Esi\Mimey'): string
     {
@@ -174,13 +169,10 @@ class Generator
         );
     }
 
-    /**
-     * @param string $mimeType
-     */
     protected function convertMimeTypeToCaseName(string $mimeType): string
     {
         if ($mimeType !== '') {
-            $mimeType = preg_replace('/([\/\-_+.]+)/', '', ucfirst(ucwords($mimeType, '/-_+.'))) ?? $mimeType;
+            return preg_replace('/([\/\-_+.]+)/', '', ucfirst(ucwords($mimeType, '/-_+.'))) ?? $mimeType;
         }
 
         return $mimeType;
@@ -195,12 +187,13 @@ class Generator
     {
         if (\count($parts) === 2) {
             $mime       = trim($parts[0]);
-            $extensions = explode(' ', $parts[1]);
+            $extensions = array_filter(array_map(
+                static fn (string $extension): string => trim($extension),
+                explode(' ', $parts[1])
+            ), static fn (string $value): bool => $value !== '');
 
             foreach ($extensions as $extension) {
-                $extension = trim($extension);
-
-                if ($mime !== '' && $extension !== '') {
+                if ($mime !== '') {
                     $this->mapCache['mimes'][$extension][] = $mime;
                     $this->mapCache['extensions'][$mime][] = $extension;
                     $this->mapCache['mimes'][$extension]   = array_unique($this->mapCache['mimes'][$extension]);

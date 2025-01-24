@@ -102,7 +102,10 @@ class Builder implements BuilderInterface
      */
     public static function blank(): Builder
     {
-        return new self(['mimes' => [], 'extensions' => []]);
+        return new self([
+            'mimes'      => [],
+            'extensions' => [],
+        ]);
     }
 
     /**
@@ -119,14 +122,12 @@ class Builder implements BuilderInterface
     public static function load(string $file): Builder
     {
         try {
-            /** @var string $json * */
-            $json = file_get_contents($file);
             /** @var MimeTypeMap $json * */
-            $json = json_decode(/** @scrutinizer ignore-type */ $json, true, flags: JSON_THROW_ON_ERROR);
+            $json = json_decode((string) file_get_contents($file), true, flags: JSON_THROW_ON_ERROR);
 
             return new self($json);
-        } catch (Throwable $e) {
-            throw new RuntimeException(\sprintf('Unable to parse built-in types at %s', $file), 0, $e);
+        } catch (Throwable $throwable) {
+            throw new RuntimeException(\sprintf('Unable to parse built-in types at %s', $file), 0, $throwable);
         }
     }
 }

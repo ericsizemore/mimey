@@ -37,7 +37,7 @@ use RuntimeException;
  * @psalm-api
  */
 #[CoversClass(Generator::class)]
-class GeneratorTest extends TestCase
+final class GeneratorTest extends TestCase
 {
     /**
      * Test generating JSON from given mime.types text.
@@ -328,10 +328,10 @@ class GeneratorTest extends TestCase
 
     public function testSpaceIndent(): void
     {
-        $spaceIndent = new ReflectionMethod(Generator::class, 'spaceIndent');
+        $reflectionMethod = new ReflectionMethod(Generator::class, 'spaceIndent');
 
         /** @var string $result */
-        $result = $spaceIndent->invoke($spaceIndent, 0, 'test');
+        $result = $reflectionMethod->invoke($reflectionMethod, 0, 'test');
 
         self::assertStringStartsWith('    ', $result);
         self::assertSame(8, \strlen($result));

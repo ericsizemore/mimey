@@ -36,7 +36,7 @@ use const JSON_THROW_ON_ERROR;
 /**
  * Class for converting MIME types to file extensions and vice versa.
  *
- * This psalm-type looks gnarly, but it covers just about everything.
+ * This phpstan-type looks gnarly, but it covers just about everything.
  *
  * @phpstan-type MimeTypeMap = array{
  *    mimes: array<
@@ -70,7 +70,7 @@ class MimeTypes implements MimeTypesInterface
      *                                  array of MIME types. Entry "extensions" being an associative
      *                                  array of MIME type to array of extensions.
      *
-     *                                  Example:
+     *                                  ```
      *                                  [
      *                                      'extensions' => [
      *                                          'application/json' => ['json'],
@@ -83,6 +83,7 @@ class MimeTypes implements MimeTypesInterface
      *                                          ...
      *                                      ]
      *                                  ]
+     *                                  ```
      */
     public function __construct(protected ?array $mapping = null)
     {

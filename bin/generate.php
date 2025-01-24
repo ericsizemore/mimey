@@ -3,23 +3,34 @@
 
 declare(strict_types=1);
 
-require_once \dirname(__DIR__) . '/vendor/autoload.php';
+/**
+ * This file is part of Esi\Mimey.
+ *
+ * (c) Eric Sizemore <admin@secondversion.com>
+ * (c) Ricardo Boss <contact@ricardoboss.de>
+ * (c) Ralph Khattar <ralph.khattar@gmail.com>
+ *
+ * This source file is subject to the MIT license. For the full copyright,
+ * license information, and credits/acknowledgements, please view the LICENSE
+ * and README files that were distributed with this source code.
+ */
+require_once dirname(__DIR__) . '/vendor/autoload.php';
 
 //////////////////////////////////////////////////////////////
 
 use Esi\Mimey\Mapping\Generator;
 
-$mimeTypes          = \dirname(__DIR__) . '/data/mime.types';
-$mimeTypesCustom    = \dirname(__DIR__) . '/data/mime.types.custom';
-$jsonDestination    = \dirname(__DIR__) . '/dist/mime.types.json';
-$minJsonDestination = \dirname(__DIR__) . '/dist/mime.types.min.json';
-$enumDestination    = \dirname(__DIR__) . '/dist/MimeType.php';
+$mimeTypes          = dirname(__DIR__) . '/data/mime.types';
+$mimeTypesCustom    = dirname(__DIR__) . '/data/mime.types.custom';
+$jsonDestination    = dirname(__DIR__) . '/dist/mime.types.json';
+$minJsonDestination = dirname(__DIR__) . '/dist/mime.types.min.json';
+$enumDestination    = dirname(__DIR__) . '/dist/MimeType.php';
 
-$mimeTypesContent       = \file_get_contents($mimeTypes);
-$mimeTypesCustomContent = \file_get_contents($mimeTypesCustom);
+$mimeTypesContent       = file_get_contents($mimeTypes);
+$mimeTypesCustomContent = file_get_contents($mimeTypesCustom);
 
-\assert($mimeTypesContent !== false);
-\assert($mimeTypesCustomContent !== false);
+assert($mimeTypesContent !== false);
+assert($mimeTypesCustomContent !== false);
 
 $generator = new Generator($mimeTypesCustomContent . \PHP_EOL . $mimeTypesContent);
 $generator->generateMapping();

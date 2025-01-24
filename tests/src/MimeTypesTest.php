@@ -42,12 +42,12 @@ use function unlink;
  * @psalm-api
  */
 #[CoversClass(MimeTypes::class)]
-class MimeTypesTest extends TestCase
+final class MimeTypesTest extends TestCase
 {
     /**
      * Contains the MimeTypes class instance.
      */
-    protected MimeTypes $mime;
+    private MimeTypes $mimeTypes;
 
     /**
      * Set up testing with needed data.
@@ -55,7 +55,7 @@ class MimeTypesTest extends TestCase
     #[\Override]
     protected function setUp(): void
     {
-        $this->mime = new MimeTypes([
+        $this->mimeTypes = new MimeTypes([
             'mimes' => [
                 'json' => ['application/json'],
                 'jpeg' => ['image/jpeg'],
@@ -112,8 +112,8 @@ class MimeTypesTest extends TestCase
 
             self::assertSame('json', $mimeTypes->getExtension('application/json'));
             self::assertSame('application/json', $mimeTypes->getMimeType('json'));
-            self::assertSame('json', $this->mime->getExtension('application/json'));
-            self::assertSame('application/json', $this->mime->getMimeType('json'));
+            self::assertSame('json', $this->mimeTypes->getExtension('application/json'));
+            self::assertSame('application/json', $this->mimeTypes->getMimeType('json'));
         } finally {
             unlink($original);
             rename($backup, $original);
@@ -128,7 +128,7 @@ class MimeTypesTest extends TestCase
     #[DataProvider('getAllExtensionsProvider')]
     public function testGetAllExtensions(array $expectedExtensions, string $mimeType): void
     {
-        self::assertSame($expectedExtensions, $this->mime->getAllExtensions($mimeType));
+        self::assertSame($expectedExtensions, $this->mimeTypes->getAllExtensions($mimeType));
     }
 
     /**
@@ -136,7 +136,7 @@ class MimeTypesTest extends TestCase
      */
     public function testGetAllExtensionsUndefined(): void
     {
-        self::assertSame([], $this->mime->getAllExtensions('undefined'));
+        self::assertSame([], $this->mimeTypes->getAllExtensions('undefined'));
     }
 
     /**
@@ -147,7 +147,7 @@ class MimeTypesTest extends TestCase
     #[DataProvider('getAllMimeTypesProvider')]
     public function testGetAllMimeTypes(array $expectedMimeTypes, string $extension): void
     {
-        self::assertSame($expectedMimeTypes, $this->mime->getAllMimeTypes($extension));
+        self::assertSame($expectedMimeTypes, $this->mimeTypes->getAllMimeTypes($extension));
     }
 
     /**
@@ -155,7 +155,7 @@ class MimeTypesTest extends TestCase
      */
     public function testGetAllMimeTypesUndefined(): void
     {
-        self::assertSame([], $this->mime->getAllMimeTypes('undefined'));
+        self::assertSame([], $this->mimeTypes->getAllMimeTypes('undefined'));
     }
 
     /**
@@ -164,7 +164,7 @@ class MimeTypesTest extends TestCase
     #[DataProvider('getExtensionProvider')]
     public function testGetExtension(string $expectedExtension, string $mimeType): void
     {
-        self::assertSame($expectedExtension, $this->mime->getExtension($mimeType));
+        self::assertSame($expectedExtension, $this->mimeTypes->getExtension($mimeType));
     }
 
     /**
@@ -172,7 +172,7 @@ class MimeTypesTest extends TestCase
      */
     public function testGetExtensionUndefined(): void
     {
-        self::assertNull($this->mime->getExtension('undefined'));
+        self::assertNull($this->mimeTypes->getExtension('undefined'));
     }
 
     /**
@@ -181,7 +181,7 @@ class MimeTypesTest extends TestCase
     #[DataProvider('getMimeTypeProvider')]
     public function testGetMimeType(string $expectedMimeType, string $extension): void
     {
-        self::assertSame($expectedMimeType, $this->mime->getMimeType($extension));
+        self::assertSame($expectedMimeType, $this->mimeTypes->getMimeType($extension));
     }
 
     /**
@@ -189,7 +189,7 @@ class MimeTypesTest extends TestCase
      */
     public function testGetMimeTypeUndefined(): void
     {
-        self::assertNull($this->mime->getMimeType('undefined'));
+        self::assertNull($this->mimeTypes->getMimeType('undefined'));
     }
 
     /**

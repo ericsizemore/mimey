@@ -1,4 +1,4 @@
-# Contributing to Mimey
+# Contributing to this library
 
 #### Important Note
 
@@ -6,8 +6,8 @@ The contributing guidelines for this project are heavily inspired by, and borrow
 
 ## Welcome!
 
-This project accepts contributions of code and documentation from the community. 
-These contributions can be made in the form of Issues or [Pull Requests](http://help.github.com/send-pull-requests/) on the [Mimey repository](https://github.com/ericsizemore/mimey).
+This project accepts contributions of code and documentation from the community.
+These contributions can be made in the form of Issues or [Pull Requests](http://help.github.com/send-pull-requests/) on the [library's repository](https://github.com/ericsizemore/mimey).
 
 Here are some examples how you can contribute:
 
@@ -15,7 +15,7 @@ Here are some examples how you can contribute:
 * [Propose a new feature](https://github.com/ericsizemore/mimey/issues/new?labels=enhancement,unverified&template=2-feature_request.yml)
 * [Send a pull request](https://github.com/ericsizemore/mimey/pulls)
 
-I look forward to your contributions! 
+I look forward to your contributions!
 
 ## Code of Conduct
 
@@ -28,7 +28,7 @@ When you submit code changes, your submissions are understood to be under the sa
 ## Workflow for Pull Requests
 
 - Fork the repository.
-- Create your branch from `master` if you plan to implement new functionality or change existing code significantly.
+- Create your branch from `develop` if you plan to implement new functionality or change existing code significantly.
   - Create your branch from the oldest branch that is affected by the bug if you plan to fix a bug.
   - Pull requests for bug fixes must be made for the oldest branch that is [supported](https://github.com/ericsizemore/mimey/blob/develop/SECURITY.md).
 - Implement your change and add tests for it.
@@ -47,14 +47,14 @@ Before we look into how, here are the guidelines. If your Pull Requests fail to 
 
 ### Git Checkout
 
-The following commands can be used to perform the initial checkout of Mimey:
+The following commands can be used to perform the initial checkout of this library:
 
 ```bash
 $ git clone https://github.com/ericsizemore/mimey.git
 $ cd mimey
 ```
 
-Install Mimey's dependencies using [Composer](https://getcomposer.org/):
+Install dependencies using [Composer](https://getcomposer.org/):
 
 ```bash
 $ composer install
@@ -73,7 +73,7 @@ This project comes with configuration files for various tools that are used with
 No configuration is needed for [PHPUnit Coverage Check](https://github.com/ericsizemore/phpunit-coverage-check). You can use PHPUnit Coverage Check to check the coverage percentage in the codebase after your changes. I try to stick to 100% line coverage.
 
 ```bash
-$ composer run-script coverage-check
+$ composer run-script code-coverage
 ```
 
 #### PHPStan
@@ -84,14 +84,6 @@ The configuration file can be found at `phpstan.neon`, in the repository, for [P
 $ composer run-script phpstan
 ```
 
-#### PHP-CS-Fixer
-
-The configuration file can be found at `.php-cs-fixer.dist.php`, in the repository, for [PHP-CS-Fixer](https://github.com/PHP-CS-Fixer/PHP-CS-Fixer). You can use PHP-CS-Fixer to (re)format your source code for compliance with this project's coding guidelines:
-
-```bash
-$ composer run-script cs:fix
-```
-
 #### Psalm
 
 The configuration file can be found at `psalm.xml`, in the repository, for [Psalm](https://psalm.dev/). You can use Psalm to perform static analysis (with a focus on type checking):
@@ -100,12 +92,20 @@ The configuration file can be found at `psalm.xml`, in the repository, for [Psal
 $ composer run-script psalm
 ```
 
+#### PHP-CS-Fixer
+
+The configuration file can be found at `.php-cs-fixer.dist.php`, in the repository, for [PHP-CS-Fixer](https://github.com/PHP-CS-Fixer/PHP-CS-Fixer). You can use PHP-CS-Fixer to (re)format your source code for compliance with this project's coding guidelines:
+
+```bash
+$ composer run-script phpcs:fix
+```
+
 #### Unit tests (via PHPUnit)
 
 The configuration file can be found at `phpunit.xml`, in the repository, for [PHPUnit](https://phpunit.de/index.html). You can run the test suite with:
 
 ```bash
-$ composer run-script test
+$ composer run-script phpunit
 ```
 
 ### Documentation

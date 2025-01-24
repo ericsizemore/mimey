@@ -27,6 +27,14 @@ Can also be used to get the enum value from an extension.
 [mime.types]: https://svn.apache.org/repos/asf/httpd/httpd/trunk/docs/conf/mime.types
 [changelog]: https://svn.apache.org/viewvc/httpd/httpd/trunk/docs/conf/mime.types?view=log
 
+## Installation
+
+Compatible with PHP >= 8.2 and can be installed with [Composer](https://getcomposer.org).
+
+```bash
+$ composer require esi/mimey
+```
+
 ## Usage
 
 ```php
@@ -121,28 +129,24 @@ $builder = Builder::load($cacheFilePath);
 $mimes = new MimeTypes($builder->getMapping());
 ```
 
-## Install
+## About
 
-Compatible with PHP >= 8.2.
+### Requirements
 
-```
-composer require esi/mimey
-```
+- Mimey works with PHP 8.2.0 or above.
 
 ## Credits
 
-This fork uses the same license as the original repository by @ralouphie (MIT).
-This repository is a fork of [elephox-dev/mimey](https://github.com/elephox-dev/mimey) which itself was a fork of [ralouphie/mimey](https://github.com/ralouphie/mimey).
-Thanks to them and all the contributors!
+- Author: [Eric Sizemore](https://github.com/ericsizemore)
+- Thanks to [all Contributors](https://github.com/ericsizemore/mimey/contributors).
+- Special thanks to [JetBrains](https://www.jetbrains.com/?from=esi-mimey) for their Licenses for Open Source Development.
 
-## Submitting bugs and feature requests
+`Esi\Mimey` would not be possible without the wonderful work of the libraries that came before it, which it is forked from:
 
-Bugs and feature requests are tracked on [GitHub](https://github.com/ericsizemore/mimey/issues)
+  * [elephox-dev/mimey](https://github.com/elephox-dev/mimey) by [Ricardo Boss](https://github.com/ricardoboss).
+  * [ralouphie/mimey](https://github.com/ralouphie/mimey) by [Ralph Khattar](https://github.com/ralouphie).
 
-Issues are the quickest way to report a bug. If you find a bug or documentation error, please check the following first:
-
-* That there is not an Issue already open concerning the bug
-* That the issue has not already been addressed (within closed Issues, for example)
+My thanks to them, and all their contributors. To view changes in this library in comparison to the original library, please see the [CHANGELOG.md](./CHANGELOG.md) file.
 
 ## Contributing
 
@@ -155,12 +159,30 @@ Open an issue or even add it yourself! The process is very easy:
 3. push your changes
 4. submit a pull request
 
-More information for contributions in [CONTRIBUTING](CONTRIBUTING.md).
+See [CONTRIBUTING](./CONTRIBUTING.md) for more information.
 
-## Author
+Bugs and feature requests are tracked on [GitHub](https://github.com/ericsizemore/pagination/issues).
 
-Eric Sizemore - <admin@secondversion.com> - <https://www.secondversion.com>
+### Contributor Covenant Code of Conduct
 
-## License
+See [CODE_OF_CONDUCT.md](./CODE_OF_CONDUCT.md)
 
-Mimey is licensed under the MIT License - see the `LICENSE.md` file for details.
+### Backward Compatibility Promise
+
+See [backward-compatibility.md](./backward-compatibility.md) for more information on Backwards Compatibility.
+
+### Changelog
+
+See the [CHANGELOG](./CHANGELOG.md) for more information on what has changed recently.
+
+### License
+
+See the [LICENSE](./LICENSE.md) for more information on the license that applies to this project.
+
+### Security
+
+See [SECURITY](./SECURITY.md) for more information on the security disclosure process.
+
+### Upgrading
+
+See [UPGRADING](./UPGRADING.md) for more information on the upgrade process.

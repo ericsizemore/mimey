@@ -31,6 +31,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 | composer run-script test           | composer run-script phpunit       |
 
   * Merged several workflows into one `continuous-integration.yml`.
+  * Updated dev-dependencies.
+  * FIX: invalid links in docs
 
 ### Removed
 

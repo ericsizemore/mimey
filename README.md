@@ -161,7 +161,7 @@ Open an issue or even add it yourself! The process is very easy:
 
 See [CONTRIBUTING](./CONTRIBUTING.md) for more information.
 
-Bugs and feature requests are tracked on [GitHub](https://github.com/ericsizemore/pagination/issues).
+Bugs and feature requests are tracked on [GitHub](https://github.com/ericsizemore/mimey/issues).
 
 ### Contributor Covenant Code of Conduct
 

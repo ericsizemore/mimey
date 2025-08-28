@@ -139,7 +139,6 @@ $mimes = new MimeTypes($builder->getMapping());
 
 - Author: [Eric Sizemore](https://github.com/ericsizemore)
 - Thanks to [all Contributors](https://github.com/ericsizemore/mimey/contributors).
-- Special thanks to [JetBrains](https://www.jetbrains.com/?from=esi-mimey) for their Licenses for Open Source Development.
 
 `Esi\Mimey` would not be possible without the wonderful work of the libraries that came before it, which it is forked from:
 

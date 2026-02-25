@@ -23,7 +23,6 @@ declare(strict_types=1);
 namespace Esi\Mimey\Tests;
 
 use Esi\Mimey\MimeTypes;
-use Iterator;
 use PHPUnit\Framework\Attributes\CoversClass;
 use PHPUnit\Framework\Attributes\DataProvider;
 use PHPUnit\Framework\TestCase;
@@ -217,8 +216,10 @@ final class MimeTypesTest extends TestCase
 
     /**
      * Provides the data for testing retrieving all extensions for a given mime type.
+     *
+     * @return iterable<int, array{string[], string}>
      */
-    public static function getAllExtensionsProvider(): Iterator
+    public static function getAllExtensionsProvider(): iterable
     {
         yield [
             ['json'], 'application/json',
@@ -236,8 +237,10 @@ final class MimeTypesTest extends TestCase
 
     /**
      * Provides the data for testing retrieving all mime types for a given extension.
+     *
+     * @return iterable<int, array{string[], string}>
      */
-    public static function getAllMimeTypesProvider(): Iterator
+    public static function getAllMimeTypesProvider(): iterable
     {
         yield [
             ['application/json'], 'json',
@@ -258,8 +261,10 @@ final class MimeTypesTest extends TestCase
 
     /**
      * Provides the data for testing retrieving an extension based on mime type.
+     *
+     * @return iterable<int, string[]>
      */
-    public static function getExtensionProvider(): Iterator
+    public static function getExtensionProvider(): iterable
     {
         yield ['json', 'application/json'];
         yield ['jpeg', 'image/jpeg'];
@@ -269,8 +274,10 @@ final class MimeTypesTest extends TestCase
 
     /**
      * Provides the data for testing retrieving a mime type based on extension.
+     *
+     * @return iterable<int, string[]>
      */
-    public static function getMimeTypeProvider(): Iterator
+    public static function getMimeTypeProvider(): iterable
     {
         yield ['application/json', 'json'];
         yield ['image/jpeg', 'jpeg'];

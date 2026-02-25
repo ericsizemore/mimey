@@ -49,20 +49,20 @@
         }
     ],
     "require": {
-        "php": "^8.2 <8.5"
+        "php": ">=8.2"
     },
     "require-dev": {
-        "esi/phpunit-coverage-check": "^2.0",
-        "friendsofphp/php-cs-fixer": "^3.68",
+        "esi/phpunit-coverage-check": "^2.0 || ^3.1",
+        "friendsofphp/php-cs-fixer": "^3.94",
         "phpstan/extension-installer": "^1.4",
         "phpstan/phpstan": "^2.1",
         "phpstan/phpstan-deprecation-rules": "^2.0",
         "phpstan/phpstan-phpunit": "^2.0",
         "phpstan/phpstan-strict-rules": "^2.0",
-        "phpunit/phpunit": "^11.5",
+        "phpunit/phpunit": "^11.5 || ^12.5 || ^13.0",
         "psalm/plugin-phpunit": "^0.19.0",
-        "rector/rector": "^2.0",
-        "vimeo/psalm": "^6.1"
+        "rector/rector": "^2.3",
+        "vimeo/psalm": "^6.15"
     },
     "suggest": {
         "ext-mbstring": "For non-English (user) input parsing"
@@ -100,7 +100,6 @@
             "@code-coverage",
             "@phpstan",
             "@psalm",
-            "@psalm:security",
             "@psalm:shepherd"
         ],
         "clear-build": "rm -rf ./build/*",
@@ -111,10 +110,10 @@
         "phpstan": "vendor/bin/phpstan analyse -c phpstan.neon -vvv",
         "phpunit": "vendor/bin/phpunit",
         "phpunit:migrate": "@phpunit --migrate-configuration",
-        "psalm": "vendor/bin/psalm -c psalm.xml --no-cache --no-diff",
-        "psalm:baseline": "vendor/bin/psalm -c psalm.xml --no-cache --no-diff --set-baseline=psalm-baseline.xml",
-        "psalm:security": "vendor/bin/psalm -c psalm.xml --no-cache --no-diff --taint-analysis",
-        "psalm:shepherd": "@psalm --shepherd --stats",
+        "psalm": "vendor/bin/psalm -c psalm.xml --no-cache --show-info=true",
+        "psalm:baseline": "@psalm --no-diff --set-baseline=psalm-baseline.xml",
+        "psalm:ci": "@psalm --shepherd --report=results.sarif",
+        "psalm:shepherd": "@psalm --no-diff --shepherd --stats",
         "refactor:check": "@refactor:fix --dry-run",
         "refactor:fix": "vendor/bin/rector process",
         "update-types": "@php bin/update.php"

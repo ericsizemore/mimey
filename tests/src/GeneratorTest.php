@@ -94,11 +94,11 @@ final class GeneratorTest extends TestCase
     public function testGenerateMapping(): void
     {
         $generator = new Generator(
-            "#ignore\tme\n" .
-            "application/json\t\t\tjson\n" .
-            "image/jpeg\t\t\tjpeg jpg #ignore this too\n\n" .
-            "foo\tbar baz\n" .
-            "qux\tbar\n"
+            "#ignore\tme\n"
+            . "application/json\t\t\tjson\n"
+            . "image/jpeg\t\t\tjpeg jpg #ignore this too\n\n"
+            . "foo\tbar baz\n"
+            . "qux\tbar\n"
         );
 
         $mapping = $generator->generateMapping();

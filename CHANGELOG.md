@@ -12,6 +12,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
   * New unit tests to increase code coverage by testing `builtIn` mapping data.
   * Added `rector/rector` as a dev-dependency.
+  * Added Composer script `psalm:ci`.
 
 ### Changed
 
@@ -40,6 +41,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
     * ci.yml
     * psalm.yml
     * tests.yml
+  * Removed Composer script `psalm:security`.
 
 
 ## [2.1.0] - 2024-04-29

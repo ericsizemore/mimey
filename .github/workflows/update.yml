@@ -29,7 +29,8 @@ jobs:
         uses: ramsey/composer-install@v3
         with:
            composer-options: "--prefer-dist --optimize-autoloader"
-           require-lock-file: "true"
+           require-lock-file: "false"
+           dependency-versions: "highest"
 
       - name: "Run update"
         run: composer run-script update-types
